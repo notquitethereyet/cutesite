@@ -1,0 +1,58 @@
+#oneko {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    right: 2rem;
+    top: 1.3rem;
+    image-rendering: pixelated;
+    background-image: url("../assets/oneko.gif");
+    animation: sleep 1s infinite;
+    cursor: pointer;
+
+    &:hover {
+        animation: 2.5s 1 forwards wakeup;
+    }
+}
+
+@keyframes sleep {
+
+    0%,
+    50% {
+        background-position: -64px 0;
+    }
+
+    50.00001%,
+    100% {
+        background-position: -64px -32px;
+    }
+}
+
+@keyframes wakeup {
+
+    0%,
+    20% {
+        background-position: -160px 0;
+    }
+
+    20.00001%,
+    40% {
+        background-position: -192px 0;
+    }
+
+    40.00001%,
+    60% {
+        background-position: -224px 0;
+    }
+
+    60.00001%,
+    80% {
+        background-position: -96px -64px;
+    }
+
+    80.00001%,
+    100% {
+        background-position: -96px -96px;
+    }
+}

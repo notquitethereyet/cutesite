@@ -1,0 +1,22 @@
+:root {
+  --bg-mocha: #1e1e2e;
+  --text-latte: #f5e0dc;
+  --text-blue: #89b4fa;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.bg-mocha {
+  background-color: var(--bg-mocha);
+}
+
+.text-latte {
+  color: var(--text-latte);
+}
+
+.text-blue-400 {
+  color: var(--text-blue);
+}

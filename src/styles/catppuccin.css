@@ -1,0 +1,15 @@
+/* Catppuccin Mocha Theme (Dark) */
+:root[data-theme='mocha'] {
+    --bg: #1e1e2e;
+    --text: #cdd6f4;
+    --highlight: #f5c2e7;
+    --header-footer-bg: #313244;
+}
+
+/* Catppuccin Latte Theme (Light) */
+:root[data-theme='latte'] {
+    --bg: #eff1f5;
+    --text: #4c4f69;
+    --highlight: #dca561;
+    --header-footer-bg: #e6e9ef;
+}
