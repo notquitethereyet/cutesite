@@ -109,7 +109,7 @@ details ol {
 
 .keyboard-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 10px rgba(242, 205, 205, 0.15);
 }
 
 .keyboard-card a {
@@ -143,7 +143,7 @@ details ol {
 
 .project-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 10px rgba(242, 205, 205, 0.15);
 }
 
 .project-card strong {
@@ -184,7 +184,7 @@ details ol {
 
 .link-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 10px rgba(242, 205, 205, 0.15);
 }
 
 .link-card h3 {
@@ -242,7 +242,7 @@ details ol {
   
   .social-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 10px rgba(242, 205, 205, 0.15);
   }
   
   .social-icon {
