@@ -7,12 +7,12 @@ interface Social {
 }
 
 const socials: Social[] = [
-  { name: 'GitHub', url: 'https://github.com/notquitethereyet', icon: '/assets/github.svg' },
-  { name: 'Medium', url: 'https://medium.com/@notquitethereyet_/', icon: '/assets/medium.svg' },
-  { name: 'Discord', url: 'https://discord.com/users/708534253809434684', icon: '/assets/discord.svg' },
-  { name: 'Twitter', url: 'https://twitter.com/notquiteartyet', icon: '/assets/x.svg' },
-  { name: 'Instagram', url: 'https://instagram.com/notquite28', icon: '/assets/instagram.svg' },
-  { name: 'YouTube', url: 'https://youtube.com/channel/UC1CqG4CxLro2i_H2uBX0DCw', icon: '/assets/youtube.svg' }
+  { name: 'GitHub', url: 'https://github.com/notquitethereyet', icon: '/public/assets/github.svg' },
+  { name: 'Medium', url: 'https://medium.com/@notquitethereyet_/', icon: '/public/assets/medium.svg' },
+  { name: 'Discord', url: 'https://discord.com/users/708534253809434684', icon: '/public/assets/discord.svg' },
+  { name: 'Twitter', url: 'https://twitter.com/notquiteartyet', icon: '/public/assets/x.svg' },
+  { name: 'Instagram', url: 'https://instagram.com/notquite28', icon: '/public/assets/instagram.svg' },
+  { name: 'YouTube', url: 'https://youtube.com/channel/UC1CqG4CxLro2i_H2uBX0DCw', icon: '/public/assets/youtube.svg' }
 ];
 
 const Socials: React.FC = () => {
