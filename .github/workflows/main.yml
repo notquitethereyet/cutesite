@@ -31,16 +31,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set pnpm
+        uses: pnpm/action-setup@v4
+        with: 
+            version: 8
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm # Enable pnpm caching
-          
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8 # Specify the pnpm version (latest major version)
+          cache: pnpm # Enable pnpm caching
 
       - name: Install dependencies
         run: pnpm install
