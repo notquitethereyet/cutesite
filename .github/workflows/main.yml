@@ -31,21 +31,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm' # Cache pnpm dependencies
+          cache: pnpm # Enable pnpm caching
           
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8 # Specify the pnpm version
+          version: 8 # Specify the pnpm version (latest major version)
 
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build
+      - name: Build the site
         run: pnpm build
 
       - name: Setup Pages
@@ -54,7 +54,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload dist folder
+          # Specify the output directory
           path: './dist'
 
       - name: Deploy to GitHub Pages
