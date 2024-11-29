@@ -35,7 +35,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm # Enable pnpm caching
+          cache: npm # Enable pnpm caching
           
       - name: Install pnpm
         uses: pnpm/action-setup@v2
