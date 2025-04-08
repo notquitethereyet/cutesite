@@ -19,36 +19,36 @@ const defaultProjects: Project[] = [
     title: "Neural Network IDS with Reduced Feature Vectors",
     description: "Developed a neural network-based Intrusion Detection System that improved detection accuracy with custom feature selection. Achieved 92.20% accuracy on UNSW-NB15 and 95.14% on NSL-KDD, outperforming previous benchmarks.",
     icon: "fa-shield-alt",
-    iconColor: "text-[#f38ba8]", // Catppuccin Mocha Red
-    bgColor: "bg-[#1e1e2e]", // Catppuccin Mocha Base
-    textColor: "text-[#cdd6f4]", // Catppuccin Mocha Text
+    iconColor: "text-blue-600", 
+    bgColor: "bg-blue-50", 
+    textColor: "text-blue-800", 
     tags: ["Neural Networks", "Security", "Feature Selection", "Python"]
   },
   {
     title: "Scalable RAG System with Pinecone and Groq",
     description: "Built a modular Retrieval-Augmented Generation system using Pinecone for vector storage and Groq for fast inference, enabling real-time, context-aware querying of large PDF datasets with a 35% boost in search relevance.",
     icon: "fa-brain",
-    iconColor: "text-[#fab387]", // Catppuccin Mocha Peach
-    bgColor: "bg-[#1e1e2e]", // Catppuccin Mocha Base
-    textColor: "text-[#cdd6f4]", // Catppuccin Mocha Text
+    iconColor: "text-blue-600", 
+    bgColor: "bg-blue-50", 
+    textColor: "text-blue-800", 
     tags: ["Artificial Intelligence", "Machine Learning", "LLMs", "Vector Search"]
   },
   {
     title: "Automation and Full Stack Development",
     description: "Developed automation workflows and websites dealing with healthcare data for my company.",
     icon: "fa-heartbeat",
-    iconColor: "text-[#f5c2e7]", // Catppuccin Mocha Pink
-    bgColor: "bg-[#1e1e2e]", // Catppuccin Mocha Base
-    textColor: "text-[#cdd6f4]", // Catppuccin Mocha Text
+    iconColor: "text-blue-600", 
+    bgColor: "bg-blue-50", 
+    textColor: "text-blue-800", 
     tags: ["Make.com", "Supabase", "Google APIs", "Automation"]
   },
   {
     title: "NixOS Configuration",
     description: "NixOS configuration for reproducible development environments and system management.",
     icon: "fa-terminal",
-    iconColor: "text-[#89dceb]", // Catppuccin Mocha Sky
-    bgColor: "bg-[#1e1e2e]", // Catppuccin Mocha Base
-    textColor: "text-[#cdd6f4]", // Catppuccin Mocha Text
+    iconColor: "text-blue-600", 
+    bgColor: "bg-blue-50", 
+    textColor: "text-blue-800", 
     tags: ["NixOS", "Linux", "DevOps", "Configuration"]
   }
 ];
@@ -62,19 +62,19 @@ const { projects = defaultProjects } = Astro.props;
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       {projects.map((project) => (
-        <div class={`${project.bgColor} p-6 rounded-lg shadow-lg transform hover:-translate-y-1 transition duration-300 border border-[#313244]`}>
+        <div class={`${project.bgColor} p-6 rounded-lg shadow transform hover:-translate-y-1 transition duration-300`}>
           <div class="flex items-start mb-4">
             <div class={`w-10 h-10 flex items-center justify-center mr-4`}>
               <i class={`fas ${project.icon} text-2xl ${project.iconColor}`}></i>
             </div>
             <div>
               <h3 class={`text-xl font-bold mb-2 ${project.textColor}`}>{project.title}</h3>
-              <p class="text-[#a6adc8] mb-4">{project.description}</p>
+              <p class="text-gray-600 mb-4">{project.description}</p>
             </div>
           </div>
           <div class="flex flex-wrap gap-2 mt-auto">
             {project.tags.map((tag) => (
-              <span class={`text-xs px-2 py-1 rounded-full bg-[#313244] text-[#cdd6f4]`}>
+              <span class={`text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800`}>
                 {tag}
               </span>
             ))}
