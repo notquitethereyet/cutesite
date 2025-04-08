@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../components/layouts/BaseLayout.astro';
+
+const pageTitle = "Autism Links";
+const pageDescription = "A collection of useful and interesting links";
+
+// Link data structure
+const links = [
+  {
+    title: "My Medium Blog",
+    description: "I write about things that interest me! Check me out!",
+    url: "https://medium.com/@notquitethereyet_/"
+  },
+  {
+    title: "Degoogling",
+    description: "Reduce the amount of data Google can steal from you!",
+    url: "https://www.reddit.com/r/degoogle/comments/huk4rp/why_you_should_degoogle_intro_degoogling/"
+  },
+  {
+    title: "Stay Private Online!",
+    description: "Various Privacy Tools",
+    url: "https://www.privacytools.io/"
+  },
+  {
+    title: "Are VPNs really private?",
+    description: "VPNs keep no logs. Right? RIGHT??????",
+    url: "https://www.youtube.com/watch?v=239w7x2TdWE"
+  },
+  {
+    title: "BitTorrent crypto mining",
+    description: "Your harem anime spiking CPU usage?",
+    url: "https://www.trustedreviews.com/news/utorrent-silently-installing-bundled-bitcoin-mining-software-2931825"
+  },
+  {
+    title: "PlayStation 2 BIOS",
+    description: "Curated BIOS that I need to play PS2 games.",
+    url: "https://drive.google.com/file/d/1H_ydGw_leVuMpRzrEoC8nAWhmR1kGr0i/view"
+  },
+  {
+    title: "PlayStation 3 Firmware",
+    description: "Official Sony repo for PS3 firmware! Good job Sony!",
+    url: "https://www.playstation.com/en-us/support/hardware/ps3/system-software/"
+  },
+  {
+    title: "Stealing Stuff Pt. 1",
+    description: "Stealing guide for games!",
+    url: "https://www.reddit.com/r/Piracy/wiki/megathread/games/"
+  },
+  {
+    title: "Stealing Stuff Pt. 2",
+    description: "Stealing Guide for other software!",
+    url: "https://www.reddit.com/r/Piracy/wiki/tools"
+  },
+  {
+    title: "Stealing Stuff Pt. 3",
+    description: "Stealing Guide for stinky weebs!",
+    url: "https://nyaa.si/"
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <div class="min-h-screen py-16 px-4 relative flex flex-col">
+    <!-- Semi-transparent overlay for better text readability -->
+    <div class="absolute inset-0 bg-[#1e1e2e] bg-opacity-80 -z-10"></div>
+    
+    <div class="max-w-4xl mx-auto flex-grow">
+      <h1 class="text-5xl md:text-6xl font-bold mb-8 text-center text-[#cdd6f4]">Autism Links</h1>
+      <p class="text-xl text-center text-[#a6adc8] mb-12">A collection of useful and interesting links</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {links.map((link) => (
+          <a href={link.url} target="_blank" rel="noopener noreferrer" 
+             class="bg-blue-50 p-6 rounded-lg shadow-lg transform hover:-translate-y-1 transition duration-300 group">
+            <div>
+              <h3 class="text-xl font-bold mb-2 text-blue-800 group-hover:text-blue-600 transition duration-300">{link.title}</h3>
+              <p class="text-gray-600">{link.description}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+    
+    <div class="w-full text-center py-12 mt-12">
+      <a href="/" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-lg">
+        Back to Home
+      </a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  /* Make sure the canvas is behind the content but visible */
+  :global(canvas#boidCanvas) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -20;
+    filter: blur(5px);
+  }
+</style>
