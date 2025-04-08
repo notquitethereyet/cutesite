@@ -1,0 +1,83 @@
+---
+interface Project {
+  title: string;
+  description: string;
+  icon: string;
+  iconColor: string;
+  bgColor: string;
+  textColor: string;
+  tags: string[];
+  link?: string;
+}
+
+interface Props {
+  projects?: Project[];
+}
+
+const defaultProjects: Project[] = [
+  {
+    title: "Interactive Data Visualization",
+    description: "A dashboard for visualizing complex datasets with interactive charts and filters. Built with D3.js and React.",
+    icon: "fa-code",
+    iconColor: "text-blue-500",
+    bgColor: "bg-blue-200",
+    textColor: "text-blue-800",
+    tags: ["React", "D3.js", "TypeScript"]
+  },
+  {
+    title: "Mobile Health App",
+    description: "A cross-platform mobile application for tracking health metrics and providing personalized recommendations.",
+    icon: "fa-mobile-alt",
+    iconColor: "text-green-600",
+    bgColor: "bg-green-200",
+    textColor: "text-green-800",
+    tags: ["React Native", "Firebase", "Node.js"]
+  },
+  {
+    title: "AI Content Generator",
+    description: "A web application that uses machine learning to generate content based on user prompts and preferences.",
+    icon: "fa-robot",
+    iconColor: "text-purple-500",
+    bgColor: "bg-purple-200",
+    textColor: "text-purple-800",
+    tags: ["Python", "TensorFlow", "Flask"]
+  },
+  {
+    title: "E-Commerce Platform",
+    description: "A full-featured online store with product management, cart functionality, and secure checkout.",
+    icon: "fa-shopping-cart",
+    iconColor: "text-yellow-500",
+    bgColor: "bg-yellow-200",
+    textColor: "text-yellow-800",
+    tags: ["Next.js", "MongoDB", "Stripe API"]
+  }
+];
+
+const { projects = defaultProjects } = Astro.props;
+---
+
+<section id="projects" class="py-16 px-4 bg-gray-100 bg-opacity-90 section-transition">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold mb-8 text-center text-blue-900">My Projects</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {projects.map((project) => (
+        <div class="bg-white p-6 rounded-lg shadow-lg transform hover:-translate-y-1 transition duration-300">
+          <div class={`h-48 ${project.bgColor} mb-4 rounded flex items-center justify-center`}>
+            <i class={`fas ${project.icon} text-5xl ${project.iconColor}`}></i>
+          </div>
+          <h3 class={`text-xl font-bold mb-2 ${project.textColor}`}>{project.title}</h3>
+          <p class="text-gray-600 mb-4">
+            {project.description}
+          </p>
+          <div class="flex flex-wrap gap-2 mb-4">
+            {project.tags.map((tag) => (
+              <span class={`px-2 py-1 bg-${project.bgColor.split('-')[1]}-100 ${project.textColor} rounded text-sm`}>{tag}</span>
+            ))}
+          </div>
+          <a href={project.link || "#"} class="text-blue-600 hover:text-blue-800 font-medium">View Project →</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

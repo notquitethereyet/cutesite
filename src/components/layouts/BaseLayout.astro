@@ -1,0 +1,40 @@
+---
+import '../../styles/global.css';
+import Oneko from '../ui/Oneko.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Portfolio - Boid Fish Simulation",
+  description = "Portfolio website with interactive boid fish simulation background"
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content={description}>
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body class="font-sans text-gray-800">
+    <canvas id="boidCanvas"></canvas>
+    
+    <main class="relative">
+        <slot />
+    </main>
+    
+    <!-- Include Boid Simulation JavaScript -->
+    <script is:inline src="/js/boid-simulation.js"></script>
+    
+    <!-- Oneko animation -->
+    <Oneko position="bottom-right" />
+</body>
+</html>

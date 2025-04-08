@@ -1,0 +1,20 @@
+---
+interface Props {
+  copyright?: string;
+  tagline?: string;
+  year?: number;
+}
+
+const { 
+  copyright = "John Doe. All Rights Reserved.",
+  tagline = "Made with <i class=\"fas fa-heart text-red-500\"></i> and lots of coffee",
+  year = new Date().getFullYear()
+} = Astro.props;
+---
+
+<footer class="py-8 px-4 bg-gray-800 text-white text-center section-transition">
+  <div class="max-w-4xl mx-auto">
+    <p class="mb-4">© {year} {copyright}</p>
+    <p class="text-gray-400" set:html={tagline}></p>
+  </div>
+</footer>

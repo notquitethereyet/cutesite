@@ -1,0 +1,23 @@
+---
+interface Props {
+  name: string;
+  title: string;
+  description: string;
+}
+
+const { 
+  name = "John Doe",
+  title = "Full-Stack Developer & Designer",
+  description = "Creating innovative digital experiences with a focus on interactive web applications and creative coding."
+} = Astro.props;
+---
+
+<section class="hero-section min-h-screen flex flex-col justify-center items-center text-center p-8">
+  <h1 class="text-5xl md:text-6xl font-bold mb-4 text-blue-900">{name}</h1>
+  <h2 class="text-2xl md:text-3xl mb-8 text-blue-700">{title}</h2>
+  <p class="max-w-lg mb-8 text-lg">{description}</p>
+  <div class="flex flex-wrap justify-center gap-4">
+    <a href="#contact" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-lg">Get in Touch</a>
+    <a href="#projects" class="px-6 py-3 bg-transparent border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition shadow-lg">See My Work</a>
+  </div>
+</section>
