@@ -1,47 +1,53 @@
-# Astro Starter Kit: Minimal
+# Portfolio with Boid Fish Simulation - Astro Version
 
-```sh
-npm create astro@latest -- --template minimal
-```
+This is a portfolio website featuring a beautiful interactive boid fish simulation background, ported to the Astro framework.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## Features
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- Interactive boid fish simulation background
+- Responsive portfolio layout
+- Tailwind CSS for styling
+- Custom color theme based on Catppuccin Mocha
+- Optimized for performance with Astro
 
-## 🚀 Project Structure
+## Project Structure
 
-Inside of your Astro project, you'll see the following folders and files:
+- `src/` - Contains all Astro components and pages
+  - `layouts/` - Layout components
+  - `pages/` - Page components
+  - `styles/` - Global CSS styles
+- `public/` - Static assets
+  - `js/` - JavaScript files including the boid simulation
+  - `css/` - CSS files
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Getting Started
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+1. Clone the repository
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Run the development server:
+   ```
+   npm run dev
+   ```
+4. Build for production:
+   ```
+   npm run build
+   ```
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Porting Notes
 
-Any static assets, like images, can be placed in the `public/` directory.
+This project was ported from a vanilla HTML/CSS/JS implementation to Astro. The main changes include:
 
-## 🧞 Commands
+1. Creating an Astro component structure
+2. Moving static assets to the public directory
+3. Adapting the JavaScript to work with Astro's component lifecycle
+4. Maintaining the same visual design and interactive elements
 
-All commands are run from the root of the project, from a terminal:
+## Technologies Used
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [Astro](https://astro.build/) - The web framework for content-driven websites
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Font Awesome](https://fontawesome.com/) - Icon library
+- Vanilla JavaScript for the boid simulation

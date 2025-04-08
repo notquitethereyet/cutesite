@@ -1,0 +1,290 @@
+/* Catppuccin Mocha Color Palette */
+:root {
+    /* Mocha Theme */
+    --rosewater: #f5e0dc;
+    --flamingo: #f2cdcd;
+    --pink: #f5c2e7;
+    --mauve: #cba6f7;
+    --red: #f38ba8;
+    --maroon: #eba0ac;
+    --peach: #fab387;
+    --yellow: #f9e2af;
+    --green: #a6e3a1;
+    --teal: #94e2d5;
+    --sky: #89dceb;
+    --sapphire: #74c7ec;
+    --blue: #89b4fa;
+    --lavender: #b4befe;
+    --text: #cdd6f4;
+    --subtext1: #bac2de;
+    --subtext0: #a6adc8;
+    --overlay2: #9399b2;
+    --overlay1: #7f849c;
+    --overlay0: #6c7086;
+    --surface2: #585b70;
+    --surface1: #45475a;
+    --surface0: #313244;
+    --base: #1e1e2e;
+    --mantle: #181825;
+    --crust: #11111b;
+    
+    /* Background and text colors */
+    --background-primary: var(--base);
+    --background-secondary: var(--mantle);
+    --background-tertiary: var(--crust);
+    --text-primary: var(--text);
+    --text-secondary: var(--subtext1);
+    --accent-primary: var(--blue);
+    --accent-secondary: var(--lavender);
+    --hero-bg: rgba(30, 30, 46, 0.4); /* --base with opacity */
+    --card-bg: var(--surface0);
+    --card-shadow: rgba(0, 0, 0, 0.3);
+    --footer-bg: var(--crust);
+    --footer-text: var(--text);
+}
+
+/* Main styles */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: var(--background-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+section {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section {
+    background-color: var(--hero-bg);
+    backdrop-filter: blur(5px);
+}
+
+.section-transition {
+    transition: all 0.5s ease;
+}
+
+/* Section backgrounds */
+section.bg-white {
+    background-color: var(--background-primary) !important;
+}
+
+section.bg-gray-100 {
+    background-color: var(--background-secondary) !important;
+}
+
+/* Card backgrounds */
+.bg-white {
+    background-color: var(--card-bg) !important;
+}
+
+.bg-blue-200 {
+    background-color: var(--blue) !important;
+    opacity: 0.3;
+}
+
+.bg-green-200 {
+    background-color: var(--green) !important;
+    opacity: 0.3;
+}
+
+.bg-purple-200 {
+    background-color: var(--mauve) !important;
+    opacity: 0.3;
+}
+
+.bg-yellow-200 {
+    background-color: var(--yellow) !important;
+    opacity: 0.3;
+}
+
+.bg-blue-50, .bg-green-50, .bg-purple-50 {
+    background-color: var(--surface1) !important;
+}
+
+.shadow, .shadow-lg {
+    box-shadow: 0 4px 6px var(--card-shadow) !important;
+}
+
+/* Text colors */
+.text-gray-800 {
+    color: var(--text) !important;
+}
+
+.text-gray-700, .text-gray-600, .text-gray-400 {
+    color: var(--subtext1) !important;
+}
+
+.text-blue-900, .text-blue-800, .text-blue-700, 
+.text-green-800, .text-purple-800, .text-yellow-800 {
+    color: var(--accent-primary) !important;
+}
+
+.text-orange-500 {
+    color: var(--peach) !important;
+}
+
+.text-yellow-500 {
+    color: var(--yellow) !important;
+}
+
+.text-blue-500 {
+    color: var(--blue) !important;
+}
+
+.text-red-500 {
+    color: var(--red) !important;
+}
+
+.text-pink-500 {
+    color: var(--pink) !important;
+}
+
+.text-green-600, .text-green-500 {
+    color: var(--green) !important;
+}
+
+.text-gray-600, .text-gray-700 {
+    color: var(--subtext0) !important;
+}
+
+.text-orange-600 {
+    color: var(--peach) !important;
+}
+
+.text-blue-400 {
+    color: var(--sapphire) !important;
+}
+
+.text-purple-500 {
+    color: var(--mauve) !important;
+}
+
+/* Heading colors */
+h1.text-blue-900 {
+    color: var(--blue) !important;
+}
+
+h2.text-blue-700 {
+    color: var(--sapphire) !important;
+}
+
+h3.text-blue-800 {
+    color: var(--blue) !important;
+}
+
+h3.text-green-800 {
+    color: var(--green) !important;
+}
+
+h3.text-purple-800 {
+    color: var(--mauve) !important;
+}
+
+h3.text-yellow-800 {
+    color: var(--yellow) !important;
+}
+
+/* Button colors */
+.bg-blue-600 {
+    background-color: var(--blue) !important;
+}
+
+.hover\:bg-blue-700:hover {
+    background-color: var(--sapphire) !important;
+}
+
+.text-blue-600 {
+    color: var(--blue) !important;
+}
+
+.hover\:text-blue-800:hover {
+    color: var(--sapphire) !important;
+}
+
+.border-blue-600 {
+    border-color: var(--blue) !important;
+}
+
+.hover\:bg-blue-50:hover {
+    background-color: var(--surface0) !important;
+}
+
+.text-white {
+    color: var(--text) !important;
+}
+
+/* Improve contrast for button text */
+a.bg-blue-600.text-white {
+    color: var(--crust) !important;
+    font-weight: 600 !important;
+}
+
+/* Additional button text contrast fix */
+.hero-section a.bg-blue-600 {
+    background-color: var(--lavender) !important;
+}
+
+.hero-section a.bg-blue-600:hover {
+    background-color: var(--blue) !important;
+}
+
+/* Skill tag colors */
+.bg-blue-100 {
+    background-color: rgba(137, 180, 250, 0.2) !important; /* --blue with opacity */
+}
+
+.bg-green-100 {
+    background-color: rgba(166, 227, 161, 0.2) !important; /* --green with opacity */
+}
+
+.bg-purple-100 {
+    background-color: rgba(203, 166, 247, 0.2) !important; /* --mauve with opacity */
+}
+
+.bg-yellow-100 {
+    background-color: rgba(249, 226, 175, 0.2) !important; /* --yellow with opacity */
+}
+
+.text-blue-800, .text-green-800, .text-purple-800, .text-yellow-800 {
+    color: var(--accent-primary) !important;
+}
+
+/* Footer */
+footer.bg-gray-800 {
+    background-color: var(--footer-bg) !important;
+}
+
+footer .text-white {
+    color: var(--footer-text) !important;
+}
+
+/* Print styles */
+@media print {
+    section {
+        page-break-inside: avoid;
+        background-color: white !important;
+    }
+    
+    canvas {
+        display: none;
+    }
+    
+    .hero-section {
+        background-color: white !important;
+    }
+}
