@@ -14,24 +14,49 @@ const positionClasses = {
   'bottom-left': 'bottom-4 left-4',
   'bottom-right': 'bottom-4 right-4'
 };
+
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const onekoUrl = `${baseUrl}oneko.gif`;
 ---
 
 <div id="oneko" class={`fixed ${positionClasses[position]} z-50 cursor-pointer`} aria-hidden="true"></div>
 
-<style>
+<style define:vars={{ onekoUrl }}>
   #oneko {
     content: "";
     display: inline-block;
     width: 32px;
     height: 32px;
     image-rendering: pixelated;
-    background-image: url("/oneko.gif");
+    background-image: url(var(--onekoUrl));
+    background-repeat: no-repeat;
+    background-position: 0 0;
     animation: sleep 1s infinite;
     cursor: pointer;
   }
 
-  #oneko:hover {
-    animation: 2.5s 1 forwards wakeup;
+  #oneko.running {
+    animation: running 0.2s steps(2) infinite;
+  }
+
+  #oneko.up {
+    transform: rotate(0deg);
+  }
+
+  #oneko.down {
+    transform: rotate(180deg);
+  }
+
+  #oneko.left {
+    transform: rotate(270deg);
+  }
+
+  #oneko.right {
+    transform: rotate(90deg);
+  }
+
+  #oneko.awake {
+    animation: wakeup 1s steps(5);
   }
 
   @keyframes sleep {
@@ -66,3 +91,13 @@ const positionClasses = {
     }
   }
 </style>
+
+<script define:vars={{ onekoUrl }}>
+  document.addEventListener('DOMContentLoaded', function() {
+    const onekoElement = document.getElementById('oneko');
+    if (!onekoElement) return;
+    
+    // Directly set the background image with the full URL
+    onekoElement.style.backgroundImage = `url('${onekoUrl}')`;
+  });
+</script>

@@ -15,7 +15,7 @@ const defaultParagraphs = [
 const { 
   initials = "Q",
   paragraphs = defaultParagraphs,
-  imagePath = "/quiet.png"
+  imagePath = `${import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`}quiet.png`
 } = Astro.props;
 ---
 

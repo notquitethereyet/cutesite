@@ -3,38 +3,30 @@ import BaseLayout from '../components/layouts/BaseLayout.astro';
 
 const pageTitle = "404 - Page Not Found";
 const pageDescription = "Oops! The page you're looking for doesn't exist.";
+const baseUrl = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
   <div class="min-h-screen flex flex-col items-center justify-center p-8 text-center relative">
-    <h1 class="text-5xl md:text-6xl font-bold mb-4 text-blue-900">404</h1>
-    <h2 class="text-2xl md:text-3xl mb-8 text-blue-700">迷子ですか？</h2>
+    <h1 class="text-5xl md:text-6xl font-bold mb-4 text-[#cdd6f4]">404</h1>
+    <h2 class="text-2xl md:text-3xl mb-8 text-[#f5c2e7]">迷子ですか？</h2>
     
     <div class="max-w-md mb-8">
-      <img src="/bwaa.gif" alt="404 Error" class="w-full rounded-lg shadow-lg">
+      <img src={`${baseUrl}bwaa.gif`} alt="404 Error" class="w-full rounded-lg shadow-lg">
     </div>
     
-    <p class="max-w-lg mb-8 text-lg">Page no workey! Let's put you back home!</p>
+    <p class="max-w-lg mb-8 text-lg text-[#a6adc8]">Page no workey! Let's put you back home!</p>
     
-    <a href="/" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-lg tooltip" title="I wanna go home">
+    <a href={baseUrl} class="px-6 py-3 bg-[#f5c2e7] text-[#1e1e2e] rounded-lg hover:bg-[#f38ba8] transition shadow-lg tooltip" title="I wanna go home">
       うちに帰りたい
     </a>
     
     <!-- Semi-transparent overlay for better text readability -->
-    <div class="absolute inset-0 bg-[#1e1e2e] bg-opacity-80 -z-10"></div>
+    <div class="absolute inset-0 bg-[#1e1e2e] bg-opacity-90 -z-10"></div>
   </div>
 </BaseLayout>
 
 <style>
-  /* Make text more visible against dark background */
-  h1, h2 {
-    color: #cdd6f4 !important; /* Catppuccin Mocha Text */
-  }
-  
-  p {
-    color: #a6adc8 !important; /* Catppuccin Mocha Subtext */
-  }
-  
   /* Make sure the canvas is behind the content but visible */
   :global(canvas#boidCanvas) {
     position: fixed;
