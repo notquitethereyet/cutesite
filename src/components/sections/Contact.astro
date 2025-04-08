@@ -17,9 +17,9 @@ interface Props {
 }
 
 const defaultContactInfo: ContactInfo = {
-  email: "john.doe@example.com",
-  phone: "+1 (555) 123-4567",
-  location: "San Francisco, CA, USA"
+  email: "judy2077@protonmail.com",
+  phone: "Available upon request",
+  location: "California, USA"
 };
 
 const defaultSocialLinks: SocialLink[] = [
@@ -36,13 +36,13 @@ const {
 } = Astro.props;
 ---
 
-<section id="contact" class="py-16 px-4 bg-gray-100 bg-opacity-90 section-transition">
+<section id="contact" class="py-16 px-4 bg-white bg-opacity-90 section-transition">
   <div class="max-w-4xl mx-auto">
     <h2 class="text-3xl font-bold mb-8 text-center text-blue-900">Get In Touch</h2>
     
-    <div class="flex flex-col items-center">
-      <div class="bg-blue-50 p-6 rounded-lg shadow-lg mb-6 max-w-md w-full">
-        <h3 class="text-xl font-bold mb-4 text-blue-800">Contact Information</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-bold mb-4 text-blue-800 text-center">Contact Information</h3>
         <ul class="space-y-3">
           <li class="flex items-center">
             <i class="fas fa-envelope text-blue-500 mr-2"></i>
@@ -59,8 +59,8 @@ const {
         </ul>
       </div>
       
-      <div class="bg-blue-50 p-6 rounded-lg shadow-lg max-w-md w-full">
-        <h3 class="text-xl font-bold mb-4 text-blue-800">Connect With Me</h3>
+      <div class="bg-blue-50 p-6 rounded-lg shadow-lg">
+        <h3 class="text-xl font-bold mb-4 text-blue-800 text-center">Connect With Me</h3>
         <div class="flex justify-center space-x-6">
           {socialLinks.map((social) => (
             <a href={social.url} class="text-gray-700 hover:text-blue-600 transition" aria-label={social.platform}>

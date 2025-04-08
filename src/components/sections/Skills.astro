@@ -1,8 +1,8 @@
 ---
 interface Skill {
-  icon: string;
   name: string;
-  iconColor?: string;
+  icon: string;
+  prefix?: string;
 }
 
 interface SkillCategory {
@@ -16,33 +16,66 @@ interface Props {
 
 const defaultCategories: SkillCategory[] = [
   {
-    title: "Frontend",
+    title: "Programming Languages",
     skills: [
-      { icon: "fa-html5", name: "HTML5 / CSS3", iconColor: "text-orange-500" },
-      { icon: "fa-js", name: "JavaScript / TypeScript", iconColor: "text-yellow-500" },
-      { icon: "fa-react", name: "React / Next.js", iconColor: "text-blue-400" },
-      { icon: "fa-vuejs", name: "Vue.js / Nuxt.js", iconColor: "text-green-500" },
-      { icon: "fa-sass", name: "SASS / Tailwind CSS", iconColor: "text-pink-500" }
+      { name: "Python", icon: "fa-python", prefix: "fab" },
+      { name: "JavaScript", icon: "fa-js-square", prefix: "fab" },
+      { name: "TypeScript", icon: "fa-js", prefix: "fab" },
+      { name: "C++", icon: "fa-code", prefix: "fas" },
+      { name: "C#", icon: "fa-code", prefix: "fas" },
+      { name: "Java", icon: "fa-java", prefix: "fab" },
+      { name: ".NET", icon: "fa-code", prefix: "fas" }
     ]
   },
   {
-    title: "Backend",
+    title: "Frontend Development",
     skills: [
-      { icon: "fa-node-js", name: "Node.js / Express", iconColor: "text-green-600" },
-      { icon: "fa-python", name: "Python / Django", iconColor: "text-blue-500" },
-      { icon: "fa-database", name: "MongoDB / PostgreSQL", iconColor: "text-blue-500" },
-      { icon: "fa-server", name: "REST API / GraphQL", iconColor: "text-red-500" },
-      { icon: "fa-lock", name: "Authentication / Security", iconColor: "text-gray-700" }
+      { name: "Angular", icon: "fa-angular", prefix: "fab" },
+      { name: "Svelte", icon: "fa-code", prefix: "fas" },
+      { name: "Astro", icon: "fa-code", prefix: "fas" },
+      { name: "HTML5", icon: "fa-html5", prefix: "fab" },
+      { name: "CSS3", icon: "fa-css3-alt", prefix: "fab" },
+      { name: "Tailwind CSS", icon: "fa-code", prefix: "fas" },
+      { name: "Accessibility (WCAG)", icon: "fa-universal-access", prefix: "fas" }
     ]
   },
   {
-    title: "Tools & Others",
+    title: "Backend Development",
     skills: [
-      { icon: "fa-git-alt", name: "Git / GitHub", iconColor: "text-orange-600" },
-      { icon: "fa-docker", name: "Docker / Kubernetes", iconColor: "text-blue-500" },
-      { icon: "fa-aws", name: "AWS / Cloud Services", iconColor: "text-orange-500" },
-      { icon: "fa-vial", name: "Jest / Testing", iconColor: "text-purple-500" },
-      { icon: "fa-pencil-ruler", name: "UI/UX Design / Figma", iconColor: "text-blue-500" }
+      { name: "Node.js", icon: "fa-node-js", prefix: "fab" },
+      { name: "Express.js", icon: "fa-server", prefix: "fas" },
+      { name: "ASP.NET", icon: "fa-code", prefix: "fas" },
+      { name: "Supabase", icon: "fa-database", prefix: "fas" },
+      { name: "RESTful APIs", icon: "fa-plug", prefix: "fas" },
+      { name: "PostgreSQL", icon: "fa-database", prefix: "fas" },
+      { name: "Oracle Database", icon: "fa-database", prefix: "fas" },
+      { name: "Docker", icon: "fa-docker", prefix: "fab" }
+    ]
+  },
+  {
+    title: "Machine Learning",
+    skills: [
+      { name: "TensorFlow", icon: "fa-code", prefix: "fas" },
+      { name: "PyTorch", icon: "fa-fire", prefix: "fas" },
+      { name: "Hugging Face", icon: "fa-smile", prefix: "fas" },
+      { name: "Neural Networks", icon: "fa-project-diagram", prefix: "fas" },
+      { name: "Deep Learning", icon: "fa-microchip", prefix: "fas" },
+      { name: "NLP", icon: "fa-language", prefix: "fas" },
+      { name: "Computer Vision", icon: "fa-eye", prefix: "fas" },
+      { name: "Scikit-learn", icon: "fa-chart-line", prefix: "fas" }
+    ]
+  },
+  {
+    title: "Tools & Platforms",
+    skills: [
+      { name: "Git", icon: "fa-git-alt", prefix: "fab" },
+      { name: "Linux", icon: "fa-linux", prefix: "fab" },
+      { name: "NixOS", icon: "fa-terminal", prefix: "fas" },
+      { name: "Make.com", icon: "fa-cogs", prefix: "fas" },
+      { name: "Softr.io", icon: "fa-window-restore", prefix: "fas" },
+      { name: "MATLAB", icon: "fa-calculator", prefix: "fas" },
+      { name: "LaTeX", icon: "fa-file-alt", prefix: "fas" },
+      { name: "Jupyter Notebook", icon: "fa-book-open", prefix: "fas" }
     ]
   }
 ];
@@ -51,17 +84,17 @@ const { categories = defaultCategories } = Astro.props;
 ---
 
 <section id="skills" class="py-16 px-4 bg-white bg-opacity-90 section-transition">
-  <div class="max-w-4xl mx-auto">
+  <div class="max-w-5xl mx-auto">
     <h2 class="text-3xl font-bold mb-8 text-center text-blue-900">My Skills</h2>
     
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {categories.map((category) => (
         <div class="bg-blue-50 p-6 rounded-lg shadow">
           <h3 class="text-xl font-bold mb-4 text-blue-800 text-center">{category.title}</h3>
-          <ul class="space-y-3">
+          <ul class="space-y-2">
             {category.skills.map((skill) => (
               <li class="flex items-center">
-                <i class={`fab ${skill.icon} ${skill.iconColor} mr-2`}></i>
+                <i class={`${skill.prefix || 'fas'} ${skill.icon} text-blue-600 mr-2 w-6 text-center`}></i>
                 <span>{skill.name}</span>
               </li>
             ))}

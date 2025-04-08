@@ -8,16 +8,12 @@ import Contact from '../components/sections/Contact.astro';
 import Footer from '../components/sections/Footer.astro';
 
 // Page metadata
-const pageTitle = "Portfolio - Boid Fish Simulation";
-const pageDescription = "Portfolio website with interactive boid fish simulation background";
+const pageTitle = "quiet - Portfolio";
+const pageDescription = "Software Developer, ML Enthusiast and Open-Source Lover passionate about everything open-source, Linux, and building cool things with technology.";
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
-  <Hero 
-    name="Arnav Panigrahi"
-    title="Portfolio"
-    description="This is my portfolio."
-  />
+  <Hero />
   
   <About />
   
@@ -27,5 +23,8 @@ const pageDescription = "Portfolio website with interactive boid fish simulation
   
   <Contact />
   
-  <Footer />
+  <Footer 
+    copyright="quiet"
+    tagline="Built with <a href='https://astro.build' class='text-blue-400 hover:underline'>Astro</a> and a passion for open-source"
+  />
 </BaseLayout>

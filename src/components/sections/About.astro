@@ -2,31 +2,50 @@
 interface Props {
   initials?: string;
   paragraphs?: string[];
+  imagePath?: string;
 }
 
+const defaultParagraphs = [
+  "CS graduate student with 2 years of software development experience.",
+  "Currently interning with a healthcare company utilizing Make.com, Supabase with Postgres, and Google APIs for automation.",
+  "Passionate about technology, Linux, and virtualization (big on VFIO GPU passthrough).",
+  "Simp for open-source, libre, and FOSS. Self-learning NixOS and Deep Learning, with plans to explore Machine Learning deployment soon™."
+];
+
 const { 
-  initials = "JD",
-  paragraphs = [
-    "Hello! I'm a passionate developer with expertise in creating interactive web experiences. I specialize in combining creative design with technical excellence to build engaging applications.",
-    "With over 5 years of experience in the industry, I've worked on a diverse range of projects from small business websites to complex enterprise applications. My approach combines clean code, intuitive user experiences, and innovative problem-solving.",
-    "When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or enjoying outdoor activities. I believe in continuous learning and regularly challenge myself with new skills and techniques."
-  ]
+  initials = "Q",
+  paragraphs = defaultParagraphs,
+  imagePath = "/quiet.png"
 } = Astro.props;
 ---
 
 <section id="about" class="py-16 px-4 bg-white bg-opacity-90 section-transition">
   <div class="max-w-4xl mx-auto">
     <h2 class="text-3xl font-bold mb-8 text-center text-blue-900">About Me</h2>
+    
     <div class="flex flex-col md:flex-row gap-8 items-center">
       <div class="md:w-1/3">
-        <div class="w-64 h-64 rounded-full bg-blue-200 mx-auto flex items-center justify-center">
-          <span class="text-6xl text-blue-500">{initials}</span>
+        <div class="w-64 h-64 rounded-full bg-blue-200 mx-auto overflow-hidden shadow-lg">
+          <img src={imagePath} alt="quiet" class="w-full h-full object-cover" />
         </div>
       </div>
+      
       <div class="md:w-2/3">
         {paragraphs.map((paragraph) => (
-          <p class="mb-4">{paragraph}</p>
+          <p class="mb-4 text-lg">{paragraph}</p>
         ))}
+        
+        <div class="mt-6">
+          <h3 class="text-xl font-bold mb-3 text-blue-800">My Current Hyperfixations:</h3>
+          <ul class="list-disc pl-5 space-y-2">
+            <li>Anime, manga, videogames, sketching, vintage digicams, custom keyboards</li>
+            <li>City Pop, J-Rock</li>
+            <li>Arch Linux and NixOS</li>
+            <li>Japanese guitars</li>
+            <li>Mechanical keyboards with lubed Cherry MX Blacks on aluminum or polycarbonate plates</li>
+            <li>Topre keyboards - aged 2014 pro 2 and a sho v2 with carrots</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
