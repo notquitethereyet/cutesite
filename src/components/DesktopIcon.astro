@@ -8,7 +8,7 @@ const { id, name } = Astro.props;
 ---
 
 <div class="flex flex-col items-center cursor-pointer transition-transform duration-300 w-[100px] hover:scale-110 hover:rotate-3" data-window={id}>
-  <div class={`w-[80px] h-[80px] rounded-xl bg-highlight dark:bg-primary flex justify-center items-center mb-2 shadow-md overflow-hidden transition-shadow duration-300 ${id}-icon`}>
+  <div class={`w-[80px] h-[80px] flex justify-center items-center mb-2 transition-transform duration-300 ${id}-icon`}>
     <img src={`/images/icons/${id}.svg`} alt={`${name} icon`} width="70" height="70" class="w-full h-full object-contain transition-transform duration-300 hover:scale-110">
   </div>
   <div class="text-lg text-center bg-secondary/90 dark:bg-secondary/90 py-0.5 px-3 rounded-lg transition-colors duration-300 text-white font-medium hover:bg-secondary hover:text-white dark:hover:bg-secondary">{name}</div>

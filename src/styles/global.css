@@ -371,21 +371,37 @@ a, button, [data-window], .window-close, .window-titlebar {
   border: 5px solid var(--highlight-color);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
+  cursor: pointer; /* Add cursor pointer to indicate it's clickable */
 }
 
 .profile-image:hover {
-  transform: scale(1.05) rotate(3deg);
+  transform: scale(1.05);
+}
+
+.profile-click {
+  animation: profile-click-animation 0.3s ease;
+}
+
+@keyframes profile-click-animation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .about-window, .links-window, .work-window, .faq-window, .contact-window {
   max-width: 600px;
 }
 
-.about-window h2, .links-window h2, .work-window h2, .faq-window h2, .contact-window h2 {
-  color: var(--highlight-color);
-  margin-bottom: 15px;
-  position: relative;
-  display: inline-block;
+.about-window h2, .work-window h2, .faq-window h2, .contact-window h2 {
+  color: #562135; /* Deep burgundy from the sakura palette for better contrast */
+  font-weight: bold;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.3);
 }
 
 .about-window h2::after, .links-window h2::after, .work-window h2::after, .faq-window h2::after, .contact-window h2::after {
@@ -423,18 +439,15 @@ a, button, [data-window], .window-close, .window-titlebar {
 .link-icon {
   width: 60px;
   height: 60px;
-  border-radius: 12px;
-  background-color: var(--icon-bg);
-  margin-bottom: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: var(--icon-shadow);
-  transition: box-shadow 0.3s ease;
+  margin-bottom: 8px;
+  transition: transform 0.3s ease;
 }
 
 .link-item:hover .link-icon {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.15);
 }
 
 .link-text {
@@ -490,14 +503,15 @@ a, button, [data-window], .window-close, .window-titlebar {
   margin-bottom: 30px;
   padding: 15px;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 1); /* Solid white background */
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
   border: 2px dashed var(--icon-border);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: var(--text-color); /* Ensure text color matches theme */
+  color: #562135; /* Deep burgundy for better contrast */
 }
 
 .dark .work-item, .dark .faq-item {
-  background-color: rgba(80, 84, 119, 1); /* Dark blue-purple background */
+  background-color: rgba(80, 84, 119, 0.9); /* Dark blue-purple background */
+  color: #ffdede; /* Light pink-peach for dark mode */
   font-weight: 500;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
@@ -509,7 +523,41 @@ a, button, [data-window], .window-close, .window-titlebar {
 
 .work-item h3, .faq-item h3 {
   margin-bottom: 10px;
-  color: var(--highlight-color);
+  color: #c3829e; /* Mauve pink for headings */
+}
+
+.dark .work-item h3, .dark .faq-item h3 {
+  color: #ffc2c2; /* Salmon pink for dark mode */
+}
+
+.about-window h2, .work-window h2, .faq-window h2, .contact-window h2 {
+  color: #562135; /* Deep burgundy from the sakura palette for better contrast */
+  font-weight: bold;
+  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.3);
+}
+
+.about-window p, .about-window li, .work-window p, .faq-window p {
+  color: #562135; /* Deep burgundy for better contrast */
+  font-weight: 500; /* Medium weight for better readability */
+}
+
+.dark .about-window h2, 
+.dark .work-window h2, 
+.dark .faq-window h2, 
+.dark .contact-window h2 {
+  color: #fcddf2; /* Light pink for better contrast in dark mode */
+  font-weight: bold;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+}
+
+.dark .about-window p, 
+.dark .about-window li, 
+.dark .work-window p, 
+.dark .faq-window p, 
+.dark .contact-window p {
+  color: #ffdede; /* Light pink-peach for better contrast in dark mode */
+  font-weight: 500; /* Medium weight for better readability */
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 /* Animation classes */

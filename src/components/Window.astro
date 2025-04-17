@@ -1,0 +1,36 @@
+---
+export interface Props {
+  id: string;
+  title: string;
+  isTemplate?: boolean;
+}
+
+const { id, title, isTemplate = false } = Astro.props;
+
+// Classes and attributes for the window container
+const windowClasses = "window absolute rounded-md shadow-lg min-w-[650px] max-w-[80%] max-h-[80%] overflow-hidden pointer-events-auto flex flex-col opacity-0 scale-90 transition-all duration-400 border-3 border-secondary dark:border-secondary-dark";
+const windowAttrs = isTemplate ? {} : { "data-window-id": id, style: "left: 50%; top: 45%; transform: translate(-50%, -50%);" };
+
+// Special case for home window
+const isHome = id === "home";
+const windowId = isTemplate ? "" : id;
+---
+
+<div id={isHome ? "home-window" : undefined} class={windowClasses} {...windowAttrs} data-window-id={windowId}>
+  <div class="bg-secondary dark:bg-secondary-dark text-white py-2 px-4 flex justify-between items-center cursor-move" style="background-color: var(--window-title-bg);">
+    <div class="font-bold text-sm lowercase text-white">{title}</div>
+    {!isHome && (
+      <button class="bg-transparent border-none text-white cursor-pointer font-bold text-xl transition-transform duration-300 w-7 h-7 rounded-full flex justify-center items-center hover:scale-110 hover:bg-white/20">×</button>
+    )}
+  </div>
+  <div class="p-10 overflow-auto flex-1 transition-opacity duration-300 bg-window-content dark:bg-window-content-dark !opacity-100" style="background-color: var(--window-content-bg);">
+    {isTemplate ? (
+      <div class="flex flex-col items-center justify-center h-full min-h-[150px]">
+        <div class="w-10 h-10 rounded-full border-4 border-highlight/30 dark:border-highlight-dark/30 border-t-secondary dark:border-t-secondary-dark animate-spin"></div>
+        <div class="mt-4 text-base font-bold text-text dark:text-text-dark">Loading...</div>
+      </div>
+    ) : (
+      <slot />
+    )}
+  </div>
+</div>

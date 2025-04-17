@@ -20,7 +20,7 @@
       const isDarkMode = document.documentElement.classList.contains('dark');
 
       // Save preference
-      localStorage.setItem('darkMode', isDarkMode);
+      localStorage.setItem('darkMode', String(isDarkMode));
 
       // If switching from dark to light mode, play the wakeup animation
       if (wasDarkMode && !isDarkMode) {

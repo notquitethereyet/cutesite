@@ -1,6 +1,7 @@
 ---
 import DesktopIcon from './DesktopIcon.astro';
 import DarkModeToggle from './DarkModeToggle.astro';
+import Window from './Window.astro';
 ---
 
 <div class="flex flex-col h-screen relative bg-background dark:bg-background-dark">
@@ -8,6 +9,7 @@ import DarkModeToggle from './DarkModeToggle.astro';
   <div class="sakura-decoration">
     <img src="/images/sakura.png" alt="Sakura branch decoration">
   </div>
+  
   <!-- Top bar with controls -->
   <div class="absolute top-2.5 left-2.5 z-10">
     <DarkModeToggle />
@@ -23,141 +25,50 @@ import DarkModeToggle from './DarkModeToggle.astro';
 
   <!-- Footer -->
   <div class="absolute bottom-0 left-0 w-full p-4 flex flex-col items-center">
-    <div class="text-sm text-text dark:text-text-dark opacity-80 z-10">© 2025 Your Name</div>
+    <div class="text-sm text-text dark:text-text-dark opacity-80 z-10">&copy; 2025 Your Name</div>
   </div>
 </div>
 
 <!-- Home window (visible on load) -->
-<div id="home-window" class="window absolute rounded-md shadow-lg w-[750px] max-w-[90%] max-h-[90%] overflow-hidden pointer-events-auto flex flex-col opacity-0 scale-90 transition-all duration-400 border-3 border-secondary dark:border-secondary-dark" data-window-id="home" style="left: 50%; top: 45%; transform: translate(-50%, -50%);">
-  <div class="bg-secondary dark:bg-secondary-dark text-white py-2 px-4 flex justify-between items-center" style="background-color: var(--window-title-bg);">
-    <div class="font-bold text-sm lowercase text-white">home</div>
+<Window id="home" title="home">
+  <div class="text-center mb-10">
+    <h1 class="text-5xl mb-3 text-text dark:text-text-dark" style="text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.2);">hi! i'm <span class="text-secondary dark:text-accent-dark relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-secondary dark:after:bg-accent-dark after:opacity-70 after:rounded-lg">shar</span></h1>
+    <h2 class="text-2xl font-normal text-text dark:text-text-dark">illustrator, animator, and developer</h2>
   </div>
-  <div class="p-10 overflow-auto flex-1 transition-opacity duration-300 bg-window-content dark:bg-window-content-dark !opacity-100" style="background-color: var(--window-content-bg);">
-    <div class="text-center mb-10">
-      <h1 class="text-5xl mb-3 text-text dark:text-text-dark" style="text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.2);">hi! i'm <span class="text-secondary dark:text-accent-dark relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-secondary dark:after:bg-accent-dark after:opacity-70 after:rounded-lg">shar</span></h1>
-      <h2 class="text-2xl font-normal text-text dark:text-text-dark">illustrator, animator, and developer</h2>
-    </div>
 
-    <!-- Desktop icons inside the window -->
-    <div class="flex justify-center gap-12 flex-wrap mt-12">
-      <DesktopIcon id="about" name="about" />
-      <DesktopIcon id="links" name="links" />
-      <DesktopIcon id="work" name="work" />
-      <DesktopIcon id="faq" name="faq" />
-      <DesktopIcon id="contact" name="contact" />
-    </div>
+  <!-- Desktop icons inside the window -->
+  <div class="flex justify-center gap-12 flex-wrap mt-12">
+    <DesktopIcon id="about" name="about" />
+    <DesktopIcon id="links" name="links" />
+    <DesktopIcon id="work" name="work" />
+    <DesktopIcon id="faq" name="faq" />
+    <DesktopIcon id="contact" name="contact" />
   </div>
-</div>
+</Window>
 
-<!-- Window templates (hidden) -->
+<!-- Window template for dynamic content -->
 <template id="window-template">
-  <div class="window absolute rounded-md shadow-lg min-w-[650px] max-w-[80%] max-h-[80%] overflow-hidden pointer-events-auto flex flex-col opacity-0 scale-90 transition-all duration-400 border-3 border-secondary dark:border-secondary-dark" data-window-id="">
-    <div class="bg-secondary dark:bg-secondary-dark text-white py-2 px-4 flex justify-between items-center cursor-move" style="background-color: var(--window-title-bg);">
-      <div class="font-bold text-sm lowercase text-white"></div>
-      <button class="bg-transparent border-none text-white cursor-pointer font-bold text-xl transition-transform duration-300 w-7 h-7 rounded-full flex justify-center items-center hover:scale-110 hover:bg-white/20">×</button>
-    </div>
-    <div class="p-10 overflow-auto flex-1 transition-opacity duration-300 bg-window-content dark:bg-window-content-dark !opacity-100" style="background-color: var(--window-content-bg);">
-      <div class="flex flex-col items-center justify-center h-full min-h-[150px]">
-        <div class="w-10 h-10 rounded-full border-4 border-highlight/30 dark:border-highlight-dark/30 border-t-secondary dark:border-t-secondary-dark animate-spin"></div>
-        <div class="mt-4 text-base font-bold text-text dark:text-text-dark">Loading...</div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<!-- Window content templates -->
-<template id="about-content">
-  <div class="about-window">
-    <img src="/images/profile.png" alt="Profile picture" class="profile-image">
-    <h2>Your Name</h2>
-    <p>Your bio and description here. Tell visitors about yourself!</p>
-    <ul>
-      <li>What you do</li>
-      <li>Your skills</li>
-      <li>Your interests</li>
-    </ul>
-  </div>
-</template>
-
-<template id="links-content">
-  <div class="links-window">
-    <div class="links-grid">
-      <a href="#" target="_blank" class="link-item">
-        <div class="link-icon twitter-icon">
-          <img src="/images/icons/social-twitter.svg" alt="Twitter" width="30" height="30">
-        </div>
-        <div class="link-text">twitter</div>
-      </a>
-      <a href="#" target="_blank" class="link-item">
-        <div class="link-icon youtube-icon">
-          <img src="/images/icons/social-youtube.svg" alt="YouTube" width="30" height="30">
-        </div>
-        <div class="link-text">youtube</div>
-      </a>
-      <a href="#" target="_blank" class="link-item">
-        <div class="link-icon instagram-icon">
-          <img src="/images/icons/social-instagram.svg" alt="Instagram" width="30" height="30">
-        </div>
-        <div class="link-text">instagram</div>
-      </a>
-    </div>
-    <p class="links-note">clicking any of the links will open a new tab!</p>
-  </div>
-</template>
-
-<template id="work-content">
-  <div class="work-window">
-    <h2>My Work</h2>
-    <div class="work-items">
-      <div class="work-item">
-        <h3>Project 1</h3>
-        <p>Description of project 1</p>
-      </div>
-      <div class="work-item">
-        <h3>Project 2</h3>
-        <p>Description of project 2</p>
-      </div>
-    </div>
-  </div>
-</template>
-
-<template id="faq-content">
-  <div class="faq-window">
-    <h2>Frequently Asked Questions</h2>
-    <div class="faq-item">
-      <h3>Question 1?</h3>
-      <p>Answer to question 1.</p>
-    </div>
-    <div class="faq-item">
-      <h3>Question 2?</h3>
-      <p>Answer to question 2.</p>
-    </div>
-  </div>
-</template>
-
-<template id="contact-content">
-  <div class="contact-window">
-    <h2>Contact Me</h2>
-    <p>Feel free to reach out to me at: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
-  </div>
+  <Window id="" title="" isTemplate={true} />
 </template>
 
 <script>
-  // State
-  let activeWindows = [];
-  let highestZIndex = 10;
+  import { initIcons, initDarkModeToggle } from '../utils/iconManager';
+  import { repositionWindows } from '../utils/windowManager';
+  import { initTouchSupport } from '../utils/touchSupport';
+  import { initAudio } from '../utils/audioManager';
 
   // Initialize dark mode state
-  let isDarkMode = false;
+  let isDarkMode: boolean = false;
 
   // Check for saved preference
   const savedDarkMode = localStorage.getItem('darkMode');
   if (savedDarkMode !== null) {
-    // Use saved preference
     isDarkMode = savedDarkMode === 'true';
   } else {
-    // Check for system preference
-    isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Default to user's system preference
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    isDarkMode = prefersDark;
+    localStorage.setItem('darkMode', String(prefersDark));
   }
 
   // Apply dark mode class if needed
@@ -172,6 +83,7 @@ import DarkModeToggle from './DarkModeToggle.astro';
     initDarkModeToggle();
     initIcons();
     initTouchSupport();
+    initAudio(); // Initialize audio functionality
 
     // Position windows in the center initially
     window.addEventListener('resize', repositionWindows);
@@ -183,541 +95,14 @@ import DarkModeToggle from './DarkModeToggle.astro';
         homeWindow.classList.add('active');
         // Set a base z-index for the home window
         // Other windows will appear in front of it
-        homeWindow.style.zIndex = 5;
-        // Set the highest z-index to be higher than the home window
-        highestZIndex = 10;
+        homeWindow.style.zIndex = '5';
 
         // Ensure home window title bar has solid background color
-        const homeTitleBar = homeWindow.querySelector('.bg-secondary');
+        const homeTitleBar = homeWindow.querySelector('.bg-secondary') as HTMLElement;
         if (homeTitleBar) {
           homeTitleBar.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--window-title-bg');
         }
       }, 300);
     }
   });
-
-  // Dark Mode Toggle is now handled by the Oneko component
-  function initDarkModeToggle() {
-    // This function is kept for compatibility but no longer does anything
-    // as the dark mode toggle is now handled by the Oneko component
-  }
-
-  // Initialize Desktop Icons
-  function initIcons() {
-    console.log('Initializing icons');
-    const icons = document.querySelectorAll('[data-window]');
-    console.log('Found icons:', icons.length);
-
-    icons.forEach(icon => {
-      // Add click event
-      icon.addEventListener('click', (e) => {
-        // Create ripple effect
-        const ripple = document.createElement('div');
-        ripple.classList.add('ripple');
-        icon.appendChild(ripple);
-
-        const rect = icon.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-
-        ripple.style.width = ripple.style.height = `${size}px`;
-        ripple.style.left = `${e.clientX - rect.left - size/2}px`;
-        ripple.style.top = `${e.clientY - rect.top - size/2}px`;
-
-        ripple.classList.add('active');
-
-        // Remove ripple after animation completes
-        setTimeout(() => {
-          ripple.remove();
-        }, 600);
-
-        // Get window ID and open window
-        const windowId = icon.getAttribute('data-window');
-        openWindow(windowId);
-      });
-
-      // Add floating animation
-      const delay = Array.from(icons).indexOf(icon) * 0.2;
-      icon.style.animation = `float 3s ease-in-out ${delay}s infinite`;
-    });
-  }
-
-  // Window Management
-  function openWindow(windowId) {
-    console.log('Opening window:', windowId);
-    // Check if window is already open
-    const existingWindow = document.querySelector(`.window[data-window-id="${windowId}"]`);
-    if (existingWindow) {
-      // Add shake animation to indicate it's already open
-      existingWindow.classList.add('window-shake');
-      setTimeout(() => {
-        existingWindow.classList.remove('window-shake');
-      }, 500);
-
-      bringToFront(existingWindow);
-      return;
-    }
-
-    // Create new window from template
-    const template = document.getElementById('window-template');
-    if (!template) {
-      console.error('Window template not found');
-      return;
-    }
-
-    // Clone the template content
-    const clonedContent = template.content.cloneNode(true);
-    if (!clonedContent) {
-      console.error('Failed to clone template content');
-      return;
-    }
-
-    // Get the window element from the cloned content
-    const windowEl = clonedContent.querySelector('.window');
-    if (!windowEl) {
-      console.error('Window element not found in template');
-      return;
-    }
-
-    // Set window ID
-    windowEl.setAttribute('data-window-id', windowId);
-
-    // Set window title
-    const titleEl = windowEl.querySelector('.bg-secondary div');
-    if (!titleEl) {
-      console.error('Window title element not found');
-    } else {
-      titleEl.textContent = windowId;
-    }
-
-    // Ensure title bar has solid background color
-    const titleBar = windowEl.querySelector('.bg-secondary');
-    if (titleBar) {
-      titleBar.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--window-title-bg');
-    }
-
-    // Add to container
-    const container = document.getElementById('windows-container');
-    container.appendChild(windowEl);
-
-    // Position window with staggered effect
-    const windowWidth = 550;
-    const windowHeight = 450;
-
-    windowEl.style.width = `${windowWidth}px`;
-    windowEl.style.height = `${windowHeight}px`;
-
-    // Calculate position based on number of active windows
-    const position = calculateWindowPosition(windowWidth, windowHeight);
-    windowEl.style.left = `${position.left}px`;
-    windowEl.style.top = `${position.top}px`;
-
-    // Add opening animation
-    windowEl.classList.add('window-opening');
-
-    // Initialize window events
-    initWindowEvents(windowEl);
-
-    // Add active class after a small delay
-    setTimeout(() => {
-      windowEl.classList.add('active');
-      // Confetti effect removed
-    }, 50);
-
-    // Get content element
-    const contentEl = windowEl.querySelector('.p-10');
-    if (!contentEl) {
-      console.error('Content element not found');
-      return;
-    }
-    contentEl.classList.add('loading');
-    contentEl.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--window-content-bg');
-
-    // Simulate loading content
-    setTimeout(() => {
-      // Load content from template
-      const contentTemplate = document.getElementById(`${windowId}-content`);
-      if (contentTemplate) {
-        // Remove loader
-        const loader = contentEl.querySelector('.flex-col');
-        if (loader) {
-          loader.remove();
-        }
-
-        // Add content with fade-in animation
-        const contentWrapper = document.createElement('div');
-        contentWrapper.classList.add('content-fade-in');
-        contentWrapper.style.backgroundColor = 'transparent';
-        contentWrapper.appendChild(contentTemplate.content.cloneNode(true));
-        contentEl.appendChild(contentWrapper);
-
-        // Remove loading class
-        contentEl.classList.remove('loading');
-      }
-    }, 800); // Simulate loading delay
-
-    // Add to active windows
-    activeWindows.push({
-      id: windowId,
-      element: windowEl
-    });
-
-    // Bring to front
-    bringToFront(windowEl);
-
-    // If there are multiple windows, rearrange them all
-    if (activeWindows.length > 1) {
-      rearrangeWindows();
-    }
-  }
-
-  // Close window
-  function closeWindow(windowEl) {
-    // Add closing animation
-    windowEl.classList.add('window-closing');
-    windowEl.classList.remove('window-active');
-
-    // Remove from active windows
-    const windowId = windowEl.getAttribute('data-window-id');
-    activeWindows = activeWindows.filter(w => w.id !== windowId);
-
-    // Remove from DOM after animation completes
-    setTimeout(() => {
-      windowEl.remove();
-
-      // If there are still multiple windows, rearrange them
-      if (activeWindows.length > 1) {
-        rearrangeWindows();
-      }
-    }, 400);
-  }
-
-  // Bring window to front
-  function bringToFront(windowEl) {
-    // Increment highest z-index
-    highestZIndex += 1;
-    windowEl.style.zIndex = highestZIndex;
-
-    // Update active class
-    document.querySelectorAll('.window').forEach(w => {
-      w.classList.remove('window-active');
-    });
-    windowEl.classList.add('window-active');
-  }
-
-  // Initialize window events
-  function initWindowEvents(windowEl) {
-    // Close button
-    const closeBtn = windowEl.querySelector('button');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        closeWindow(windowEl);
-      });
-    } else {
-      console.error('Close button not found');
-    }
-
-    // Bring to front on click
-    windowEl.addEventListener('mousedown', () => {
-      bringToFront(windowEl);
-    });
-
-    // Double-click titlebar to maximize
-    const titleBar = windowEl.querySelector('.bg-secondary');
-    if (titleBar) {
-      titleBar.addEventListener('dblclick', () => {
-        windowEl.classList.toggle('window-maximized');
-      });
-
-      // Dragging functionality
-      makeDraggable(windowEl, titleBar);
-    } else {
-      console.error('Titlebar not found');
-    }
-  }
-
-  // Make element draggable
-  function makeDraggable(element, handle) {
-    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-
-    handle.onmousedown = dragMouseDown;
-
-    function dragMouseDown(e) {
-      e.preventDefault();
-
-      // Bring window to front
-      bringToFront(element);
-
-      // Add dragging class
-      element.classList.add('window-dragging');
-
-      // Get the mouse cursor position at startup
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-
-      document.onmouseup = closeDragElement;
-      document.onmousemove = elementDrag;
-    }
-
-    function elementDrag(e) {
-      e.preventDefault();
-
-      // Calculate the new cursor position
-      pos1 = pos3 - e.clientX;
-      pos2 = pos4 - e.clientY;
-      pos3 = e.clientX;
-      pos4 = e.clientY;
-
-      // Set the element's new position
-      const newTop = (element.offsetTop - pos2);
-      const newLeft = (element.offsetLeft - pos1);
-
-      // Keep window within viewport
-      const maxTop = window.innerHeight - 50; // Keep at least the titlebar visible
-      const maxLeft = window.innerWidth - 50;
-
-      element.style.top = `${Math.min(Math.max(0, newTop), maxTop)}px`;
-      element.style.left = `${Math.min(Math.max(0, newLeft), maxLeft)}px`;
-    }
-
-    function closeDragElement() {
-      // Remove dragging class
-      element.classList.remove('window-dragging');
-
-      // Stop moving when mouse button is released
-      document.onmouseup = null;
-      document.onmousemove = null;
-    }
-  }
-
-  // Confetti effect and related functions removed
-
-  // Calculate staggered position for new windows
-  function calculateWindowPosition(windowWidth, windowHeight) {
-    // Base position (center of screen)
-    const baseLeft = (window.innerWidth - windowWidth) / 2;
-    const baseTop = (window.innerHeight - windowHeight) / 2;
-
-    // If no windows are open, center the first one
-    if (activeWindows.length === 0) {
-      return { left: baseLeft, top: baseTop };
-    }
-
-    // Offset each window by a certain amount
-    const offsetX = 40;
-    const offsetY = 40;
-
-    // Calculate position based on number of active windows
-    // Create a cascading effect
-    const numWindows = activeWindows.length;
-
-    // Use modulo to reset the cascade after a certain number of windows
-    // to prevent windows from going off-screen
-    const cascadeLimit = 5;
-    const cascadeIndex = numWindows % cascadeLimit;
-
-    // Calculate new position
-    const newLeft = baseLeft + (cascadeIndex * offsetX);
-    const newTop = baseTop + (cascadeIndex * offsetY);
-
-    // Ensure window stays within viewport bounds
-    const maxLeft = window.innerWidth - windowWidth - 10;
-    const maxTop = window.innerHeight - windowHeight - 10;
-
-    return {
-      left: Math.min(Math.max(10, newLeft), maxLeft),
-      top: Math.min(Math.max(10, newTop), maxTop)
-    };
-  }
-
-  // Reposition windows when screen is resized
-  function repositionWindows() {
-    // Reposition each window with staggered effect
-    const windows = document.querySelectorAll('.window');
-
-    // If there are multiple windows, reposition them with the staggered effect
-    if (windows.length > 1) {
-      // Sort windows by z-index to maintain the visual stack order
-      const sortedWindows = Array.from(windows).sort((a, b) => {
-        return parseInt(a.style.zIndex || 0) - parseInt(b.style.zIndex || 0);
-      });
-
-      // Reposition each window
-      sortedWindows.forEach((windowEl, index) => {
-        // Get window dimensions
-        const windowWidth = windowEl.offsetWidth;
-        const windowHeight = windowEl.offsetHeight;
-
-        // Base position (center of screen)
-        const baseLeft = (window.innerWidth - windowWidth) / 2;
-        const baseTop = (window.innerHeight - windowHeight) / 2;
-
-        // Offset each window by a certain amount
-        const offsetX = 40;
-        const offsetY = 40;
-
-        // Use modulo to reset the cascade after a certain number of windows
-        const cascadeLimit = 5;
-        const cascadeIndex = index % cascadeLimit;
-
-        // Calculate new position
-        const newLeft = baseLeft + (cascadeIndex * offsetX);
-        const newTop = baseTop + (cascadeIndex * offsetY);
-
-        // Ensure window stays within viewport bounds
-        const maxLeft = window.innerWidth - windowWidth - 10;
-        const maxTop = window.innerHeight - windowHeight - 10;
-
-        windowEl.style.left = `${Math.min(Math.max(10, newLeft), maxLeft)}px`;
-        windowEl.style.top = `${Math.min(Math.max(10, newTop), maxTop)}px`;
-      });
-    } else if (windows.length === 1) {
-      // If there's only one window, center it
-      const windowEl = windows[0];
-      const windowWidth = 550;
-      const windowHeight = 450;
-
-      // Set the window size
-      windowEl.style.width = `${windowWidth}px`;
-      windowEl.style.height = `${windowHeight}px`;
-
-      windowEl.style.left = `${(window.innerWidth - windowWidth) / 2}px`;
-      windowEl.style.top = `${(window.innerHeight - windowHeight) / 2}px`;
-    }
-  }
-
-  // Rearrange all windows in a staggered pattern
-  function rearrangeWindows() {
-    // Sort windows by z-index to maintain the visual stack order
-    const sortedWindows = activeWindows.sort((a, b) => {
-      return parseInt(a.element.style.zIndex || 0) - parseInt(b.element.style.zIndex || 0);
-    });
-
-    // Animate each window to its new position
-    sortedWindows.forEach((windowObj, index) => {
-      const windowEl = windowObj.element;
-      const windowWidth = 550;
-      const windowHeight = 450;
-
-      // Set the window size
-      windowEl.style.width = `${windowWidth}px`;
-      windowEl.style.height = `${windowHeight}px`;
-
-      // Base position (center of screen)
-      const baseLeft = (window.innerWidth - windowWidth) / 2;
-      const baseTop = (window.innerHeight - windowHeight) / 2;
-
-      // Offset each window by a certain amount
-      const offsetX = 40;
-      const offsetY = 40;
-
-      // Use modulo to reset the cascade after a certain number of windows
-      const cascadeLimit = 5;
-      const cascadeIndex = index % cascadeLimit;
-
-      // Calculate new position
-      const newLeft = baseLeft + (cascadeIndex * offsetX);
-      const newTop = baseTop + (cascadeIndex * offsetY);
-
-      // Ensure window stays within viewport bounds
-      const maxLeft = window.innerWidth - windowWidth - 10;
-      const maxTop = window.innerHeight - windowHeight - 10;
-
-      // Add smooth transition for repositioning
-      windowEl.style.transition = 'left 0.3s ease, top 0.3s ease';
-
-      // Set new position
-      windowEl.style.left = `${Math.min(Math.max(10, newLeft), maxLeft)}px`;
-      windowEl.style.top = `${Math.min(Math.max(10, newTop), maxTop)}px`;
-
-      // Remove transition after animation completes
-      setTimeout(() => {
-        windowEl.style.transition = '';
-      }, 300);
-    });
-  }
-
-  // Touch support for mobile devices
-  function initTouchSupport() {
-    // Apply touch dragging to existing windows
-    const existingWindows = document.querySelectorAll('.window');
-    existingWindows.forEach(windowEl => {
-      const titleBar = windowEl.querySelector('.bg-secondary');
-      if (titleBar) {
-        touchDraggable(windowEl, titleBar);
-      }
-    });
-
-    // Touch dragging for windows
-    function touchDraggable(windowEl, handleEl) {
-      if (!handleEl) return;
-      handleEl.addEventListener('touchstart', touchStart, { passive: false });
-
-      function touchStart(e) {
-        // Don't prevent default for touchstart to allow scrolling inside windows
-
-        // Bring window to front
-        bringToFront(windowEl);
-
-        // Add dragging class
-        windowEl.classList.add('window-dragging');
-
-        const touch = e.touches[0];
-        const startX = touch.clientX;
-        const startY = touch.clientY;
-
-        const startTop = windowEl.offsetTop;
-        const startLeft = windowEl.offsetLeft;
-
-        // Add event listeners to document instead of handleEl for better touch tracking
-        document.addEventListener('touchmove', touchMove, { passive: false });
-        document.addEventListener('touchend', touchEnd, { passive: false });
-
-        function touchMove(e) {
-          // Prevent default to stop scrolling while dragging
-          e.preventDefault();
-
-          const touch = e.touches[0];
-          const deltaX = touch.clientX - startX;
-          const deltaY = touch.clientY - startY;
-
-          // Set the element's new position
-          const newTop = startTop + deltaY;
-          const newLeft = startLeft + deltaX;
-
-          // Keep window within viewport
-          const maxTop = window.innerHeight - 50;
-          const maxLeft = window.innerWidth - 50;
-
-          windowEl.style.top = `${Math.min(Math.max(0, newTop), maxTop)}px`;
-          windowEl.style.left = `${Math.min(Math.max(0, newLeft), maxLeft)}px`;
-        }
-
-        function touchEnd() {
-          document.removeEventListener('touchmove', touchMove);
-          document.removeEventListener('touchend', touchEnd);
-
-          // Remove dragging class
-          windowEl.classList.remove('window-dragging');
-        }
-      }
-    }
-
-    // Apply touch dragging to all windows
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.addedNodes.length) {
-          mutation.addedNodes.forEach((node) => {
-            if (node.classList && node.classList.contains('window')) {
-              const titleBar = node.querySelector('.bg-secondary');
-              if (titleBar) {
-                touchDraggable(node, titleBar);
-              }
-            }
-          });
-        }
-      });
-    });
-
-    observer.observe(document.getElementById('windows-container'), { childList: true });
-  }
 </script>

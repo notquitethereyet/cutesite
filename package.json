@@ -11,6 +11,10 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.4",
     "astro": "^5.7.2",
+    "howler": "^2.2.4",
     "tailwindcss": "^4.1.4"
+  },
+  "devDependencies": {
+    "@types/howler": "^2.2.12"
   }
 }
