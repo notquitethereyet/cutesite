@@ -62,6 +62,13 @@ export function openWindow(windowId: string): void {
     titleEl.textContent = windowId;
   }
 
+  // Special case for home window - make it wider on mobile
+  if (windowId === 'home') {
+    windowEl.classList.add('home-window');
+    // Add responsive width classes
+    windowEl.style.width = 'min(90vw, 500px)';
+  }
+
   // Ensure title bar has solid background color
   const titleBar = windowEl.querySelector('.bg-secondary') as HTMLElement;
   if (titleBar) {

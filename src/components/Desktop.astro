@@ -99,12 +99,12 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
 <!-- Home window (visible on load) -->
 <Window id="home" title="home">
   <div class="text-center mb-10">
-    <h1 class="text-5xl mb-3 text-text dark:text-text-dark" style="text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.2);">hi! i'm <span class="text-secondary dark:text-accent-dark relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-secondary dark:after:bg-accent-dark after:opacity-70 after:rounded-lg">{userName}</span></h1>
-    <h2 class="text-2xl font-normal text-text dark:text-text-dark">{userTagline}</h2>
+    <img src="/images/profile.png" alt="Profile picture" class="profile-image mx-auto mb-4">
+    <h1 class="text-2xl font-bold text-text dark:text-text-dark">{userName}</h1>
+    <p class="text-text dark:text-text-dark opacity-80 mb-6">{userTagline}</p>
   </div>
-
-  <!-- Desktop icons inside the window -->
-  <div class="flex justify-center gap-12 flex-wrap mt-12">
+  
+  <div class="desktop-icons grid grid-cols-2 gap-12">
     <DesktopIcon id="about" name="about" />
     <DesktopIcon id="links" name="links" />
     <DesktopIcon id="work" name="work" />

@@ -157,11 +157,11 @@ a, button, [data-window], .window-close, .window-titlebar {
 
 /* Desktop icons */
 .desktop-icons {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  margin-top: 30px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  justify-items: center;
+  margin-top: 1rem;
 }
 
 .icon {
@@ -231,6 +231,19 @@ a, button, [data-window], .window-close, .window-titlebar {
 .dark .icon:hover .icon-text {
   background-color: var(--window-title-bg);
   opacity: 1;
+}
+
+/* Make desktop icons 2 columns on mobile */
+@media (max-width: 640px) {
+  .desktop-icons {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  /* Increase the home window width on mobile */
+  .home-window {
+    min-width: 280px !important;
+  }
 }
 
 /* Windows */
@@ -747,7 +760,7 @@ body.lain-background .window {
   height: 100%;
   pointer-events: none;
   z-index: 1;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .lily-1 {
@@ -757,15 +770,37 @@ body.lain-background .window {
   width: 300px;
   transform: scale(1.2) rotate(-5deg);
   opacity: 1.0;
+  animation: lily-sway 8s ease-in-out infinite;
 }
 
 .lily-2 {
   position: absolute;
-  bottom: 30px;
-  left: 80px;
-  width: 200px;
+  bottom: -10px; /* Changed from 30px to -10px to move it down */
+  left: 120px;
+  width: 250px;
   transform: scale(0.9) rotate(8deg);
   opacity: 1.0;
+  animation: lily-sway-reverse 10s ease-in-out infinite;
+  z-index: 2;
+}
+
+/* Animations for lily decorations */
+@keyframes lily-sway {
+  0%, 100% {
+    transform: scale(1.2) rotate(-5deg) translateY(0);
+  }
+  50% {
+    transform: scale(1.2) rotate(-3deg) translateY(-10px);
+  }
+}
+
+@keyframes lily-sway-reverse {
+  0%, 100% {
+    transform: scale(0.9) rotate(8deg) translateY(0);
+  }
+  50% {
+    transform: scale(0.9) rotate(10deg) translateY(-15px);
+  }
 }
 
 /* Dark mode adjustments for lily */
