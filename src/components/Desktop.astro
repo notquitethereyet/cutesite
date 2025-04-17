@@ -2,6 +2,13 @@
 import DesktopIcon from './DesktopIcon.astro';
 import DarkModeToggle from './DarkModeToggle.astro';
 import Window from './Window.astro';
+import CherryBlossoms from './CherryBlossoms.astro';
+import { userName, userTagline, currentYear } from '../utils/siteConfig';
+
+// User information variables
+// const userName = "quiet";
+// const userTagline = "Art, Tech and Everything Cute";
+// const currentYear = new Date().getFullYear();
 ---
 
 <div class="flex flex-col h-screen relative bg-background dark:bg-background-dark">
@@ -9,6 +16,9 @@ import Window from './Window.astro';
   <div class="sakura-decoration">
     <img src="/images/sakura.png" alt="Sakura branch decoration">
   </div>
+  
+  <!-- Cherry blossoms animation -->
+  <CherryBlossoms />
   
   <!-- Top bar with controls -->
   <div class="absolute top-2.5 left-2.5 z-10">
@@ -25,15 +35,15 @@ import Window from './Window.astro';
 
   <!-- Footer -->
   <div class="absolute bottom-0 left-0 w-full p-4 flex flex-col items-center">
-    <div class="text-sm text-text dark:text-text-dark opacity-80 z-10">&copy; 2025 Your Name</div>
+    <div class="text-sm text-text dark:text-text-dark opacity-80 z-10">&copy; {currentYear} {userName}</div>
   </div>
 </div>
 
 <!-- Home window (visible on load) -->
 <Window id="home" title="home">
   <div class="text-center mb-10">
-    <h1 class="text-5xl mb-3 text-text dark:text-text-dark" style="text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.2);">hi! i'm <span class="text-secondary dark:text-accent-dark relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-secondary dark:after:bg-accent-dark after:opacity-70 after:rounded-lg">shar</span></h1>
-    <h2 class="text-2xl font-normal text-text dark:text-text-dark">illustrator, animator, and developer</h2>
+    <h1 class="text-5xl mb-3 text-text dark:text-text-dark" style="text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.2);">hi! i'm <span class="text-secondary dark:text-accent-dark relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-secondary dark:after:bg-accent-dark after:opacity-70 after:rounded-lg">{userName}</span></h1>
+    <h2 class="text-2xl font-normal text-text dark:text-text-dark">{userTagline}</h2>
   </div>
 
   <!-- Desktop icons inside the window -->
@@ -42,7 +52,6 @@ import Window from './Window.astro';
     <DesktopIcon id="links" name="links" />
     <DesktopIcon id="work" name="work" />
     <DesktopIcon id="faq" name="faq" />
-    <DesktopIcon id="contact" name="contact" />
   </div>
 </Window>
 

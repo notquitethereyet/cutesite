@@ -22,6 +22,9 @@
       // Save preference
       localStorage.setItem('darkMode', String(isDarkMode));
 
+      // Update window styles to match the new theme
+      updateWindowStyles(isDarkMode);
+
       // If switching from dark to light mode, play the wakeup animation
       if (wasDarkMode && !isDarkMode) {
         // Add waking-up class to trigger animation
@@ -35,6 +38,26 @@
 
       console.log('Dark mode toggled:', isDarkMode);
     });
+    
+    // Function to update window styles when theme changes
+    function updateWindowStyles(isDarkMode: boolean): void {
+      // Get all window elements
+      const windows = document.querySelectorAll('.window');
+      
+      windows.forEach(window => {
+        // Update title bar background
+        const titleBar = window.querySelector('.window > div:first-child') as HTMLElement;
+        if (titleBar) {
+          titleBar.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--window-title-bg');
+        }
+        
+        // Update window content background
+        const contentArea = window.querySelector('.window > div:nth-child(2)') as HTMLElement;
+        if (contentArea) {
+          contentArea.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--window-content-bg');
+        }
+      });
+    }
   });
 </script>
 

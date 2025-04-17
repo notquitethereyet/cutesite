@@ -1,5 +1,6 @@
 // Types
 import { playSound } from './audioManager';
+import { userName, userEmail, socialLinks } from './siteConfig';
 
 interface WindowState {
   id: string;
@@ -150,7 +151,7 @@ function createWindowContent(windowId: string): string | null {
       return `
         <div class="about-window">
           <img src="/images/profile.png" alt="Profile picture" class="profile-image" id="profile-image">
-          <h2 class="font-bold text-2xl text-text dark:text-text-dark">Your Name</h2>
+          <h2 class="font-bold text-2xl text-text dark:text-text-dark">${userName}</h2>
           <p>Your bio and description here. Tell visitors about yourself!</p>
           <ul>
             <li>What you do</li>
@@ -160,29 +161,42 @@ function createWindowContent(windowId: string): string | null {
         </div>
       `;
     case 'links':
+      // Generate HTML for each available social link
+      const socialLinksHTML = Object.entries(socialLinks)
+        .map(([platform, url]) => {
+          // Map platform names to Font Awesome icon classes
+          const iconMap: Record<string, string> = {
+            github: 'fab fa-github',
+            twitter: 'fab fa-twitter',
+            linkedin: 'fab fa-linkedin',
+            devto: 'fab fa-dev',
+            medium: 'fab fa-medium'
+          };
+          
+          // Only create HTML for platforms that have an icon mapping
+          if (iconMap[platform]) {
+            const platformName = platform.charAt(0).toUpperCase() + platform.slice(1);
+            return `
+              <a href="${url}" class="link-item" target="_blank">
+                <i class="${iconMap[platform]} link-icon"></i>
+                <span>${platformName}</span>
+              </a>
+            `;
+          }
+          return '';
+        })
+        .join('');
+      
       return `
         <div class="links-window">
+          <h2 class="font-bold text-2xl text-text dark:text-text-dark">Find Me Online</h2>
           <div class="links-grid">
-            <a href="#" target="_blank" class="link-item">
-              <div class="link-icon twitter-icon">
-                <img src="/images/icons/social-twitter.svg" alt="Twitter" width="30" height="30">
-              </div>
-              <div class="link-text">twitter</div>
-            </a>
-            <a href="#" target="_blank" class="link-item">
-              <div class="link-icon youtube-icon">
-                <img src="/images/icons/social-youtube.svg" alt="YouTube" width="30" height="30">
-              </div>
-              <div class="link-text">youtube</div>
-            </a>
-            <a href="#" target="_blank" class="link-item">
-              <div class="link-icon instagram-icon">
-                <img src="/images/icons/social-instagram.svg" alt="Instagram" width="30" height="30">
-              </div>
-              <div class="link-text">instagram</div>
+            ${socialLinksHTML}
+            <a href="mailto:${userEmail}" class="link-item">
+              <i class="fas fa-envelope link-icon"></i>
+              <span>Email</span>
             </a>
           </div>
-          <p class="links-note">clicking any of the links will open a new tab!</p>
         </div>
       `;
     case 'work':
@@ -192,11 +206,11 @@ function createWindowContent(windowId: string): string | null {
           <div class="work-items">
             <div class="work-item">
               <h3>Project 1</h3>
-              <p>Description of project 1</p>
+              <p>Description of project 1.</p>
             </div>
             <div class="work-item">
               <h3>Project 2</h3>
-              <p>Description of project 2</p>
+              <p>Description of project 2.</p>
             </div>
           </div>
         </div>
@@ -213,13 +227,6 @@ function createWindowContent(windowId: string): string | null {
             <h3>Question 2?</h3>
             <p>Answer to question 2.</p>
           </div>
-        </div>
-      `;
-    case 'contact':
-      return `
-        <div class="contact-window">
-          <h2 class="font-bold text-2xl text-secondary dark:text-text-dark">Contact Me</h2>
-          <p>Feel free to reach out to me at: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
         </div>
       `;
     default:

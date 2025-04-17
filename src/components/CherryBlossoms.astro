@@ -1,0 +1,63 @@
+---
+// Cherry Blossoms Animation Component
+---
+
+<div class="cherry-blossoms-container">
+  <!-- We'll create 50 petals with different animations -->
+  {Array.from({ length: 50 }).map((_, index) => (
+    <div class={`cherry-petal petal-${(index % 5) + 1}`}></div>
+  ))}
+</div>
+
+<script>
+  // Function to randomly position petals
+  function randomizePetals() {
+    const petals = document.querySelectorAll('.cherry-petal');
+    
+    petals.forEach(petal => {
+      const htmlPetal = petal as HTMLElement;
+      
+      // Random starting position
+      const startX = Math.random() * 100; // % of screen width
+      const startY = Math.random() * -50; // Start above the viewport
+      
+      // Random animation duration (slower for more realistic effect)
+      const duration = 7 + Math.random() * 15; // Between 7-22 seconds
+      
+      // Random delay so they don't all start at once
+      const delay = Math.random() * 15; // Between 0-15 seconds
+      
+      // Random rotation
+      const rotation = Math.random() * 360;
+      
+      // Apply styles
+      htmlPetal.style.left = `${startX}%`;
+      htmlPetal.style.top = `${startY}px`;
+      htmlPetal.style.animationDuration = `${duration}s`;
+      htmlPetal.style.animationDelay = `${delay}s`;
+      htmlPetal.style.transform = `rotate(${rotation}deg)`;
+    });
+  }
+  
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', randomizePetals);
+  
+  // Reposition petals when animation ends
+  document.addEventListener('animationend', (event) => {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('cherry-petal')) {
+      // Random horizontal position
+      const newX = Math.random() * 100;
+      // Start from top again
+      target.style.left = `${newX}%`;
+      target.style.top = '-20px';
+      
+      // Random rotation
+      const rotation = Math.random() * 360;
+      target.style.transform = `rotate(${rotation}deg)`;
+      
+      // Force a reflow to restart the animation
+      void target.offsetWidth;
+    }
+  });
+</script>
