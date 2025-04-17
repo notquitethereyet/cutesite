@@ -152,12 +152,25 @@ function createWindowContent(windowId: string): string | null {
         <div class="about-window">
           <img src="/images/profile.png" alt="Profile picture" class="profile-image" id="profile-image">
           <h2 class="font-bold text-2xl text-text dark:text-text-dark">${userName}</h2>
-          <p>Your bio and description here. Tell visitors about yourself!</p>
-          <ul>
-            <li>What you do</li>
-            <li>Your skills</li>
-            <li>Your interests</li>
-          </ul>
+          <p class="mb-3">CS graduate student with software development experience.</p>
+          <div class="about-sections">
+            <div class="about-section">
+              <h3 class="font-bold text-lg text-text dark:text-text-dark">Tech Interests</h3>
+              <ul class="list-disc pl-5 mb-3">
+                <li>Open-source, Linux (Arch & NixOS)</li>
+                <li>Machine Learning & Deep Learning</li>
+                <li>Virtualization & VFIO GPU passthrough</li>
+              </ul>
+            </div>
+            <div class="about-section">
+              <h3 class="font-bold text-lg text-text dark:text-text-dark">Hobbies</h3>
+              <ul class="list-disc pl-5">
+                <li>Anime, manga, sketching, videogames</li>
+                <li>City Pop, J-Rock & Japanese guitars</li>
+                <li>Mechanical keyboards (Cherry MX Blacks & Topre)</li>
+              </ul>
+            </div>
+          </div>
         </div>
       `;
     case 'links':

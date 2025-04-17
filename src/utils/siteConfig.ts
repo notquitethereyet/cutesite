@@ -5,7 +5,7 @@
 
 // User information
 export const userName = "quiet";
-export const userTagline = "Art, Tech and Everything Fun";
+export const userTagline = "neet developer/artist/musician";
 export const userEmail = "judy2077@protonmail.com";
 
 // Social links

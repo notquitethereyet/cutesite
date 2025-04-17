@@ -546,6 +546,68 @@ a, button, [data-window], .window-close, .window-titlebar {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
+/* About window styling */
+.about-window {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.about-window .profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border: 3px solid var(--accent);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.about-window .profile-image:hover {
+  transform: scale(1.05);
+  border-color: var(--secondary);
+}
+
+.about-sections {
+  width: 100%;
+  margin-top: 0.5rem;
+  text-align: left;
+}
+
+.about-section {
+  margin-bottom: 1rem;
+}
+
+.about-section h3 {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.about-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--accent);
+  border-radius: 1px;
+  opacity: 0.7;
+}
+
+.about-section ul li {
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+}
+
+.dark .about-section h3::after {
+  background-color: var(--accent-dark);
+}
+
 /* Animation classes */
 .window-opening {
   animation: windowOpen 0.5s forwards;
