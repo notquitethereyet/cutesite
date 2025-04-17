@@ -3,8 +3,9 @@
 :root {
   /* Light mode colors - Sakura theme */
   --bg-color: #ffe7de;      /* Pale peach */
-  --window-bg: #fcd1d7;     /* Soft pink */
-  --window-title-bg: #a86e87; /* Darker mauve pink for better contrast */
+  --window-bg: #ffe7de;     /* Pale peach for window background */
+  --window-content-bg: #fcd1d7; /* Soft pink for window content */
+  --window-title-bg: #c3829e; /* Mauve pink */
   --window-title-text: #ffffff; /* White text for title bar */
   --text-color: #562135;    /* Deep burgundy */
   --highlight-color: #e9b1cd; /* Light pink */
@@ -15,15 +16,16 @@
 }
 
 .dark {
-  /* Dark mode colors - Sakura theme */
-  --bg-color: #562135;      /* Deep burgundy */
-  --window-bg: #562135;     /* Deep burgundy */
-  --window-title-bg: #a86e87; /* Darker mauve pink for better contrast */
+  /* Dark mode colors - New palette */
+  --bg-color: #505477;      /* Dark blue-purple */
+  --window-bg: #505477;     /* Dark blue-purple for window background */
+  --window-content-bg: #505477; /* Dark blue-purple for window content */
+  --window-title-bg: #616c99; /* Medium blue-purple for title bar */
   --window-title-text: #ffffff;
-  --text-color: #ffe7de;    /* Pale peach */
-  --highlight-color: #e9b1cd; /* Light pink */
-  --icon-border: #e9b1cd;   /* Light pink */
-  --icon-bg: #562135;       /* Deep burgundy */
+  --text-color: #ffdede;    /* Light pink-peach */
+  --highlight-color: #ffc2c2; /* Salmon pink */
+  --icon-border: #fcddf2;   /* Light pink */
+  --icon-bg: #505477;       /* Dark blue-purple */
   --window-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   --icon-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -41,13 +43,13 @@ body {
   color: var(--text-color);
   transition: background-color 0.5s ease;
   font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 C30,40 40,30 50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 Z M50,30 C45,25 45,15 50,10 C55,15 55,25 50,30 Z M70,50 C75,45 85,45 90,50 C85,55 75,55 70,50 Z M50,70 C55,75 55,85 50,90 C45,85 45,75 50,70 Z M30,50 C25,55 15,55 10,50 C15,45 25,45 30,50 Z" fill="%23fcd1d7" opacity="0.3"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 C30,40 40,30 50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 Z M50,30 C45,25 45,15 50,10 C55,15 55,25 50,30 Z M70,50 C75,45 85,45 90,50 C85,55 75,55 70,50 Z M50,70 C55,75 55,85 50,90 C45,85 45,75 50,70 Z M30,50 C25,55 15,55 10,50 C15,45 25,45 30,50 Z" fill="%23e9b1cd" opacity="0.3"/></svg>');
   background-size: 100px 100px;
 }
 
 /* Dark mode background pattern with reduced opacity */
 .dark body {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 C30,40 40,30 50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 Z M50,30 C45,25 45,15 50,10 C55,15 55,25 50,30 Z M70,50 C75,45 85,45 90,50 C85,55 75,55 70,50 Z M50,70 C55,75 55,85 50,90 C45,85 45,75 50,70 Z M30,50 C25,55 15,55 10,50 C15,45 25,45 30,50 Z" fill="%23c3829e" opacity="0.1"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 C30,40 40,30 50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 Z M50,30 C45,25 45,15 50,10 C55,15 55,25 50,30 Z M70,50 C75,45 85,45 90,50 C85,55 75,55 70,50 Z M50,70 C55,75 55,85 50,90 C45,85 45,75 50,70 Z M30,50 C25,55 15,55 10,50 C15,45 25,45 30,50 Z" fill="%23fcddf2" opacity="0.15"/></svg>');
 }
 
 /* Cute cursor */
@@ -55,8 +57,16 @@ body {
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%23c3829e" opacity="0.6"/><circle cx="12" cy="12" r="4" fill="%23ffe7de"/></svg>'), auto;
 }
 
+.dark body {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%23616c99" opacity="0.6"/><circle cx="12" cy="12" r="4" fill="%23ffdede"/></svg>'), auto;
+}
+
 a, button, [data-window], .window-close, .window-titlebar {
   cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23c3829e" opacity="0.6"/><path d="M8,12 L16,12 M12,8 L12,16" stroke="%23ffe7de" stroke-width="2"/></svg>'), pointer;
+}
+
+.dark a, .dark button, .dark [data-window], .dark .window-close, .dark .window-titlebar {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23616c99" opacity="0.6"/><path d="M8,12 L16,12 M12,8 L12,16" stroke="%23ffdede" stroke-width="2"/></svg>'), pointer;
 }
 
 /* Desktop layout */
@@ -170,7 +180,6 @@ a, button, [data-window], .window-close, .window-titlebar {
 .icon-image {
   width: 70px;
   height: 70px;
-  border: 3px solid var(--icon-border);
   border-radius: 12px;
   background-color: var(--icon-bg);
   display: flex;
@@ -200,23 +209,28 @@ a, button, [data-window], .window-close, .window-titlebar {
 .icon-text {
   font-size: 1rem;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: var(--window-title-bg);
   padding: 3px 8px;
   border-radius: 10px;
   transition: background-color 0.3s ease;
-  color: var(--text-color); /* Ensure text color matches theme */
+  color: white; /* White text for better contrast */
+  font-weight: 500;
 }
 
 .dark .icon-text {
-  background-color: rgba(52, 73, 94, 0.7);
+  background-color: rgba(97, 108, 153, 1); /* Medium blue-purple */
+  font-weight: 500;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .icon:hover .icon-text {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: var(--window-title-bg);
+  opacity: 1;
 }
 
 .dark .icon:hover .icon-text {
-  background-color: rgba(52, 73, 94, 0.9);
+  background-color: var(--window-title-bg);
+  opacity: 1;
 }
 
 /* Windows */
@@ -229,9 +243,19 @@ a, button, [data-window], .window-close, .window-titlebar {
   pointer-events: none;
 }
 
+/* Ensure title bar has solid background */
+.bg-secondary {
+  background-color: var(--window-title-bg) !important;
+  opacity: 1 !important;
+}
+
+.dark .bg-secondary-dark {
+  background-color: var(--window-title-bg) !important;
+  opacity: 1 !important;
+}
+
 .window {
   position: absolute;
-  background-color: var(--window-bg);
   border-radius: 15px;
   box-shadow: var(--window-shadow);
   min-width: 300px;
@@ -245,6 +269,7 @@ a, button, [data-window], .window-close, .window-titlebar {
   transform: scale(0.9);
   transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55), box-shadow 0.3s ease;
   border: 3px solid var(--window-title-bg);
+  background-color: transparent; /* Remove background color from window container */
 }
 
 .window.active {
@@ -257,7 +282,7 @@ a, button, [data-window], .window-close, .window-titlebar {
 }
 
 .window-titlebar {
-  background-color: var(--window-title-bg);
+  background-color: var(--window-title-bg) !important;
   color: var(--window-title-text);
   padding: 12px 15px;
   display: flex;
@@ -265,6 +290,7 @@ a, button, [data-window], .window-close, .window-titlebar {
   align-items: center;
   cursor: move;
   border-bottom: 2px dashed rgba(255, 255, 255, 0.3);
+  opacity: 1 !important;
 }
 
 .window-title {
@@ -300,10 +326,13 @@ a, button, [data-window], .window-close, .window-titlebar {
   flex: 1;
   transition: opacity 0.3s ease;
   color: var(--text-color); /* Ensure text color matches theme */
+  background-color: var(--window-content-bg) !important; /* Use window content background color */
+  opacity: 1 !important; /* Ensure full opacity */
 }
 
 .window-content.loading {
-  opacity: 0.5;
+  opacity: 0.8;
+  background-color: var(--window-content-bg) !important;
 }
 
 /* Window loader */
@@ -394,7 +423,6 @@ a, button, [data-window], .window-close, .window-titlebar {
 .link-icon {
   width: 60px;
   height: 60px;
-  border: 3px solid var(--icon-border);
   border-radius: 12px;
   background-color: var(--icon-bg);
   margin-bottom: 8px;
@@ -412,23 +440,28 @@ a, button, [data-window], .window-close, .window-titlebar {
 .link-text {
   font-size: 0.9rem;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: var(--window-title-bg);
   padding: 3px 8px;
   border-radius: 10px;
   transition: background-color 0.3s ease;
-  color: var(--text-color); /* Ensure text color matches theme */
+  color: white; /* White text for better contrast */
+  font-weight: 500;
 }
 
 .dark .link-text {
-  background-color: rgba(52, 73, 94, 0.7);
+  background-color: rgba(97, 108, 153, 1); /* Medium blue-purple */
+  font-weight: 500;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .link-item:hover .link-text {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: var(--window-title-bg);
+  opacity: 1;
 }
 
 .dark .link-item:hover .link-text {
-  background-color: rgba(52, 73, 94, 0.9);
+  background-color: var(--window-title-bg);
+  opacity: 1;
 }
 
 .links-note {
@@ -436,7 +469,7 @@ a, button, [data-window], .window-close, .window-titlebar {
   font-size: 1rem;
   margin-top: 25px;
   font-style: italic;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 1); /* Solid white background */
   padding: 10px;
   border-radius: 10px;
   border: 2px dashed var(--icon-border);
@@ -444,7 +477,9 @@ a, button, [data-window], .window-close, .window-titlebar {
 }
 
 .dark .links-note {
-  background-color: rgba(52, 73, 94, 0.5);
+  background-color: rgba(80, 84, 119, 1); /* Dark blue-purple background */
+  font-weight: 500;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .work-items, .faq-item {
@@ -455,14 +490,16 @@ a, button, [data-window], .window-close, .window-titlebar {
   margin-bottom: 30px;
   padding: 15px;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 1); /* Solid white background */
   border: 2px dashed var(--icon-border);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   color: var(--text-color); /* Ensure text color matches theme */
 }
 
 .dark .work-item, .dark .faq-item {
-  background-color: rgba(52, 73, 94, 0.5);
+  background-color: rgba(80, 84, 119, 1); /* Dark blue-purple background */
+  font-weight: 500;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 .work-item:hover, .faq-item:hover {
@@ -496,6 +533,8 @@ a, button, [data-window], .window-close, .window-titlebar {
 
 .content-fade-in {
   animation: fadeIn 0.5s ease forwards;
+  background-color: transparent !important;
+  width: 100%;
 }
 
 .rotate-toggle {
@@ -561,6 +600,31 @@ a, button, [data-window], .window-close, .window-titlebar {
   margin-top: 5px;
 }
 
+/* Sakura decoration */
+.sakura-decoration {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 5;
+  pointer-events: none;
+  max-width: 400px;
+  max-height: 400px;
+  opacity: 0.9;
+  transform: scale(0.8);
+  transform-origin: bottom left;
+  animation: sakura-sway 8s ease-in-out infinite;
+}
+
+.sakura-decoration img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.dark .sakura-decoration img {
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3)) brightness(0.9);
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .welcome-text h1 {
@@ -586,6 +650,12 @@ a, button, [data-window], .window-close, .window-titlebar {
 
   .window {
     max-width: 95%;
+  }
+
+  .sakura-decoration {
+    max-width: 250px;
+    max-height: 250px;
+    transform: scale(0.6);
   }
 }
 
@@ -680,5 +750,14 @@ a, button, [data-window], .window-close, .window-titlebar {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes sakura-sway {
+  0%, 100% {
+    transform: scale(0.8) rotate(0deg);
+  }
+  50% {
+    transform: scale(0.8) rotate(2deg) translateY(-5px);
   }
 }

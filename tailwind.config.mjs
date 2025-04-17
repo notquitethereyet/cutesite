@@ -4,14 +4,25 @@ export default {
   theme: {
     extend: {
       colors: {
+        /* Light mode colors */
         'primary': '#562135',       /* Deep burgundy */
         'secondary': '#c3829e',     /* Mauve pink */
         'accent': '#e9b1cd',        /* Light pink */
         'background': '#ffe7de',    /* Pale peach */
-        'background-dark': '#562135', /* Deep burgundy for dark mode */
         'text': '#562135',          /* Deep burgundy for text */
-        'text-dark': '#ffe7de',     /* Pale peach for dark mode text */
         'highlight': '#fcd1d7',     /* Soft pink */
+        'window': '#ffe7de',        /* Pale peach for window background */
+        'window-content': '#fcd1d7', /* Soft pink for window content */
+
+        /* Dark mode colors */
+        'primary-dark': '#505477',  /* Dark blue-purple */
+        'secondary-dark': '#616c99', /* Medium blue-purple */
+        'accent-dark': '#fcddf2',   /* Light pink */
+        'background-dark': '#505477', /* Dark blue-purple */
+        'text-dark': '#ffdede',     /* Light pink-peach for dark mode text */
+        'highlight-dark': '#ffc2c2', /* Salmon pink */
+        'window-dark': '#505477',   /* Dark blue-purple for window background */
+        'window-content-dark': '#505477', /* Dark blue-purple for window content */
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

@@ -4,6 +4,10 @@ import DarkModeToggle from './DarkModeToggle.astro';
 ---
 
 <div class="flex flex-col h-screen relative bg-background dark:bg-background-dark">
+  <!-- Sakura branch decoration -->
+  <div class="sakura-decoration">
+    <img src="/images/sakura.png" alt="Sakura branch decoration">
+  </div>
   <!-- Top bar with controls -->
   <div class="absolute top-2.5 left-2.5 z-10">
     <DarkModeToggle />
@@ -11,19 +15,7 @@ import DarkModeToggle from './DarkModeToggle.astro';
 
   <!-- Main desktop area -->
   <div class="flex-1 flex flex-col justify-center items-center p-5">
-    <div class="text-center mb-12 animate-float">
-      <h1 class="text-4xl mb-2.5 text-text dark:text-text-dark" style="text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);">hi! i'm <span class="text-secondary relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-secondary after:opacity-70 after:rounded-lg">your name</span></h1>
-      <h2 class="text-2xl font-normal text-text dark:text-text-dark">your title or description here</h2>
-    </div>
-
-    <!-- Desktop icons -->
-    <div class="flex justify-center gap-10 flex-wrap mt-7">
-      <DesktopIcon id="about" name="about" />
-      <DesktopIcon id="links" name="links" />
-      <DesktopIcon id="work" name="work" />
-      <DesktopIcon id="faq" name="faq" />
-      <DesktopIcon id="contact" name="contact" />
-    </div>
+    <!-- Desktop area is now empty as icons are moved to the home window -->
   </div>
 
   <!-- Windows container (windows will be created dynamically) -->
@@ -31,21 +23,43 @@ import DarkModeToggle from './DarkModeToggle.astro';
 
   <!-- Footer -->
   <div class="absolute bottom-0 left-0 w-full p-4 flex flex-col items-center">
-    <div class="text-sm text-text dark:text-text-dark opacity-80">© 2025 Your Name</div>
+    <div class="text-sm text-text dark:text-text-dark opacity-80 z-10">© 2025 Your Name</div>
+  </div>
+</div>
+
+<!-- Home window (visible on load) -->
+<div id="home-window" class="window absolute rounded-md shadow-lg w-[750px] max-w-[90%] max-h-[90%] overflow-hidden pointer-events-auto flex flex-col opacity-0 scale-90 transition-all duration-400 border-3 border-secondary dark:border-secondary-dark" data-window-id="home" style="left: 50%; top: 45%; transform: translate(-50%, -50%);">
+  <div class="bg-secondary dark:bg-secondary-dark text-white py-2 px-4 flex justify-between items-center" style="background-color: var(--window-title-bg);">
+    <div class="font-bold text-sm lowercase text-white">home</div>
+  </div>
+  <div class="p-10 overflow-auto flex-1 transition-opacity duration-300 bg-window-content dark:bg-window-content-dark !opacity-100" style="background-color: var(--window-content-bg);">
+    <div class="text-center mb-10">
+      <h1 class="text-5xl mb-3 text-text dark:text-text-dark" style="text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.2);">hi! i'm <span class="text-secondary dark:text-accent-dark relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-secondary dark:after:bg-accent-dark after:opacity-70 after:rounded-lg">shar</span></h1>
+      <h2 class="text-2xl font-normal text-text dark:text-text-dark">illustrator, animator, and developer</h2>
+    </div>
+
+    <!-- Desktop icons inside the window -->
+    <div class="flex justify-center gap-12 flex-wrap mt-12">
+      <DesktopIcon id="about" name="about" />
+      <DesktopIcon id="links" name="links" />
+      <DesktopIcon id="work" name="work" />
+      <DesktopIcon id="faq" name="faq" />
+      <DesktopIcon id="contact" name="contact" />
+    </div>
   </div>
 </div>
 
 <!-- Window templates (hidden) -->
 <template id="window-template">
-  <div class="window absolute bg-background dark:bg-primary rounded-2xl shadow-lg min-w-[550px] max-w-[80%] max-h-[80%] overflow-hidden pointer-events-auto flex flex-col opacity-0 scale-90 transition-all duration-400 border-2 border-secondary dark:border-accent" data-window-id="">
-    <div class="bg-secondary text-white py-3 px-4 flex justify-between items-center cursor-move border-b-2 border-dashed border-highlight/50">
-      <div class="font-bold text-lg lowercase text-white"></div>
-      <button class="bg-transparent border-none text-white cursor-pointer font-bold text-lg transition-transform duration-300 w-7 h-7 rounded-full flex justify-center items-center hover:scale-110 hover:bg-white/20">[x]</button>
+  <div class="window absolute rounded-md shadow-lg min-w-[650px] max-w-[80%] max-h-[80%] overflow-hidden pointer-events-auto flex flex-col opacity-0 scale-90 transition-all duration-400 border-3 border-secondary dark:border-secondary-dark" data-window-id="">
+    <div class="bg-secondary dark:bg-secondary-dark text-white py-2 px-4 flex justify-between items-center cursor-move" style="background-color: var(--window-title-bg);">
+      <div class="font-bold text-sm lowercase text-white"></div>
+      <button class="bg-transparent border-none text-white cursor-pointer font-bold text-xl transition-transform duration-300 w-7 h-7 rounded-full flex justify-center items-center hover:scale-110 hover:bg-white/20">×</button>
     </div>
-    <div class="p-5 overflow-auto flex-1 transition-opacity duration-300">
+    <div class="p-10 overflow-auto flex-1 transition-opacity duration-300 bg-window-content dark:bg-window-content-dark !opacity-100" style="background-color: var(--window-content-bg);">
       <div class="flex flex-col items-center justify-center h-full min-h-[150px]">
-        <div class="w-10 h-10 rounded-full border-4 border-highlight/30 border-t-secondary animate-spin"></div>
-        <div class="mt-4 text-base font-bold text-primary dark:text-text-dark">Loading...</div>
+        <div class="w-10 h-10 rounded-full border-4 border-highlight/30 dark:border-highlight-dark/30 border-t-secondary dark:border-t-secondary-dark animate-spin"></div>
+        <div class="mt-4 text-base font-bold text-text dark:text-text-dark">Loading...</div>
       </div>
     </div>
   </div>
@@ -161,6 +175,25 @@ import DarkModeToggle from './DarkModeToggle.astro';
 
     // Position windows in the center initially
     window.addEventListener('resize', repositionWindows);
+
+    // Show home window on load
+    const homeWindow = document.getElementById('home-window');
+    if (homeWindow) {
+      setTimeout(() => {
+        homeWindow.classList.add('active');
+        // Set a base z-index for the home window
+        // Other windows will appear in front of it
+        homeWindow.style.zIndex = 5;
+        // Set the highest z-index to be higher than the home window
+        highestZIndex = 10;
+
+        // Ensure home window title bar has solid background color
+        const homeTitleBar = homeWindow.querySelector('.bg-secondary');
+        if (homeTitleBar) {
+          homeTitleBar.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--window-title-bg');
+        }
+      }, 300);
+    }
   });
 
   // Dark Mode Toggle
@@ -288,6 +321,12 @@ import DarkModeToggle from './DarkModeToggle.astro';
       titleEl.textContent = windowId;
     }
 
+    // Ensure title bar has solid background color
+    const titleBar = windowEl.querySelector('.bg-secondary');
+    if (titleBar) {
+      titleBar.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--window-title-bg');
+    }
+
     // Add to container
     const container = document.getElementById('windows-container');
     container.appendChild(windowEl);
@@ -317,12 +356,13 @@ import DarkModeToggle from './DarkModeToggle.astro';
     }, 50);
 
     // Get content element
-    const contentEl = windowEl.querySelector('.p-5');
+    const contentEl = windowEl.querySelector('.p-10');
     if (!contentEl) {
       console.error('Content element not found');
       return;
     }
     contentEl.classList.add('loading');
+    contentEl.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--window-content-bg');
 
     // Simulate loading content
     setTimeout(() => {
@@ -338,6 +378,7 @@ import DarkModeToggle from './DarkModeToggle.astro';
         // Add content with fade-in animation
         const contentWrapper = document.createElement('div');
         contentWrapper.classList.add('content-fade-in');
+        contentWrapper.style.backgroundColor = 'transparent';
         contentWrapper.appendChild(contentTemplate.content.cloneNode(true));
         contentEl.appendChild(contentWrapper);
 
@@ -631,6 +672,7 @@ import DarkModeToggle from './DarkModeToggle.astro';
   function initTouchSupport() {
     // Touch dragging for windows
     function touchDraggable(windowEl, handleEl) {
+      if (!handleEl) return;
       handleEl.addEventListener('touchstart', touchStart, { passive: false });
 
       function touchStart(e) {
@@ -687,8 +729,10 @@ import DarkModeToggle from './DarkModeToggle.astro';
         if (mutation.addedNodes.length) {
           mutation.addedNodes.forEach((node) => {
             if (node.classList && node.classList.contains('window')) {
-              const titleBar = node.querySelector('.window-titlebar');
-              touchDraggable(node, titleBar);
+              const titleBar = node.querySelector('.bg-gray-800');
+              if (titleBar) {
+                touchDraggable(node, titleBar);
+              }
             }
           });
         }
