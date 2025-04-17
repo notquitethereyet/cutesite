@@ -741,8 +741,8 @@ body.lain-background .window {
 /* Lily decorations */
 .lily-decoration {
   position: absolute;
-  top: 0;
-  right: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -752,20 +752,20 @@ body.lain-background .window {
 
 .lily-1 {
   position: absolute;
-  top: -20px;
-  right: -20px;
+  bottom: -20px;
+  left: -20px;
   width: 300px;
-  transform: scale(1.2) rotate(5deg);
-  opacity: 0.8;
+  transform: scale(1.2) rotate(-5deg);
+  opacity: 1.0;
 }
 
 .lily-2 {
   position: absolute;
-  top: 50px;
-  right: 80px;
+  bottom: 30px;
+  left: 80px;
   width: 200px;
-  transform: scale(0.9) rotate(-8deg);
-  opacity: 0.6;
+  transform: scale(0.9) rotate(8deg);
+  opacity: 1.0;
 }
 
 /* Dark mode adjustments for lily */

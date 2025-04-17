@@ -4,7 +4,7 @@
 import { Howl, Howler } from 'howler';
 
 // Define sound types
-type SoundType = 'windowOpen' | 'windowClose' | 'profileClick';
+type SoundType = 'windowOpen' | 'windowClose' | 'profileClick' | 'glitch';
 
 // Sound library - we'll initialize this after user interaction
 let sounds: Record<SoundType, Howl> | null = null;
@@ -14,7 +14,8 @@ let audioInitialized = false;
 const AUDIO_PATHS = {
   windowOpen: '/audio/click.mp3',
   windowClose: '/audio/close.mp3',
-  profileClick: '/audio/ahoy.mp3'
+  profileClick: '/audio/ahoy.mp3',
+  glitch: '/audio/glitch.mp3'
 };
 
 /**
@@ -37,6 +38,11 @@ function initSounds(): void {
     }),
     profileClick: new Howl({
       src: [AUDIO_PATHS.profileClick],
+      volume: 0.7,
+      preload: false // Don't preload until needed
+    }),
+    glitch: new Howl({
+      src: [AUDIO_PATHS.glitch],
       volume: 0.7,
       preload: false // Don't preload until needed
     })

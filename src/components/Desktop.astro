@@ -189,7 +189,14 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
         
         // Hide controller if it's visible
         if (controllerVisible) {
-          hideController();
+          // Hide controller but don't remove Lain background
+          const controller = document.getElementById('konami-controller');
+          if (controller) {
+            controller.classList.add('hidden');
+            controllerVisible = false;
+            konamiIndex = 0;
+            // Note: We intentionally don't remove the lain-background class here
+          }
         }
         
         // Open the autism window
@@ -205,6 +212,9 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
         const body = document.querySelector('body');
         if (body) {
           body.classList.add('konami-activated');
+          
+          // Ensure Lain background is applied
+          body.classList.add('lain-background');
           
           // Flash effect
           setTimeout(() => {
@@ -223,6 +233,9 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
           
           // Add Lain background when controller is shown
           document.body.classList.add('lain-background');
+          
+          // Toggle decorations
+          toggleDecorations(true);
         }
       }
       
@@ -235,9 +248,16 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
           
           // Remove Lain background when controller is hidden
           document.body.classList.remove('lain-background');
+          
+          // Check if autism window is open before toggling decorations back
+          const autismWindow = document.querySelector('.window[data-window-id="autism"]');
+          if (!autismWindow) {
+            toggleDecorations(false);
+          }
         }
       }
       
+      // Helper function to update sequence dots
       function updateSequenceDots() {
         const dots = document.querySelectorAll('#sequence-dots div');
         for (let i = 0; i < dots.length; i++) {
@@ -251,6 +271,7 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
         }
       }
       
+      // Helper function to reset sequence dots
       function resetSequenceDots() {
         const dots = document.querySelectorAll('#sequence-dots div');
         dots.forEach(dot => {
@@ -258,6 +279,20 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
           dot.classList.add('bg-red-900');
         });
         konamiIndex = 0;
+      }
+      
+      // Helper function to toggle between sakura and lily decorations
+      function toggleDecorations(showLily: boolean) {
+        const sakuraDecoration = document.querySelector('.sakura-decoration');
+        const lilyDecoration = document.querySelector('.lily-decoration');
+        
+        if (showLily) {
+          sakuraDecoration?.classList.add('hidden');
+          lilyDecoration?.classList.remove('hidden');
+        } else {
+          sakuraDecoration?.classList.remove('hidden');
+          lilyDecoration?.classList.add('hidden');
+        }
       }
       
       // Initialize controller buttons
@@ -311,6 +346,11 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
                   // First close the FAQ window
                   import('../utils/windowManager').then(({ closeWindow }) => {
                     closeWindow('faq');
+                    
+                    // Play glitch sound
+                    import('../utils/audioManager').then(({ playSound }) => {
+                      playSound('glitch');
+                    });
                     
                     // Then show the controller after a short delay
                     setTimeout(() => {

@@ -29,6 +29,12 @@ export function openWindow(windowId: string): void {
     return;
   }
 
+  // If opening the autism window, toggle decorations and ensure Lain background
+  if (windowId === 'autism') {
+    toggleDecorations(true);
+    document.body.classList.add('lain-background');
+  }
+
   // Create new window from template
   const template = document.getElementById('window-template');
   if (!template) {
@@ -343,6 +349,7 @@ export function closeWindow(windowId: string): void {
       if (windowId === 'autism') {
         // Remove Lain background before redirecting
         document.body.classList.remove('lain-background');
+        toggleDecorations(false);
         window.location.href = '/';
       }
     }, 300);
@@ -587,4 +594,20 @@ export function rearrangeWindows(): void {
       windowEl.style.transition = '';
     }, 300);
   });
+}
+
+/**
+ * Toggles decorations on or off
+ */
+function toggleDecorations(on: boolean): void {
+  const sakuraDecoration = document.querySelector('.sakura-decoration');
+  const lilyDecoration = document.querySelector('.lily-decoration');
+  
+  if (on) {
+    sakuraDecoration?.classList.add('hidden');
+    lilyDecoration?.classList.remove('hidden');
+  } else {
+    sakuraDecoration?.classList.remove('hidden');
+    lilyDecoration?.classList.add('hidden');
+  }
 }
