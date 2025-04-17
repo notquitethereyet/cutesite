@@ -1,29 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  /* Light mode colors */
-  --bg-color: #a8d4ff;
-  --window-bg: #ffffff;
-  --window-title-bg: #9370db;
-  --window-title-text: #ffffff;
-  --text-color: #333333;
-  --highlight-color: #ff9e2c;
-  --icon-border: #ff85a2;
-  --icon-bg: #ffffff;
-  --window-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  --icon-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Light mode colors - Sakura theme */
+  --bg-color: #ffe7de;      /* Pale peach */
+  --window-bg: #fcd1d7;     /* Soft pink */
+  --window-title-bg: #a86e87; /* Darker mauve pink for better contrast */
+  --window-title-text: #ffffff; /* White text for title bar */
+  --text-color: #562135;    /* Deep burgundy */
+  --highlight-color: #e9b1cd; /* Light pink */
+  --icon-border: #c3829e;   /* Mauve pink */
+  --icon-bg: #fcd1d7;       /* Soft pink */
+  --window-shadow: 0 8px 20px rgba(86, 33, 53, 0.15);
+  --icon-shadow: 0 4px 8px rgba(86, 33, 53, 0.1);
 }
 
 .dark {
-  /* Dark mode colors */
-  --bg-color: #2c3e50;
-  --window-bg: #34495e;
-  --window-title-bg: #8e44ad;
+  /* Dark mode colors - Sakura theme */
+  --bg-color: #562135;      /* Deep burgundy */
+  --window-bg: #562135;     /* Deep burgundy */
+  --window-title-bg: #a86e87; /* Darker mauve pink for better contrast */
   --window-title-text: #ffffff;
-  --text-color: #ecf0f1;
-  --highlight-color: #f39c12;
-  --icon-border: #e74c3c;
-  --icon-bg: #2c3e50;
+  --text-color: #ffe7de;    /* Pale peach */
+  --highlight-color: #e9b1cd; /* Light pink */
+  --icon-border: #e9b1cd;   /* Light pink */
+  --icon-bg: #562135;       /* Deep burgundy */
   --window-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   --icon-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -41,17 +41,22 @@ body {
   color: var(--text-color);
   transition: background-color 0.5s ease;
   font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.3"/></svg>');
-  background-size: 30px 30px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 C30,40 40,30 50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 Z M50,30 C45,25 45,15 50,10 C55,15 55,25 50,30 Z M70,50 C75,45 85,45 90,50 C85,55 75,55 70,50 Z M50,70 C55,75 55,85 50,90 C45,85 45,75 50,70 Z M30,50 C25,55 15,55 10,50 C15,45 25,45 30,50 Z" fill="%23fcd1d7" opacity="0.3"/></svg>');
+  background-size: 100px 100px;
+}
+
+/* Dark mode background pattern with reduced opacity */
+.dark body {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 C30,40 40,30 50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 Z M50,30 C45,25 45,15 50,10 C55,15 55,25 50,30 Z M70,50 C75,45 85,45 90,50 C85,55 75,55 70,50 Z M50,70 C55,75 55,85 50,90 C45,85 45,75 50,70 Z M30,50 C25,55 15,55 10,50 C15,45 25,45 30,50 Z" fill="%23c3829e" opacity="0.1"/></svg>');
 }
 
 /* Cute cursor */
 body {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%23ff85a2" opacity="0.6"/><circle cx="12" cy="12" r="4" fill="%23ffffff"/></svg>'), auto;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%23c3829e" opacity="0.6"/><circle cx="12" cy="12" r="4" fill="%23ffe7de"/></svg>'), auto;
 }
 
-a, button, .icon, .window-close, .window-titlebar {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23ff85a2" opacity="0.6"/><path d="M8,12 L16,12 M12,8 L12,16" stroke="%23ffffff" stroke-width="2"/></svg>'), pointer;
+a, button, [data-window], .window-close, .window-titlebar {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23c3829e" opacity="0.6"/><path d="M8,12 L16,12 M12,8 L12,16" stroke="%23ffe7de" stroke-width="2"/></svg>'), pointer;
 }
 
 /* Desktop layout */
@@ -199,6 +204,7 @@ a, button, .icon, .window-close, .window-titlebar {
   padding: 3px 8px;
   border-radius: 10px;
   transition: background-color 0.3s ease;
+  color: var(--text-color); /* Ensure text color matches theme */
 }
 
 .dark .icon-text {
@@ -293,6 +299,7 @@ a, button, .icon, .window-close, .window-titlebar {
   overflow: auto;
   flex: 1;
   transition: opacity 0.3s ease;
+  color: var(--text-color); /* Ensure text color matches theme */
 }
 
 .window-content.loading {
@@ -322,6 +329,7 @@ a, button, .icon, .window-close, .window-titlebar {
   margin-top: 15px;
   font-size: 1rem;
   color: var(--text-color);
+  font-weight: bold; /* Make text bolder for better visibility */
 }
 
 /* Window content styles */
@@ -408,6 +416,7 @@ a, button, .icon, .window-close, .window-titlebar {
   padding: 3px 8px;
   border-radius: 10px;
   transition: background-color 0.3s ease;
+  color: var(--text-color); /* Ensure text color matches theme */
 }
 
 .dark .link-text {
@@ -431,6 +440,7 @@ a, button, .icon, .window-close, .window-titlebar {
   padding: 10px;
   border-radius: 10px;
   border: 2px dashed var(--icon-border);
+  color: var(--text-color); /* Ensure text color matches theme */
 }
 
 .dark .links-note {
@@ -448,6 +458,7 @@ a, button, .icon, .window-close, .window-titlebar {
   background-color: rgba(255, 255, 255, 0.5);
   border: 2px dashed var(--icon-border);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--text-color); /* Ensure text color matches theme */
 }
 
 .dark .work-item, .dark .faq-item {
@@ -506,13 +517,7 @@ a, button, .icon, .window-close, .window-titlebar {
   z-index: 10;
 }
 
-/* Confetti animation */
-.confetti {
-  position: absolute;
-  z-index: 1;
-  border-radius: 3px;
-  animation: confetti-fall 2s ease-in-out forwards;
-}
+/* Confetti animation removed */
 
 /* Footer */
 .footer {
@@ -650,16 +655,7 @@ a, button, .icon, .window-close, .window-titlebar {
   }
 }
 
-@keyframes confetti-fall {
-  0% {
-    transform: translateY(-50px) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100px) rotate(720deg);
-    opacity: 0;
-  }
-}
+/* Confetti animation keyframes removed */
 
 @keyframes fadeIn {
   from {
@@ -686,10 +682,3 @@ a, button, .icon, .window-close, .window-titlebar {
     transform: rotate(360deg);
   }
 }
-
-
-
-a, button, .icon, .window-close, .window-titlebar {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23ff85a2" opacity="0.6"/><path d="M8,12 L16,12 M12,8 L12,16" stroke="%23ffffff" stroke-width="2"/></svg>'), pointer;
-}
-

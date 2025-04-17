@@ -4,13 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary': '#9370db',
-        'secondary': '#ff85a2',
-        'accent': '#ff9e2c',
-        'background': '#a8d4ff',
-        'background-dark': '#2c3e50',
-        'text': '#333333',
-        'text-dark': '#ecf0f1',
+        'primary': '#562135',       /* Deep burgundy */
+        'secondary': '#c3829e',     /* Mauve pink */
+        'accent': '#e9b1cd',        /* Light pink */
+        'background': '#ffe7de',    /* Pale peach */
+        'background-dark': '#562135', /* Deep burgundy for dark mode */
+        'text': '#562135',          /* Deep burgundy for text */
+        'text-dark': '#ffe7de',     /* Pale peach for dark mode text */
+        'highlight': '#fcd1d7',     /* Soft pink */
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
