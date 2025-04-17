@@ -1,0 +1,561 @@
+---
+import DesktopIcon from './DesktopIcon.astro';
+import DarkModeToggle from './DarkModeToggle.astro';
+---
+
+<div class="flex flex-col h-screen relative bg-background dark:bg-background-dark">
+  <!-- Top bar with controls -->
+  <div class="absolute top-2.5 left-2.5 z-10">
+    <DarkModeToggle />
+  </div>
+
+  <!-- Main desktop area -->
+  <div class="flex-1 flex flex-col justify-center items-center p-5">
+    <div class="text-center mb-12 animate-float">
+      <h1 class="text-4xl mb-2.5 text-text dark:text-text-dark" style="text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.5);">hi! i'm <span class="text-accent relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-accent after:opacity-50 after:rounded-lg">your name</span></h1>
+      <h2 class="text-2xl font-normal text-text dark:text-text-dark">your title or description here</h2>
+    </div>
+
+    <!-- Desktop icons -->
+    <div class="flex justify-center gap-10 flex-wrap mt-7">
+      <DesktopIcon id="about" name="about" />
+      <DesktopIcon id="links" name="links" />
+      <DesktopIcon id="work" name="work" />
+      <DesktopIcon id="faq" name="faq" />
+      <DesktopIcon id="contact" name="contact" />
+    </div>
+  </div>
+
+  <!-- Windows container (windows will be created dynamically) -->
+  <div id="windows-container" class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>
+
+  <!-- Footer -->
+  <div class="absolute bottom-0 left-0 w-full p-4 flex flex-col items-center">
+    <div class="flex gap-4 mb-2">
+      <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-white flex justify-center items-center shadow-sm transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-md">
+        <img src="/images/icons/social-twitter.svg" alt="Twitter" width="24" height="24">
+      </a>
+      <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-white flex justify-center items-center shadow-sm transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-md">
+        <img src="/images/icons/social-youtube.svg" alt="YouTube" width="24" height="24">
+      </a>
+      <a href="#" target="_blank" class="w-10 h-10 rounded-full bg-white flex justify-center items-center shadow-sm transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-md">
+        <img src="/images/icons/social-instagram.svg" alt="Instagram" width="24" height="24">
+      </a>
+    </div>
+    <div class="text-sm text-text dark:text-text-dark opacity-80 mt-1">© 2025 Your Name</div>
+  </div>
+</div>
+
+<!-- Window templates (hidden) -->
+<template id="window-template">
+  <div class="absolute bg-white dark:bg-background-dark rounded-2xl shadow-lg min-w-[300px] max-w-[80%] max-h-[80%] overflow-hidden pointer-events-auto flex flex-col opacity-0 scale-90 transition-all duration-400 border-2 border-primary dark:border-primary" data-window-id="">
+    <div class="bg-primary text-white py-3 px-4 flex justify-between items-center cursor-move border-b-2 border-dashed border-white/30">
+      <div class="font-bold text-lg lowercase"></div>
+      <button class="bg-transparent border-none text-white cursor-pointer font-bold text-lg transition-transform duration-300 w-7 h-7 rounded-full flex justify-center items-center hover:scale-110 hover:bg-white/20">[x]</button>
+    </div>
+    <div class="p-5 overflow-auto flex-1 transition-opacity duration-300">
+      <div class="flex flex-col items-center justify-center h-full min-h-[150px]">
+        <div class="w-10 h-10 rounded-full border-4 border-black/10 border-t-accent animate-spin"></div>
+        <div class="mt-4 text-base text-text dark:text-text-dark">Loading...</div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Window content templates -->
+<template id="about-content">
+  <div class="about-window">
+    <img src="/images/profile.png" alt="Profile picture" class="profile-image">
+    <h2>Your Name</h2>
+    <p>Your bio and description here. Tell visitors about yourself!</p>
+    <ul>
+      <li>What you do</li>
+      <li>Your skills</li>
+      <li>Your interests</li>
+    </ul>
+  </div>
+</template>
+
+<template id="links-content">
+  <div class="links-window">
+    <div class="links-grid">
+      <a href="#" target="_blank" class="link-item">
+        <div class="link-icon twitter-icon">
+          <img src="/images/icons/social-twitter.svg" alt="Twitter" width="30" height="30">
+        </div>
+        <div class="link-text">twitter</div>
+      </a>
+      <a href="#" target="_blank" class="link-item">
+        <div class="link-icon youtube-icon">
+          <img src="/images/icons/social-youtube.svg" alt="YouTube" width="30" height="30">
+        </div>
+        <div class="link-text">youtube</div>
+      </a>
+      <a href="#" target="_blank" class="link-item">
+        <div class="link-icon instagram-icon">
+          <img src="/images/icons/social-instagram.svg" alt="Instagram" width="30" height="30">
+        </div>
+        <div class="link-text">instagram</div>
+      </a>
+    </div>
+    <p class="links-note">clicking any of the links will open a new tab!</p>
+  </div>
+</template>
+
+<template id="work-content">
+  <div class="work-window">
+    <h2>My Work</h2>
+    <div class="work-items">
+      <div class="work-item">
+        <h3>Project 1</h3>
+        <p>Description of project 1</p>
+      </div>
+      <div class="work-item">
+        <h3>Project 2</h3>
+        <p>Description of project 2</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template id="faq-content">
+  <div class="faq-window">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <h3>Question 1?</h3>
+      <p>Answer to question 1.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Question 2?</h3>
+      <p>Answer to question 2.</p>
+    </div>
+  </div>
+</template>
+
+<template id="contact-content">
+  <div class="contact-window">
+    <h2>Contact Me</h2>
+    <p>Feel free to reach out to me at: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
+  </div>
+</template>
+
+<script>
+  // State
+  let activeWindows = [];
+  let highestZIndex = 10;
+  let isDarkMode = document.documentElement.classList.contains('dark');
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    initDarkModeToggle();
+    initIcons();
+    initTouchSupport();
+
+    // Position windows in the center initially
+    window.addEventListener('resize', repositionWindows);
+  });
+
+  // Dark Mode Toggle
+  function initDarkModeToggle() {
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+
+    darkModeToggle.addEventListener('click', () => {
+      // Add rotation animation
+      darkModeToggle.classList.add('rotate-toggle');
+
+      // Toggle dark mode class
+      document.documentElement.classList.toggle('dark');
+      isDarkMode = document.documentElement.classList.contains('dark');
+
+      // Update icon - visual feedback
+      const icon = darkModeToggle.querySelector('img');
+      if (isDarkMode) {
+        icon.style.filter = "invert(100%)";
+      } else {
+        icon.style.filter = "none";
+      }
+
+      // Save preference
+      localStorage.setItem('darkMode', isDarkMode);
+
+      // Remove rotation class after animation completes
+      setTimeout(() => {
+        darkModeToggle.classList.remove('rotate-toggle');
+      }, 500);
+    });
+  }
+
+  // Initialize Desktop Icons
+  function initIcons() {
+    const icons = document.querySelectorAll('.icon');
+
+    icons.forEach(icon => {
+      // Add click event
+      icon.addEventListener('click', (e) => {
+        // Create ripple effect
+        const ripple = document.createElement('div');
+        ripple.classList.add('ripple');
+        icon.appendChild(ripple);
+
+        const rect = icon.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+
+        ripple.style.width = ripple.style.height = `${size}px`;
+        ripple.style.left = `${e.clientX - rect.left - size/2}px`;
+        ripple.style.top = `${e.clientY - rect.top - size/2}px`;
+
+        ripple.classList.add('active');
+
+        // Remove ripple after animation completes
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+
+        // Get window ID and open window
+        const windowId = icon.getAttribute('data-window');
+        openWindow(windowId);
+      });
+
+      // Add floating animation
+      const delay = Array.from(icons).indexOf(icon) * 0.2;
+      icon.style.animation = `float 3s ease-in-out ${delay}s infinite`;
+    });
+  }
+
+  // Window Management
+  function openWindow(windowId) {
+    // Check if window is already open
+    const existingWindow = document.querySelector(`.window[data-window-id="${windowId}"]`);
+    if (existingWindow) {
+      // Add shake animation to indicate it's already open
+      existingWindow.classList.add('window-shake');
+      setTimeout(() => {
+        existingWindow.classList.remove('window-shake');
+      }, 500);
+
+      bringToFront(existingWindow);
+      return;
+    }
+
+    // Create new window from template
+    const template = document.getElementById('window-template');
+    const windowEl = template.content.cloneNode(true).querySelector('.window');
+
+    // Set window ID
+    windowEl.setAttribute('data-window-id', windowId);
+
+    // Set window title
+    const titleEl = windowEl.querySelector('.window-title');
+    titleEl.textContent = windowId;
+
+    // Add to container
+    const container = document.getElementById('windows-container');
+    container.appendChild(windowEl);
+
+    // Position window in center of screen
+    const windowWidth = 400;
+    const windowHeight = 300;
+
+    windowEl.style.width = `${windowWidth}px`;
+    windowEl.style.height = `${windowHeight}px`;
+    windowEl.style.left = `${(window.innerWidth - windowWidth) / 2}px`;
+    windowEl.style.top = `${(window.innerHeight - windowHeight) / 2}px`;
+
+    // Add opening animation
+    windowEl.classList.add('window-opening');
+
+    // Initialize window events
+    initWindowEvents(windowEl);
+
+    // Add active class after a small delay
+    setTimeout(() => {
+      windowEl.classList.add('active');
+
+      // Create confetti effect
+      createConfetti(windowId);
+    }, 50);
+
+    // Get content element
+    const contentEl = windowEl.querySelector('.window-content');
+    contentEl.classList.add('loading');
+
+    // Simulate loading content
+    setTimeout(() => {
+      // Load content from template
+      const contentTemplate = document.getElementById(`${windowId}-content`);
+      if (contentTemplate) {
+        // Remove loader
+        const loader = contentEl.querySelector('.window-loader');
+        if (loader) {
+          loader.remove();
+        }
+
+        // Add content with fade-in animation
+        const contentWrapper = document.createElement('div');
+        contentWrapper.classList.add('content-fade-in');
+        contentWrapper.appendChild(contentTemplate.content.cloneNode(true));
+        contentEl.appendChild(contentWrapper);
+
+        // Remove loading class
+        contentEl.classList.remove('loading');
+      }
+    }, 800); // Simulate loading delay
+
+    // Add to active windows
+    activeWindows.push({
+      id: windowId,
+      element: windowEl
+    });
+
+    // Bring to front
+    bringToFront(windowEl);
+  }
+
+  // Close window
+  function closeWindow(windowEl) {
+    // Add closing animation
+    windowEl.classList.add('window-closing');
+    windowEl.classList.remove('window-active');
+
+    // Remove from active windows
+    const windowId = windowEl.getAttribute('data-window-id');
+    activeWindows = activeWindows.filter(w => w.id !== windowId);
+
+    // Remove from DOM after animation completes
+    setTimeout(() => {
+      windowEl.remove();
+    }, 400);
+  }
+
+  // Bring window to front
+  function bringToFront(windowEl) {
+    // Increment highest z-index
+    highestZIndex += 1;
+    windowEl.style.zIndex = highestZIndex;
+
+    // Update active class
+    document.querySelectorAll('.window').forEach(w => {
+      w.classList.remove('window-active');
+    });
+    windowEl.classList.add('window-active');
+  }
+
+  // Initialize window events
+  function initWindowEvents(windowEl) {
+    // Close button
+    const closeBtn = windowEl.querySelector('.window-close');
+    closeBtn.addEventListener('click', () => {
+      closeWindow(windowEl);
+    });
+
+    // Bring to front on click
+    windowEl.addEventListener('mousedown', () => {
+      bringToFront(windowEl);
+    });
+
+    // Double-click titlebar to maximize
+    const titleBar = windowEl.querySelector('.window-titlebar');
+    titleBar.addEventListener('dblclick', () => {
+      windowEl.classList.toggle('window-maximized');
+    });
+
+    // Dragging functionality
+    makeDraggable(windowEl, titleBar);
+  }
+
+  // Make element draggable
+  function makeDraggable(element, handle) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+    handle.onmousedown = dragMouseDown;
+
+    function dragMouseDown(e) {
+      e.preventDefault();
+
+      // Bring window to front
+      bringToFront(element);
+
+      // Add dragging class
+      element.classList.add('window-dragging');
+
+      // Get the mouse cursor position at startup
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+
+      document.onmouseup = closeDragElement;
+      document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+      e.preventDefault();
+
+      // Calculate the new cursor position
+      pos1 = pos3 - e.clientX;
+      pos2 = pos4 - e.clientY;
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+
+      // Set the element's new position
+      const newTop = (element.offsetTop - pos2);
+      const newLeft = (element.offsetLeft - pos1);
+
+      // Keep window within viewport
+      const maxTop = window.innerHeight - 50; // Keep at least the titlebar visible
+      const maxLeft = window.innerWidth - 50;
+
+      element.style.top = `${Math.min(Math.max(0, newTop), maxTop)}px`;
+      element.style.left = `${Math.min(Math.max(0, newLeft), maxLeft)}px`;
+    }
+
+    function closeDragElement() {
+      // Remove dragging class
+      element.classList.remove('window-dragging');
+
+      // Stop moving when mouse button is released
+      document.onmouseup = null;
+      document.onmousemove = null;
+    }
+  }
+
+  // Create confetti effect
+  function createConfetti(windowId) {
+    // Create 20 confetti particles
+    for (let i = 0; i < 20; i++) {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+
+      // Set random properties
+      const size = Math.random() * 8 + 5;
+      const color = getConfettiColor(windowId);
+
+      confetti.style.width = `${size}px`;
+      confetti.style.height = `${size}px`;
+      confetti.style.background = color;
+
+      // Random position around the window
+      confetti.style.left = `${Math.random() * 100}%`;
+      confetti.style.top = `${Math.random() * 30}%`;
+
+      // Random rotation and delay
+      confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+      confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+
+      // Add to window
+      const windowEl = document.querySelector(`.window[data-window-id="${windowId}"]`);
+      windowEl.appendChild(confetti);
+
+      // Remove after animation
+      setTimeout(() => {
+        confetti.remove();
+      }, 2000);
+    }
+  }
+
+  // Get confetti color based on window type
+  function getConfettiColor(windowId) {
+    const colors = {
+      'about': '#9370db',
+      'links': '#ff7f50',
+      'work': '#20b2aa',
+      'faq': '#ff69b4',
+      'contact': '#1e90ff'
+    };
+
+    return colors[windowId] || '#ff85a2';
+  }
+
+  // Reposition windows when screen is resized
+  function repositionWindows() {
+    document.querySelectorAll('.window').forEach(windowEl => {
+      // Get window dimensions
+      const windowWidth = windowEl.offsetWidth;
+      const windowHeight = windowEl.offsetHeight;
+
+      // Keep window within viewport
+      const maxTop = window.innerHeight - 50;
+      const maxLeft = window.innerWidth - 50;
+
+      const currentTop = parseInt(windowEl.style.top);
+      const currentLeft = parseInt(windowEl.style.left);
+
+      if (currentTop > maxTop) {
+        windowEl.style.top = `${maxTop}px`;
+      }
+
+      if (currentLeft > maxLeft) {
+        windowEl.style.left = `${maxLeft}px`;
+      }
+    });
+  }
+
+  // Touch support for mobile devices
+  function initTouchSupport() {
+    // Touch dragging for windows
+    function touchDraggable(windowEl, handleEl) {
+      handleEl.addEventListener('touchstart', touchStart, { passive: false });
+
+      function touchStart(e) {
+        e.preventDefault();
+
+        // Bring window to front
+        bringToFront(windowEl);
+
+        // Add dragging class
+        windowEl.classList.add('window-dragging');
+
+        const touch = e.touches[0];
+        const startX = touch.clientX;
+        const startY = touch.clientY;
+
+        const startTop = windowEl.offsetTop;
+        const startLeft = windowEl.offsetLeft;
+
+        handleEl.addEventListener('touchmove', touchMove, { passive: false });
+        handleEl.addEventListener('touchend', touchEnd, { passive: false });
+
+        function touchMove(e) {
+          e.preventDefault();
+
+          const touch = e.touches[0];
+          const deltaX = touch.clientX - startX;
+          const deltaY = touch.clientY - startY;
+
+          // Set the element's new position
+          const newTop = startTop + deltaY;
+          const newLeft = startLeft + deltaX;
+
+          // Keep window within viewport
+          const maxTop = window.innerHeight - 50;
+          const maxLeft = window.innerWidth - 50;
+
+          windowEl.style.top = `${Math.min(Math.max(0, newTop), maxTop)}px`;
+          windowEl.style.left = `${Math.min(Math.max(0, newLeft), maxLeft)}px`;
+        }
+
+        function touchEnd() {
+          handleEl.removeEventListener('touchmove', touchMove);
+          handleEl.removeEventListener('touchend', touchEnd);
+
+          // Remove dragging class
+          windowEl.classList.remove('window-dragging');
+        }
+      }
+    }
+
+    // Apply touch dragging to all windows
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.addedNodes.length) {
+          mutation.addedNodes.forEach((node) => {
+            if (node.classList && node.classList.contains('window')) {
+              const titleBar = node.querySelector('.window-titlebar');
+              touchDraggable(node, titleBar);
+            }
+          });
+        }
+      });
+    });
+
+    observer.observe(document.getElementById('windows-container'), { childList: true });
+  }
+</script>

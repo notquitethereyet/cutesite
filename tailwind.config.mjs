@@ -1,0 +1,68 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#9370db',
+        'secondary': '#ff85a2',
+        'accent': '#ff9e2c',
+        'background': '#a8d4ff',
+        'background-dark': '#2c3e50',
+        'text': '#333333',
+        'text-dark': '#ecf0f1',
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+        'window-open': 'windowOpen 0.5s forwards',
+        'window-close': 'windowClose 0.4s forwards',
+        'ripple': 'ripple 0.6s linear',
+        'rotate': 'rotate 0.5s ease-in-out',
+        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+        'confetti-fall': 'confetti-fall 2s ease-in-out forwards',
+        'fade-in': 'fadeIn 0.5s ease forwards',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        windowOpen: {
+          '0%': { opacity: '0', transform: 'scale(0.8) translateY(20px)' },
+          '70%': { transform: 'scale(1.05) translateY(-5px)' },
+          '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+        },
+        windowClose: {
+          '0%': { opacity: '1', transform: 'scale(1)' },
+          '100%': { opacity: '0', transform: 'scale(0.8) translateY(20px)' },
+        },
+        ripple: {
+          'to': { transform: 'scale(4)', opacity: '0' },
+        },
+        rotate: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        shake: {
+          '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+          '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+          '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+          '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
+        },
+        'confetti-fall': {
+          '0%': { transform: 'translateY(-50px) rotate(0deg)', opacity: '1' },
+          '100%': { transform: 'translateY(100px) rotate(720deg)', opacity: '0' },
+        },
+        fadeIn: {
+          'from': { opacity: '0', transform: 'translateY(10px)' },
+          'to': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      fontFamily: {
+        'comic': ['"Comic Sans MS"', '"Chalkboard SE"', 'Arial', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+  darkMode: 'class',
+}

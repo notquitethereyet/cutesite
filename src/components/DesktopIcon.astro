@@ -1,0 +1,15 @@
+---
+interface Props {
+  id: string;
+  name: string;
+}
+
+const { id, name } = Astro.props;
+---
+
+<div class="flex flex-col items-center cursor-pointer transition-transform duration-300 w-[90px] hover:scale-110 hover:rotate-3" data-window={id}>
+  <div class={`w-[70px] h-[70px] border-2 border-secondary dark:border-secondary rounded-xl bg-white dark:bg-background-dark flex justify-center items-center mb-2 shadow-md overflow-hidden transition-shadow duration-300 ${id}-icon`}>
+    <img src={`/images/icons/${id}.svg`} alt={`${name} icon`} width="60" height="60" class="w-full h-full object-contain transition-transform duration-300 hover:scale-110">
+  </div>
+  <div class="text-base text-center bg-white/70 dark:bg-background-dark/70 py-0.5 px-2 rounded-lg transition-colors duration-300 hover:bg-white/90 dark:hover:bg-background-dark/90">{name}</div>
+</div>

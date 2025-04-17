@@ -1,0 +1,33 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title = 'My Desktop Site', description = 'A cute and aesthetic personal website with a desktop interface' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot />
+		<script>
+			// Check for saved dark mode preference
+			const savedDarkMode = localStorage.getItem('darkMode');
+			if (savedDarkMode === 'true') {
+				document.documentElement.classList.add('dark');
+			}
+		</script>
+	</body>
+</html>
