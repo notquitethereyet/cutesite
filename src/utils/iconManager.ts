@@ -8,22 +8,23 @@ export function initIcons(): void {
   const icons = document.querySelectorAll('[data-window]');
   console.log('Found icons:', icons.length);
 
-  icons.forEach(icon => {
+  icons.forEach((icon) => {
     // Add click event
     icon.addEventListener('click', (e) => {
+      if (!(e instanceof MouseEvent)) return;
       // Create ripple effect
       const ripple = document.createElement('div');
       ripple.classList.add('ripple');
-      
+
       const rect = (icon as HTMLElement).getBoundingClientRect();
       const size = Math.max(rect.width, rect.height);
-      
+
       ripple.style.width = ripple.style.height = `${size}px`;
       ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
       ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
-      
+
       icon.appendChild(ripple);
-      
+
       setTimeout(() => {
         ripple.remove();
       }, 600);
@@ -43,12 +44,4 @@ export function initIcons(): void {
     const delay = Array.from(icons).indexOf(icon) * 0.2;
     (icon as HTMLElement).style.animation = `float 3s ease-in-out ${delay}s infinite`;
   });
-}
-
-/**
- * Initialize dark mode toggle
- */
-export function initDarkModeToggle(): void {
-  // This function is kept for compatibility but no longer does anything
-  // as the dark mode toggle is now handled by the DarkModeToggle component
 }

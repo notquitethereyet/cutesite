@@ -3,23 +3,25 @@ import DesktopIcon from './DesktopIcon.astro';
 import DarkModeToggle from './DarkModeToggle.astro';
 import Window from './Window.astro';
 import CherryBlossoms from './CherryBlossoms.astro';
-import { userName, userTagline, currentYear } from '../utils/siteConfig';
+import { userName, currentYear } from '../utils/siteConfig';
 
-// User information variables
-// const userName = "quiet";
-// const userTagline = "Art, Tech and Everything Cute";
-// const currentYear = new Date().getFullYear();
+// Greeting logic based on current hour
+const hour = new Date().getHours();
+let jpGreeting = 'こんにちは！'; // Default: Konnichiwa
+if (hour < 5) jpGreeting = 'こんばんは！'; // Konbanwa (Good evening/night)
+else if (hour < 11) jpGreeting = 'おはよう！'; // Ohayou (Good morning)
+else if (hour >= 18) jpGreeting = 'こんばんは！'; // Konbanwa (Good evening)
 ---
 
 <div class="flex flex-col h-screen relative bg-background dark:bg-background-dark">
   <!-- Decorations - both sakura and lily -->
   <div class="sakura-decoration">
-    <img src="/images/sakura.png" alt="Sakura branch decoration">
+    <img src="/images/sakura.webp" alt="Sakura branch decoration" loading="lazy" width="400" height="300">
   </div>
   
   <div class="lily-decoration hidden">
-    <img src="/images/lily.png" alt="Lily decoration 1" class="lily-1">
-    <img src="/images/lily.png" alt="Lily decoration 2" class="lily-2">
+    <img src="/images/lily.webp" alt="Lily decoration 1" class="lily-1" loading="lazy" width="300" height="200">
+    <img src="/images/lily.webp" alt="Lily decoration 2" class="lily-2" loading="lazy" width="250" height="180">
   </div>
   
   <!-- Cherry blossoms animation -->
@@ -36,14 +38,27 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
   </div>
 
   <!-- Windows container (windows will be created dynamically) -->
-  <div id="windows-container" class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>
+  <div id="windows-container" class="absolute top-0 left-0 w-full h-full pointer-events-none" role="presentation" aria-hidden="true"></div>
+
+  <!-- Lain video background for secret mode -->
+  <video
+    id="lain-bg-video"
+    autoplay
+    loop
+    muted
+    playsinline
+    class="fixed top-0 left-0 w-full h-full object-cover z-0 hidden"
+    style="pointer-events: none;"
+  >
+    <source src="/images/lain.webm" type="video/webm" />
+  </video>
 
   <!-- Hidden controller for Konami code (initially hidden) -->
-  <div id="konami-controller" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black p-4 rounded-lg shadow-lg z-50 w-80 border-2 border-red-600">
+  <div id="konami-controller" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black p-4 rounded-lg shadow-lg z-50 w-80 border-2 border-red-600" role="dialog" aria-modal="true" aria-label="Konami Code Controller">
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-lg font-bold text-red-500">Controller</h2>
-      <button id="controller-close" class="text-red-500 hover:text-red-300">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+      <h2 class="text-lg font-bold text-red-500" id="controller-title">Controller</h2>
+      <button id="controller-close" class="text-red-500 hover:text-red-300" aria-label="Close controller">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
           <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
         </svg>
       </button>
@@ -51,10 +66,18 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
     
     <div class="flex flex-col items-center">
       <div class="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-red-600">
-        <img src="/images/glitch.gif" alt="Glitch" class="w-full h-full object-cover" />
+        <video
+          src="/images/glitch.webm"
+          autoplay
+          loop
+          muted
+          playsinline
+          class="w-full h-full object-cover"
+          width="128" height="128"
+        ></video>
       </div>
       
-      <div id="sequence-dots" class="flex justify-center space-x-1 mb-4">
+      <div id="sequence-dots" class="flex justify-center space-x-1 mb-4" aria-label="Konami code sequence progress">
         <div class="w-2 h-2 rounded-full bg-red-900"></div>
         <div class="w-2 h-2 rounded-full bg-red-900"></div>
         <div class="w-2 h-2 rounded-full bg-red-900"></div>
@@ -67,24 +90,24 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
         <div class="w-2 h-2 rounded-full bg-red-900"></div>
       </div>
       
-      <div class="controller-buttons w-full">
+      <div class="controller-buttons w-full" role="group" aria-label="Controller buttons">
         <!-- D-pad -->
         <div class="grid grid-cols-3 gap-2 mb-4">
           <div></div>
-          <button id="btn-up" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700">↑</button>
+          <button id="btn-up" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700" aria-label="Up">↑</button>
           <div></div>
-          <button id="btn-left" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700">←</button>
+          <button id="btn-left" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700" aria-label="Left">←</button>
           <div></div>
-          <button id="btn-right" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700">→</button>
+          <button id="btn-right" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700" aria-label="Right">→</button>
           <div></div>
-          <button id="btn-down" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700">↓</button>
+          <button id="btn-down" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700" aria-label="Down">↓</button>
           <div></div>
         </div>
         
         <!-- A/B buttons -->
         <div class="flex justify-center space-x-4">
-          <button id="btn-b" class="bg-black text-red-500 w-12 h-12 rounded-full hover:bg-gray-900 border-2 border-red-600">B</button>
-          <button id="btn-a" class="bg-red-900 text-red-100 w-12 h-12 rounded-full hover:bg-red-700">A</button>
+          <button id="btn-b" class="bg-black text-red-500 w-12 h-12 rounded-full hover:bg-gray-900 border-2 border-red-600" aria-label="B button">B</button>
+          <button id="btn-a" class="bg-red-900 text-red-100 w-12 h-12 rounded-full hover:bg-red-700" aria-label="A button">A</button>
         </div>
       </div>
     </div>
@@ -98,12 +121,9 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
 
 <!-- Home window (visible on load) -->
 <Window id="home" title="home">
-  <div class="text-center mb-10">
-    <img src="/images/profile.png" alt="Profile picture" class="profile-image mx-auto mb-4">
-    <h1 class="text-2xl font-bold text-text dark:text-text-dark">{userName}</h1>
-    <p class="text-text dark:text-text-dark opacity-80 mb-6">{userTagline}</p>
+  <div class="flex flex-col items-center mb-6">
+    <span class="text-3xl font-semibold text-highlight dark:text-highlight-dark" lang="ja" title="Greeting">{jpGreeting}</span>
   </div>
-  
   <div class="desktop-icons grid grid-cols-2 gap-12">
     <DesktopIcon id="about" name="about" />
     <DesktopIcon id="links" name="links" />
@@ -118,7 +138,7 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
 </template>
 
 <script>
-  import { initIcons, initDarkModeToggle } from '../utils/iconManager';
+  import { initIcons } from '../utils/iconManager';
   import { repositionWindows } from '../utils/windowManager';
   import { initTouchSupport } from '../utils/touchSupport';
   import { initAudio } from '../utils/audioManager';
@@ -146,7 +166,6 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
 
   // Initialize when DOM is loaded
   document.addEventListener('DOMContentLoaded', () => {
-    initDarkModeToggle();
     initIcons();
     initTouchSupport();
     initAudio(); // Initialize audio functionality
@@ -179,8 +198,6 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
       
       // Controller variables
       let controllerVisible = false;
-      let longPressTimer: number | null = null;
-      const longPressDelay = 1000; // 1 second for long press
       
       // Helper function to open the autism window
       function crashOut() {
@@ -199,10 +216,15 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
           }
         }
         
+        // Play glitch sound effect on crashOut (Konami code success)
+        import('../utils/audioManager').then(({ playSound }) => {
+          playSound('glitch');
+        });
+
         // Open the autism window
         import('../utils/windowManager').then(({ openWindow }) => {
           openWindow('autism');
-          // Play a special sound if available
+          // Play window open sound
           import('../utils/audioManager').then(({ playSound }) => {
             playSound('windowOpen');
           });
@@ -214,7 +236,7 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
           body.classList.add('konami-activated');
           
           // Ensure Lain background is applied
-          body.classList.add('lain-background');
+          // setBackground('lain');
           
           // Flash effect
           setTimeout(() => {
@@ -232,10 +254,10 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
           resetSequenceDots();
           
           // Add Lain background when controller is shown
-          document.body.classList.add('lain-background');
+          // setBackground('lain');
           
           // Toggle decorations
-          toggleDecorations(true);
+          // setDecoration('lily');
         }
       }
       
@@ -247,12 +269,12 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
           konamiIndex = 0;
           
           // Remove Lain background when controller is hidden
-          document.body.classList.remove('lain-background');
+          // setBackground('default');
           
           // Check if autism window is open before toggling decorations back
           const autismWindow = document.querySelector('.window[data-window-id="autism"]');
           if (!autismWindow) {
-            toggleDecorations(false);
+            // setDecoration('sakura');
           }
         }
       }
@@ -279,20 +301,6 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
           dot.classList.add('bg-red-900');
         });
         konamiIndex = 0;
-      }
-      
-      // Helper function to toggle between sakura and lily decorations
-      function toggleDecorations(showLily: boolean) {
-        const sakuraDecoration = document.querySelector('.sakura-decoration');
-        const lilyDecoration = document.querySelector('.lily-decoration');
-        
-        if (showLily) {
-          sakuraDecoration?.classList.add('hidden');
-          lilyDecoration?.classList.remove('hidden');
-        } else {
-          sakuraDecoration?.classList.remove('hidden');
-          lilyDecoration?.classList.add('hidden');
-        }
       }
       
       // Initialize controller buttons

@@ -1,7 +1,7 @@
 /**
  * Audio Manager using Howler.js for handling sound effects
  */
-import { Howl, Howler } from 'howler';
+import { Howl } from 'howler';
 
 // Define sound types
 type SoundType = 'windowOpen' | 'windowClose' | 'profileClick' | 'glitch';

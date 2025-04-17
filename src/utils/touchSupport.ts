@@ -1,4 +1,4 @@
-import { bringToFront } from './windowManager';
+import { bringToFront, getDragBounds } from './windowManager';
 
 /**
  * Initialize touch support for mobile devices
@@ -49,7 +49,7 @@ function touchDraggable(windowEl: HTMLElement, handleEl: HTMLElement): void {
     bringToFront(windowEl);
 
     // Add dragging class
-    windowEl.classList.add('window-dragging');
+    // addDragClass(windowEl); // Removed this line
 
     const touch = e.touches[0];
     const startX = touch.clientX;
@@ -74,12 +74,10 @@ function touchDraggable(windowEl: HTMLElement, handleEl: HTMLElement): void {
       const newTop = startTop + deltaY;
       const newLeft = startLeft + deltaX;
 
-      // Keep window within viewport
-      const maxTop = window.innerHeight - 50;
-      const maxLeft = window.innerWidth - 50;
-
-      windowEl.style.top = `${Math.min(Math.max(0, newTop), maxTop)}px`;
-      windowEl.style.left = `${Math.min(Math.max(0, newLeft), maxLeft)}px`;
+      // Use shared drag helpers from windowManager for bounds and class logic
+      const { top, left } = getDragBounds(newTop, newLeft);
+      windowEl.style.top = `${top}px`;
+      windowEl.style.left = `${left}px`;
     }
 
     function touchEnd(): void {
@@ -87,7 +85,7 @@ function touchDraggable(windowEl: HTMLElement, handleEl: HTMLElement): void {
       document.removeEventListener('touchend', touchEnd);
 
       // Remove dragging class
-      windowEl.classList.remove('window-dragging');
+      // removeDragClass(windowEl); // Removed this line
     }
   }
 }

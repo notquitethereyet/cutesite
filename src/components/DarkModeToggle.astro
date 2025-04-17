@@ -6,6 +6,7 @@
 </button>
 
 <script>
+  import { setTheme } from '../utils/themeManager';
   document.addEventListener('DOMContentLoaded', function() {
     const darkModeToggle = document.getElementById('dark-mode-toggle');
     const onekoCat = document.getElementById('oneko');
@@ -15,15 +16,15 @@
       // Check current state before toggling
       const wasDarkMode = document.documentElement.classList.contains('dark');
 
-      // Toggle dark mode class
-      document.documentElement.classList.toggle('dark');
-      const isDarkMode = document.documentElement.classList.contains('dark');
+      // Use setTheme to toggle dark mode
+      setTheme({ mode: wasDarkMode ? 'light' : 'dark' });
+      const isDarkMode: boolean = document.documentElement.classList.contains('dark');
 
       // Save preference
       localStorage.setItem('darkMode', String(isDarkMode));
 
       // Update window styles to match the new theme
-      updateWindowStyles(isDarkMode);
+      updateWindowStyles();
 
       // If switching from dark to light mode, play the wakeup animation
       if (wasDarkMode && !isDarkMode) {
@@ -40,20 +41,19 @@
     });
     
     // Function to update window styles when theme changes
-    function updateWindowStyles(isDarkMode: boolean): void {
+    function updateWindowStyles() {
       // Get all window elements
       const windows = document.querySelectorAll('.window');
       
       windows.forEach(window => {
         // Update title bar background
         const titleBar = window.querySelector('.window > div:first-child') as HTMLElement;
-        if (titleBar) {
+        if (titleBar && titleBar.style) {
           titleBar.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--window-title-bg');
         }
-        
         // Update window content background
         const contentArea = window.querySelector('.window > div:nth-child(2)') as HTMLElement;
-        if (contentArea) {
+        if (contentArea && contentArea.style) {
           contentArea.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--window-content-bg');
         }
       });

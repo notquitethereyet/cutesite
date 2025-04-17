@@ -13,6 +13,7 @@
   --icon-bg: #fcd1d7;       /* Soft pink */
   --window-shadow: 0 8px 20px rgba(86, 33, 53, 0.15);
   --icon-shadow: 0 4px 8px rgba(86, 33, 53, 0.1);
+  --card-border: #c3829e; /* New variable for card border */
 }
 
 .dark {
@@ -28,6 +29,7 @@
   --icon-bg: #505477;       /* Dark blue-purple */
   --window-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   --icon-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --card-border: #fcddf2; /* Update card border for dark mode */
 }
 
 /* Base styles */
@@ -338,7 +340,6 @@ a, button, [data-window], .window-close, .window-titlebar {
   overflow: auto;
   flex: 1;
   transition: opacity 0.3s ease;
-  color: var(--text-color); /* Ensure text color matches theme */
   background-color: var(--window-content-bg) !important; /* Use window content background color */
   opacity: 1 !important; /* Ensure full opacity */
 }
@@ -412,9 +413,13 @@ a, button, [data-window], .window-close, .window-titlebar {
 }
 
 .about-window h2, .work-window h2, .faq-window h2, .contact-window h2 {
-  color: #562135; /* Deep burgundy from the sakura palette for better contrast */
+  color: var(--text-color) !important;
   font-weight: bold;
-  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.3);
+  text-shadow: none;
+}
+
+.dark .about-window h2, .dark .work-window h2, .dark .faq-window h2, .dark .contact-window h2 {
+  color: var(--highlight-color) !important;
 }
 
 .about-window h2::after, .links-window h2::after, .work-window h2::after, .faq-window h2::after, .contact-window h2::after {
@@ -494,69 +499,37 @@ a, button, [data-window], .window-close, .window-titlebar {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
-.work-items, .faq-item {
+.card-list {
   margin-top: 25px;
 }
 
-.work-item, .faq-item {
+.card {
   margin-bottom: 30px;
   padding: 15px;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
-  border: 2px dashed var(--icon-border);
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px dashed var(--card-border, var(--icon-border));
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: #562135; /* Deep burgundy for better contrast */
 }
 
-.dark .work-item, .dark .faq-item {
-  background-color: rgba(80, 84, 119, 0.9); /* Dark blue-purple background */
-  color: #ffdede; /* Light pink-peach for dark mode */
+.dark .card {
+  background-color: rgba(80, 84, 119, 0.9);
   font-weight: 500;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
-.work-item:hover, .faq-item:hover {
+.card:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.work-item h3, .faq-item h3 {
+.card h3 {
   margin-bottom: 10px;
-  color: #c3829e; /* Mauve pink for headings */
+  color: #c3829e;
 }
 
-.dark .work-item h3, .dark .faq-item h3 {
-  color: #ffc2c2; /* Salmon pink for dark mode */
-}
-
-.about-window h2, .work-window h2, .faq-window h2, .contact-window h2 {
-  color: #562135; /* Deep burgundy from the sakura palette for better contrast */
-  font-weight: bold;
-  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.3);
-}
-
-.about-window p, .about-window li, .work-window p, .faq-window p {
-  color: #562135; /* Deep burgundy for better contrast */
-  font-weight: 500; /* Medium weight for better readability */
-}
-
-.dark .about-window h2, 
-.dark .work-window h2, 
-.dark .faq-window h2, 
-.dark .contact-window h2 {
-  color: #fcddf2; /* Light pink for better contrast in dark mode */
-  font-weight: bold;
-  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
-}
-
-.dark .about-window p, 
-.dark .about-window li, 
-.dark .work-window p, 
-.dark .faq-window p, 
-.dark .contact-window p {
-  color: #ffdede; /* Light pink-peach for better contrast in dark mode */
-  font-weight: 500; /* Medium weight for better readability */
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+.dark .card h3 {
+  color: #ffc2c2;
 }
 
 /* About window styling */
@@ -655,39 +628,6 @@ a, button, [data-window], .window-close, .window-titlebar {
   margin-bottom: 2rem;
 }
 
-.link-card {
-  display: block;
-  text-decoration: none;
-  margin-bottom: 1rem;
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.link-card:hover {
-  border-color: var(--accent);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.dark .link-card:hover {
-  border-color: var(--accent-dark);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.autism-notes h3 {
-  margin-bottom: 0.75rem;
-  border-bottom: 2px solid var(--accent);
-  display: inline-block;
-  padding-bottom: 2px;
-}
-
-.dark .autism-notes h3 {
-  border-bottom-color: var(--accent-dark);
-}
-
-.list-circle {
-  list-style-type: circle;
-}
-
 /* Animation classes */
 .window-opening {
   animation: windowOpen 0.5s forwards;
@@ -735,20 +675,6 @@ a, button, [data-window], .window-close, .window-titlebar {
 /* Konami code activation effect */
 .konami-activated {
   animation: flash 0.5s;
-}
-
-/* Lain background when Konami code is activated */
-body.lain-background {
-  background-image: url('/images/lain.gif') !important;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  transition: background-image 0.5s ease-in-out;
-}
-
-body.lain-background .window {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Lily decorations */

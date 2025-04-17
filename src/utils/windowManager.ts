@@ -1,13 +1,13 @@
 // Types
 import { playSound } from './audioManager';
 import { userName, userEmail, socialLinks } from './siteConfig';
+import { setTheme } from './themeManager';
 
+// State
 interface WindowState {
   id: string;
   element: HTMLElement;
 }
-
-// State
 let activeWindows: WindowState[] = [];
 let highestZIndex: number = 10;
 
@@ -31,8 +31,7 @@ export function openWindow(windowId: string): void {
 
   // If opening the autism window, toggle decorations and ensure Lain background
   if (windowId === 'autism') {
-    toggleDecorations(true);
-    document.body.classList.add('lain-background');
+    setTheme({ mode: document.documentElement.classList.contains('dark') ? 'dark' : 'light', background: 'lain', decoration: 'lily' });
   }
 
   // Create new window from template
@@ -163,7 +162,7 @@ function createWindowContent(windowId: string): string | null {
     case 'about':
       return `
         <div class="about-window">
-          <img src="/images/profile.png" alt="Profile picture" class="profile-image" id="profile-image">
+          <img src="/images/profile.webp" alt="Profile picture" class="profile-image" id="profile-image" loading="lazy" width="120" height="120">
           <h2 class="font-bold text-2xl text-text dark:text-text-dark">${userName}</h2>
           <p class="mb-3">CS graduate student with software development experience.</p>
           <div class="about-sections">
@@ -215,7 +214,7 @@ function createWindowContent(windowId: string): string | null {
       
       return `
         <div class="links-window">
-          <h2 class="font-bold text-2xl text-text dark:text-text-dark">Find Me Online</h2>
+          <h2 class="font-bold text-2xl text-highlight dark:text-highlight-dark mb-6">Find Me Online</h2>
           <div class="links-grid">
             ${socialLinksHTML}
             <a href="mailto:${userEmail}" class="link-item">
@@ -226,39 +225,43 @@ function createWindowContent(windowId: string): string | null {
         </div>
       `;
     case 'work':
+      // Example projects array (replace with your actual data)
+      const projects = [
+        {
+          title: 'Project 1',
+          description: 'Description of project 1.',
+          url: '#'
+        },
+        {
+          title: 'Project 2',
+          description: 'Description of project 2.',
+          url: '#'
+        }
+      ];
       return `
         <div class="work-window">
-          <h2 class="font-bold text-2xl text-text dark:text-text-dark">My Work</h2>
-          <div class="work-items">
-            <div class="work-item">
-              <h3>Project 1</h3>
-              <p>Description of project 1.</p>
-            </div>
-            <div class="work-item">
-              <h3>Project 2</h3>
-              <p>Description of project 2.</p>
-            </div>
-          </div>
+          <h2 class="font-bold text-2xl text-highlight dark:text-highlight-dark mb-6">My Work</h2>
+          ${generateCardListHtml(projects)}
         </div>
       `;
     case 'faq':
       return `
         <div class="faq-window">
-          <h2 class="font-bold text-2xl text-text dark:text-text-dark">???</h2>
+          <h2 class="font-bold text-2xl text-highlight dark:text-highlight-dark mb-6">???</h2>
           
           <div class="faq-item">
-            <h3 class="font-bold">???</h3>
-            <p>???</p>
+            <h3 class="font-bold text-highlight dark:text-highlight-dark">???</h3>
+            <p class="text-highlight dark:text-highlight-dark">???</p>
           </div>
           
           <div class="faq-item" id="controller-trigger-panel">
-            <h3 class="font-bold">???</h3>
-            <p>???</p>
+            <h3 class="font-bold text-highlight dark:text-highlight-dark">???</h3>
+            <p class="text-highlight dark:text-highlight-dark">???</p>
           </div>
           
           <div class="faq-item">
-            <h3 class="font-bold">???</h3>
-            <p>???</p>
+            <h3 class="font-bold text-highlight dark:text-highlight-dark">???</h3>
+            <p class="text-highlight dark:text-highlight-dark">???</p>
           </div>
         </div>
       `;
@@ -312,29 +315,12 @@ function createWindowContent(windowId: string): string | null {
         }
       ];
 
-      // Generate HTML for links
-      const linksHtml = links.map(link => `
-        <a href="${link.url}" target="_blank" rel="noopener noreferrer" 
-           class="link-card bg-opacity-10 bg-secondary dark:bg-accent-dark dark:bg-opacity-20 p-4 rounded-lg shadow-md transform hover:-translate-y-1 transition duration-300 group">
-          <div>
-            <h3 class="text-lg font-bold mb-2 text-text dark:text-text-dark group-hover:text-accent dark:group-hover:text-accent-dark transition duration-300">${link.title}</h3>
-            <p class="text-text dark:text-text-dark opacity-80">${link.description}</p>
-          </div>
-        </a>
-      `).join('');
+      // Generate HTML for links with card-list structure
+      const linksHtml = generateCardListHtml(links);
 
       return `
-        <div class="autism-window">
-          <h2 class="font-bold text-2xl text-text dark:text-text-dark mb-6 text-center w-full">shit that i need</h2>
-          <p class="mb-6 text-center text-text dark:text-text-dark opacity-80">A collection of useful and interesting links</p>
-          
-          <div class="links-grid grid grid-cols-1 md:grid-cols-2 gap-4">
-            ${linksHtml}
-          </div>
-          
-          <div class="mt-8 p-4 bg-opacity-50 bg-secondary dark:bg-accent-dark dark:bg-opacity-30 rounded-lg">
-            <p class="text-center italic text-text dark:text-text-dark">???</p>
-          </div>
+        <div class="flex flex-col gap-4">
+          ${linksHtml}
         </div>
       `;
     default:
@@ -342,10 +328,25 @@ function createWindowContent(windowId: string): string | null {
   }
 }
 
+// Utility: Generate card-list HTML for any list of {title, description, url}
+function generateCardListHtml(items: { title: string; description: string; url: string }[]): string {
+  return `
+    <div class="card-list">
+      ${items.map(item => `
+        <div class="card">
+          <h3 class="font-bold text-highlight dark:text-highlight-dark"><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
+          <p class="text-highlight dark:text-highlight-dark">${item.description}</p>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
 /**
  * Closes a window
  */
 export function closeWindow(windowId: string): void {
+  playSound('windowClose');
   const windowElement = document.querySelector(`.window[data-window-id="${windowId}"]`);
   if (windowElement) {
     windowElement.classList.add('closing');
@@ -354,9 +355,7 @@ export function closeWindow(windowId: string): void {
       
       // If this was the autism window, redirect to home
       if (windowId === 'autism') {
-        // Remove Lain background before redirecting
-        document.body.classList.remove('lain-background');
-        toggleDecorations(false);
+        setTheme({ mode: document.documentElement.classList.contains('dark') ? 'dark' : 'light', background: 'default', decoration: 'sakura' });
         window.location.href = '/';
       }
     }, 300);
@@ -388,6 +387,13 @@ function initWindowEvents(windowEl: HTMLElement): void {
   const titleBar = windowEl.querySelector('.bg-secondary') as HTMLElement;
   if (titleBar) {
     makeDraggable(windowEl, titleBar);
+  }
+
+  // Special case: Make the home window draggable on desktop
+  if (windowEl.dataset.windowId === 'home') {
+    if (titleBar) {
+      makeDraggable(windowEl, titleBar);
+    }
   }
 }
 
@@ -421,7 +427,7 @@ function addWindowEventListeners(windowEl: HTMLElement): void {
 /**
  * Makes an element draggable
  */
-function makeDraggable(element: HTMLElement, handle: HTMLElement): void {
+export function makeDraggable(element: HTMLElement, handle: HTMLElement): void {
   let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
   handle.onmousedown = dragMouseDown;
@@ -433,7 +439,7 @@ function makeDraggable(element: HTMLElement, handle: HTMLElement): void {
     bringToFront(element);
 
     // Add dragging class
-    element.classList.add('window-dragging');
+    addDragClass(element);
 
     // Get the mouse cursor position at startup
     pos3 = e.clientX;
@@ -456,21 +462,47 @@ function makeDraggable(element: HTMLElement, handle: HTMLElement): void {
     const newLeft = element.offsetLeft - pos1;
 
     // Keep window within viewport
-    const maxTop = window.innerHeight - 50;
-    const maxLeft = window.innerWidth - 50;
+    const { top, left } = getDragBounds(newTop, newLeft);
 
-    element.style.top = `${Math.min(Math.max(0, newTop), maxTop)}px`;
-    element.style.left = `${Math.min(Math.max(0, newLeft), maxLeft)}px`;
+    element.style.top = `${top}px`;
+    element.style.left = `${left}px`;
   }
 
   function closeDragElement(): void {
     // Remove dragging class
-    element.classList.remove('window-dragging');
+    removeDragClass(element);
 
     // Stop moving when mouse button is released
     document.onmouseup = null;
     document.onmousemove = null;
   }
+}
+
+// Shared helpers for drag logic
+/**
+ * Clamp window position within viewport bounds
+ */
+export function getDragBounds(top: number, left: number): { top: number, left: number } {
+  const maxTop = window.innerHeight - 50;
+  const maxLeft = window.innerWidth - 50;
+  return {
+    top: Math.min(Math.max(0, top), maxTop),
+    left: Math.min(Math.max(0, left), maxLeft)
+  };
+}
+
+/**
+ * Add dragging class to window element
+ */
+export function addDragClass(windowEl: HTMLElement) {
+  windowEl.classList.add('window-dragging');
+}
+
+/**
+ * Remove dragging class from window element
+ */
+export function removeDragClass(windowEl: HTMLElement) {
+  windowEl.classList.remove('window-dragging');
 }
 
 /**
@@ -601,20 +633,4 @@ export function rearrangeWindows(): void {
       windowEl.style.transition = '';
     }, 300);
   });
-}
-
-/**
- * Toggles decorations on or off
- */
-function toggleDecorations(on: boolean): void {
-  const sakuraDecoration = document.querySelector('.sakura-decoration');
-  const lilyDecoration = document.querySelector('.lily-decoration');
-  
-  if (on) {
-    sakuraDecoration?.classList.add('hidden');
-    lilyDecoration?.classList.remove('hidden');
-  } else {
-    sakuraDecoration?.classList.remove('hidden');
-    lilyDecoration?.classList.add('hidden');
-  }
 }
