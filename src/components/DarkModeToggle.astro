@@ -1,6 +1,101 @@
 ---
 ---
 
-<button id="dark-mode-toggle" class="bg-highlight dark:bg-primary border-2 border-secondary dark:border-accent rounded-lg w-12 h-12 flex justify-center items-center cursor-pointer mb-2.5 transition-transform duration-300 shadow-md hover:scale-110 hover:rotate-3" title="Toggle dark mode">
-  <img src="/images/icons/dark-mode.svg" alt="Dark mode toggle" width="30" height="30" class="w-7 h-7 transition-all duration-300">
+<button id="dark-mode-toggle" class="bg-transparent w-12 h-12 flex justify-center items-center cursor-pointer mb-2.5 transition-transform duration-300 hover:scale-110" title="Toggle dark mode">
+  <div id="oneko" class="w-8 h-8"></div>
 </button>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const onekoCat = document.getElementById('oneko');
+    if (!darkModeToggle || !onekoCat) return;
+
+    darkModeToggle.addEventListener('click', () => {
+      // Check current state before toggling
+      const wasDarkMode = document.documentElement.classList.contains('dark');
+
+      // Toggle dark mode class
+      document.documentElement.classList.toggle('dark');
+      const isDarkMode = document.documentElement.classList.contains('dark');
+
+      // Save preference
+      localStorage.setItem('darkMode', isDarkMode);
+
+      // If switching from dark to light mode, play the wakeup animation
+      if (wasDarkMode && !isDarkMode) {
+        // Add waking-up class to trigger animation
+        onekoCat.classList.add('waking-up');
+
+        // Remove the class after animation completes
+        setTimeout(() => {
+          onekoCat.classList.remove('waking-up');
+        }, 2500); // Match animation duration
+      }
+
+      console.log('Dark mode toggled:', isDarkMode);
+    });
+  });
+</script>
+
+<style>
+  #oneko {
+    width: 32px;
+    height: 32px;
+    background-image: url('/images/oneko.gif');
+    background-repeat: no-repeat;
+    background-position: -96px -96px; /* Default awake position */
+    image-rendering: pixelated;
+  }
+
+  /* Dark mode (sleeping) */
+  html.dark #oneko {
+    background-position: -64px 0; /* Sleeping position */
+    animation: sleep 1s steps(2) infinite;
+  }
+
+  /* Light mode (awake) */
+  html:not(.dark) #oneko {
+    background-position: -96px -96px; /* Awake position */
+    animation: none; /* No continuous animation in light mode */
+  }
+
+  /* Animation when transitioning from dark to light mode */
+  html:not(.dark) #oneko.waking-up {
+    animation: wakeup 2.5s steps(1) forwards;
+  }
+
+  @keyframes sleep {
+    0%, 50% {
+      background-position: -64px 0;
+    }
+    50.00001%, 100% {
+      background-position: -64px -32px;
+    }
+  }
+
+  /* Wakeup animation that plays once */
+  @keyframes wakeup {
+    0% {
+      background-position: -64px 0; /* Sleeping */
+    }
+    15% {
+      background-position: -160px 0; /* Start waking up */
+    }
+    30% {
+      background-position: -192px 0; /* Mid yawn */
+    }
+    45% {
+      background-position: -224px 0; /* Full yawn */
+    }
+    60% {
+      background-position: -96px -64px; /* Yawning while sitting up */
+    }
+    75% {
+      background-position: -96px -96px; /* Fully awake */
+    }
+    100% {
+      background-position: -96px -96px; /* Stays awake */
+    }
+  }
+</style>

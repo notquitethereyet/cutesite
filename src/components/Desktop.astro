@@ -196,42 +196,10 @@ import DarkModeToggle from './DarkModeToggle.astro';
     }
   });
 
-  // Dark Mode Toggle
+  // Dark Mode Toggle is now handled by the Oneko component
   function initDarkModeToggle() {
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-
-    // Check if dark mode is already active and set the icon accordingly
-    const icon = darkModeToggle.querySelector('img');
-    if (isDarkMode) {
-      icon.style.filter = "invert(100%)";
-    } else {
-      icon.style.filter = "none";
-    }
-
-    darkModeToggle.addEventListener('click', () => {
-      // Add rotation animation
-      darkModeToggle.classList.add('rotate-toggle');
-
-      // Toggle dark mode class
-      document.documentElement.classList.toggle('dark');
-      isDarkMode = document.documentElement.classList.contains('dark');
-
-      // Update icon - visual feedback
-      const icon = darkModeToggle.querySelector('img');
-      if (isDarkMode) {
-        icon.style.filter = "invert(100%)";
-      } else {
-        icon.style.filter = "none";
-      }
-
-      // Save preference
-      localStorage.setItem('darkMode', isDarkMode);
-
-      // Remove rotation class after animation completes
-      setTimeout(() => {
-        darkModeToggle.classList.remove('rotate-toggle');
-      }, 500);
-    });
+    // This function is kept for compatibility but no longer does anything
+    // as the dark mode toggle is now handled by the Oneko component
   }
 
   // Initialize Desktop Icons
@@ -670,13 +638,22 @@ import DarkModeToggle from './DarkModeToggle.astro';
 
   // Touch support for mobile devices
   function initTouchSupport() {
+    // Apply touch dragging to existing windows
+    const existingWindows = document.querySelectorAll('.window');
+    existingWindows.forEach(windowEl => {
+      const titleBar = windowEl.querySelector('.bg-secondary');
+      if (titleBar) {
+        touchDraggable(windowEl, titleBar);
+      }
+    });
+
     // Touch dragging for windows
     function touchDraggable(windowEl, handleEl) {
       if (!handleEl) return;
       handleEl.addEventListener('touchstart', touchStart, { passive: false });
 
       function touchStart(e) {
-        e.preventDefault();
+        // Don't prevent default for touchstart to allow scrolling inside windows
 
         // Bring window to front
         bringToFront(windowEl);
@@ -691,10 +668,12 @@ import DarkModeToggle from './DarkModeToggle.astro';
         const startTop = windowEl.offsetTop;
         const startLeft = windowEl.offsetLeft;
 
-        handleEl.addEventListener('touchmove', touchMove, { passive: false });
-        handleEl.addEventListener('touchend', touchEnd, { passive: false });
+        // Add event listeners to document instead of handleEl for better touch tracking
+        document.addEventListener('touchmove', touchMove, { passive: false });
+        document.addEventListener('touchend', touchEnd, { passive: false });
 
         function touchMove(e) {
+          // Prevent default to stop scrolling while dragging
           e.preventDefault();
 
           const touch = e.touches[0];
@@ -714,8 +693,8 @@ import DarkModeToggle from './DarkModeToggle.astro';
         }
 
         function touchEnd() {
-          handleEl.removeEventListener('touchmove', touchMove);
-          handleEl.removeEventListener('touchend', touchEnd);
+          document.removeEventListener('touchmove', touchMove);
+          document.removeEventListener('touchend', touchEnd);
 
           // Remove dragging class
           windowEl.classList.remove('window-dragging');
@@ -729,7 +708,7 @@ import DarkModeToggle from './DarkModeToggle.astro';
         if (mutation.addedNodes.length) {
           mutation.addedNodes.forEach((node) => {
             if (node.classList && node.classList.contains('window')) {
-              const titleBar = node.querySelector('.bg-gray-800');
+              const titleBar = node.querySelector('.bg-secondary');
               if (titleBar) {
                 touchDraggable(node, titleBar);
               }
