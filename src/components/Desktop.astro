@@ -33,6 +33,56 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
   <!-- Windows container (windows will be created dynamically) -->
   <div id="windows-container" class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>
 
+  <!-- Hidden controller for Konami code (initially hidden) -->
+  <div id="konami-controller" class="fixed inset-0 bg-black bg-opacity-80 z-50 flex flex-col items-center justify-center hidden">
+    <div class="controller-container relative w-[280px] h-[400px]">
+      <!-- Controller image background -->
+      <div class="controller-bg w-full h-full rounded-3xl bg-gray-800 border-2 border-gray-700 shadow-xl flex flex-col items-center p-4">
+        <!-- D-pad -->
+        <div class="d-pad relative w-32 h-32 mb-6 mt-4">
+          <button id="btn-up" class="konami-btn absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gray-700 hover:bg-gray-600 rounded-md flex items-center justify-center">
+            <span class="text-white">↑</span>
+          </button>
+          <button id="btn-down" class="konami-btn absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gray-700 hover:bg-gray-600 rounded-md flex items-center justify-center">
+            <span class="text-white">↓</span>
+          </button>
+          <button id="btn-left" class="konami-btn absolute left-0 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-gray-700 hover:bg-gray-600 rounded-md flex items-center justify-center">
+            <span class="text-white">←</span>
+          </button>
+          <button id="btn-right" class="konami-btn absolute right-0 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-gray-700 hover:bg-gray-600 rounded-md flex items-center justify-center">
+            <span class="text-white">→</span>
+          </button>
+          <div class="absolute inset-0 m-auto w-8 h-8 bg-gray-700 rounded-md"></div>
+        </div>
+        
+        <!-- AB buttons -->
+        <div class="ab-buttons flex justify-center space-x-8 mt-6">
+          <button id="btn-b" class="konami-btn w-14 h-14 bg-blue-600 hover:bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">B</button>
+          <button id="btn-a" class="konami-btn w-14 h-14 bg-red-600 hover:bg-red-500 rounded-full flex items-center justify-center text-white font-bold">A</button>
+        </div>
+        
+        <!-- Sequence display -->
+        <div class="sequence-display mt-8 bg-gray-900 w-full h-12 rounded-md flex items-center justify-center">
+          <div id="sequence-dots" class="flex space-x-2">
+            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
+            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
+            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
+            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
+            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
+            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
+            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
+            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
+            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
+            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
+          </div>
+        </div>
+        
+        <!-- Close button -->
+        <button id="controller-close" class="absolute top-2 right-2 w-8 h-8 bg-red-600 hover:bg-red-500 rounded-full flex items-center justify-center text-white font-bold">×</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <div class="absolute bottom-0 left-0 w-full p-4 flex flex-col items-center">
     <div class="text-sm text-text dark:text-text-dark opacity-80 z-10">&copy; {currentYear} {userName}</div>
@@ -113,5 +163,186 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
         }
       }, 300);
     }
+    
+    // Konami code implementation
+    function initKonamiCode() {
+      // Konami code sequence: ↑ ↑ ↓ ↓ ← → ← → B A
+      const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+      let konamiIndex = 0;
+      
+      // Controller variables
+      let controllerVisible = false;
+      let longPressTimer: number | null = null;
+      const longPressDelay = 1000; // 1 second for long press
+      
+      // Helper function to open the secret window
+      function openSecretWindow() {
+        // Reset the index
+        konamiIndex = 0;
+        
+        // Hide controller if it's visible
+        if (controllerVisible) {
+          hideController();
+        }
+        
+        // Open the secret window
+        import('../utils/windowManager').then(({ openWindow }) => {
+          openWindow('secret');
+          // Play a special sound if available
+          import('../utils/audioManager').then(({ playSound }) => {
+            playSound('windowOpen');
+          });
+        });
+        
+        // Add a special effect
+        const body = document.querySelector('body');
+        if (body) {
+          body.classList.add('konami-activated');
+          setTimeout(() => {
+            body.classList.remove('konami-activated');
+          }, 1000);
+        }
+      }
+      
+      // Controller functions
+      function showController() {
+        const controller = document.getElementById('konami-controller');
+        if (controller) {
+          controller.classList.remove('hidden');
+          controllerVisible = true;
+          resetSequenceDots();
+        }
+      }
+      
+      function hideController() {
+        const controller = document.getElementById('konami-controller');
+        if (controller) {
+          controller.classList.add('hidden');
+          controllerVisible = false;
+          konamiIndex = 0;
+        }
+      }
+      
+      function updateSequenceDots() {
+        const dots = document.querySelectorAll('#sequence-dots div');
+        for (let i = 0; i < dots.length; i++) {
+          if (i < konamiIndex) {
+            dots[i].classList.remove('bg-gray-700');
+            dots[i].classList.add('bg-green-500');
+          } else {
+            dots[i].classList.remove('bg-green-500');
+            dots[i].classList.add('bg-gray-700');
+          }
+        }
+      }
+      
+      function resetSequenceDots() {
+        const dots = document.querySelectorAll('#sequence-dots div');
+        dots.forEach(dot => {
+          dot.classList.remove('bg-green-500');
+          dot.classList.add('bg-gray-700');
+        });
+        konamiIndex = 0;
+      }
+      
+      // Initialize controller buttons
+      function initControllerButtons() {
+        // D-pad buttons
+        document.getElementById('btn-up')?.addEventListener('click', () => handleControllerButton('ArrowUp'));
+        document.getElementById('btn-down')?.addEventListener('click', () => handleControllerButton('ArrowDown'));
+        document.getElementById('btn-left')?.addEventListener('click', () => handleControllerButton('ArrowLeft'));
+        document.getElementById('btn-right')?.addEventListener('click', () => handleControllerButton('ArrowRight'));
+        
+        // A/B buttons
+        document.getElementById('btn-a')?.addEventListener('click', () => handleControllerButton('a'));
+        document.getElementById('btn-b')?.addEventListener('click', () => handleControllerButton('b'));
+        
+        // Close button
+        document.getElementById('controller-close')?.addEventListener('click', hideController);
+      }
+      
+      function handleControllerButton(key: string) {
+        // Check if the key matches the expected key in the sequence
+        const expectedKey = konamiCode[konamiIndex];
+        
+        if (key.toLowerCase() === expectedKey.toLowerCase()) {
+          // Move to the next key in the sequence
+          konamiIndex++;
+          updateSequenceDots();
+          
+          // If the entire sequence is entered correctly
+          if (konamiIndex === konamiCode.length) {
+            // Add a small delay so user can see the completed sequence
+            setTimeout(() => {
+              openSecretWindow();
+            }, 500);
+          }
+        } else {
+          // Reset the sequence if a wrong key is pressed
+          konamiIndex = 0;
+          updateSequenceDots();
+        }
+      }
+      
+      // Show controller on click (for desktop) or long press (for mobile)
+      function setupControllerTrigger() {
+        // For desktop: Bottom right corner click
+        const desktopTrigger = document.createElement('div');
+        desktopTrigger.id = 'controller-trigger';
+        desktopTrigger.style.position = 'fixed';
+        desktopTrigger.style.bottom = '0';
+        desktopTrigger.style.right = '0';
+        desktopTrigger.style.width = '40px';
+        desktopTrigger.style.height = '40px';
+        desktopTrigger.style.cursor = 'pointer';
+        desktopTrigger.style.zIndex = '10';
+        desktopTrigger.addEventListener('click', showController);
+        document.body.appendChild(desktopTrigger);
+        
+        // For mobile: Long press detection
+        document.addEventListener('touchstart', (e) => {
+          // Only detect long press in bottom-right corner
+          const touch = e.touches[0];
+          const windowWidth = window.innerWidth;
+          const windowHeight = window.innerHeight;
+          
+          if (touch.clientX > windowWidth * 0.8 && touch.clientY > windowHeight * 0.8) {
+            longPressTimer = setTimeout(() => {
+              showController();
+              longPressTimer = null;
+            }, longPressDelay) as unknown as number;
+          }
+        });
+        
+        // Cancel long press if touch ends
+        document.addEventListener('touchend', () => {
+          if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+          }
+        });
+        
+        // Cancel long press if touch moves too much
+        document.addEventListener('touchmove', () => {
+          if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+          }
+        });
+      }
+      
+      // Initialize controller buttons when DOM is loaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          initControllerButtons();
+          setupControllerTrigger();
+        });
+      } else {
+        initControllerButtons();
+        setupControllerTrigger();
+      }
+    }
+    
+    initKonamiCode();
   });
 </script>

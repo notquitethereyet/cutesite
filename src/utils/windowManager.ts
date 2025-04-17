@@ -242,6 +242,86 @@ function createWindowContent(windowId: string): string | null {
           </div>
         </div>
       `;
+    case 'secret':
+      // Link data structure
+      const links = [
+        {
+          title: "My Medium Blog",
+          description: "I write about things that interest me! Check me out!",
+          url: "https://medium.com/@notquitethereyet_/"
+        },
+        {
+          title: "Degoogling",
+          description: "Reduce the amount of data Google can steal from you!",
+          url: "https://www.reddit.com/r/degoogle/comments/huk4rp/why_you_should_degoogle_intro_degoogling/"
+        },
+        {
+          title: "Stay Private Online!",
+          description: "Various Privacy Tools",
+          url: "https://www.privacytools.io/"
+        },
+        {
+          title: "Are VPNs really private?",
+          description: "VPNs keep no logs. Right? RIGHT??????",
+          url: "https://www.youtube.com/watch?v=239w7x2TdWE"
+        },
+        {
+          title: "BitTorrent crypto mining",
+          description: "Your harem anime spiking CPU usage?",
+          url: "https://www.trustedreviews.com/news/utorrent-silently-installing-bundled-bitcoin-mining-software-2931825"
+        },
+        {
+          title: "PlayStation 2 BIOS",
+          description: "Curated BIOS that I need to play PS2 games.",
+          url: "https://drive.google.com/file/d/1H_ydGw_leVuMpRzrEoC8nAWhmR1kGr0i/view"
+        },
+        {
+          title: "PlayStation 3 Firmware",
+          description: "Official Sony repo for PS3 firmware! Good job Sony!",
+          url: "https://www.playstation.com/en-us/support/hardware/ps3/system-software/"
+        },
+        {
+          title: "Stealing Stuff Pt. 1",
+          description: "Stealing guide for games!",
+          url: "https://www.reddit.com/r/Piracy/wiki/megathread/games/"
+        },
+        {
+          title: "Stealing Stuff Pt. 2",
+          description: "Stealing Guide for other software!",
+          url: "https://www.reddit.com/r/Piracy/wiki/tools"
+        },
+        {
+          title: "Stealing Stuff Pt. 3",
+          description: "Stealing Guide for stinky weebs!",
+          url: "https://nyaa.si/"
+        }
+      ];
+
+      // Generate HTML for links
+      const linksHtml = links.map(link => `
+        <a href="${link.url}" target="_blank" rel="noopener noreferrer" 
+           class="link-card bg-opacity-10 bg-secondary dark:bg-accent-dark dark:bg-opacity-20 p-4 rounded-lg shadow-md transform hover:-translate-y-1 transition duration-300 group">
+          <div>
+            <h3 class="text-lg font-bold mb-2 text-text dark:text-text-dark group-hover:text-accent dark:group-hover:text-accent-dark transition duration-300">${link.title}</h3>
+            <p class="text-text dark:text-text-dark opacity-80">${link.description}</p>
+          </div>
+        </a>
+      `).join('');
+
+      return `
+        <div class="secret-window">
+          <h2 class="font-bold text-2xl text-text dark:text-text-dark mb-6 text-center w-full">Autism Links</h2>
+          <p class="mb-6 text-center text-text dark:text-text-dark opacity-80">A collection of useful and interesting links</p>
+          
+          <div class="links-grid grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${linksHtml}
+          </div>
+          
+          <div class="mt-8 p-4 bg-opacity-50 bg-secondary dark:bg-accent-dark dark:bg-opacity-30 rounded-lg">
+            <p class="text-center italic text-text dark:text-text-dark">This area is for your eyes only!</p>
+          </div>
+        </div>
+      `;
     default:
       return null;
   }
