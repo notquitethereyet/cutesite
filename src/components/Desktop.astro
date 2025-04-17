@@ -12,9 +12,14 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
 ---
 
 <div class="flex flex-col h-screen relative bg-background dark:bg-background-dark">
-  <!-- Sakura branch decoration -->
+  <!-- Decorations - both sakura and lily -->
   <div class="sakura-decoration">
     <img src="/images/sakura.png" alt="Sakura branch decoration">
+  </div>
+  
+  <div class="lily-decoration hidden">
+    <img src="/images/lily.png" alt="Lily decoration 1" class="lily-1">
+    <img src="/images/lily.png" alt="Lily decoration 2" class="lily-2">
   </div>
   
   <!-- Cherry blossoms animation -->
@@ -34,51 +39,53 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
   <div id="windows-container" class="absolute top-0 left-0 w-full h-full pointer-events-none"></div>
 
   <!-- Hidden controller for Konami code (initially hidden) -->
-  <div id="konami-controller" class="fixed inset-0 bg-black bg-opacity-80 z-50 flex flex-col items-center justify-center hidden">
-    <div class="controller-container relative w-[280px] h-[400px]">
-      <!-- Controller image background -->
-      <div class="controller-bg w-full h-full rounded-3xl bg-gray-800 border-2 border-gray-700 shadow-xl flex flex-col items-center p-4">
+  <div id="konami-controller" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black p-4 rounded-lg shadow-lg z-50 w-80 border-2 border-red-600">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-bold text-red-500">Controller</h2>
+      <button id="controller-close" class="text-red-500 hover:text-red-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+    
+    <div class="flex flex-col items-center">
+      <div class="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-red-600">
+        <img src="/images/glitch.gif" alt="Glitch" class="w-full h-full object-cover" />
+      </div>
+      
+      <div id="sequence-dots" class="flex justify-center space-x-1 mb-4">
+        <div class="w-2 h-2 rounded-full bg-red-900"></div>
+        <div class="w-2 h-2 rounded-full bg-red-900"></div>
+        <div class="w-2 h-2 rounded-full bg-red-900"></div>
+        <div class="w-2 h-2 rounded-full bg-red-900"></div>
+        <div class="w-2 h-2 rounded-full bg-red-900"></div>
+        <div class="w-2 h-2 rounded-full bg-red-900"></div>
+        <div class="w-2 h-2 rounded-full bg-red-900"></div>
+        <div class="w-2 h-2 rounded-full bg-red-900"></div>
+        <div class="w-2 h-2 rounded-full bg-red-900"></div>
+        <div class="w-2 h-2 rounded-full bg-red-900"></div>
+      </div>
+      
+      <div class="controller-buttons w-full">
         <!-- D-pad -->
-        <div class="d-pad relative w-32 h-32 mb-6 mt-4">
-          <button id="btn-up" class="konami-btn absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gray-700 hover:bg-gray-600 rounded-md flex items-center justify-center">
-            <span class="text-white">↑</span>
-          </button>
-          <button id="btn-down" class="konami-btn absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gray-700 hover:bg-gray-600 rounded-md flex items-center justify-center">
-            <span class="text-white">↓</span>
-          </button>
-          <button id="btn-left" class="konami-btn absolute left-0 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-gray-700 hover:bg-gray-600 rounded-md flex items-center justify-center">
-            <span class="text-white">←</span>
-          </button>
-          <button id="btn-right" class="konami-btn absolute right-0 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-gray-700 hover:bg-gray-600 rounded-md flex items-center justify-center">
-            <span class="text-white">→</span>
-          </button>
-          <div class="absolute inset-0 m-auto w-8 h-8 bg-gray-700 rounded-md"></div>
+        <div class="grid grid-cols-3 gap-2 mb-4">
+          <div></div>
+          <button id="btn-up" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700">↑</button>
+          <div></div>
+          <button id="btn-left" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700">←</button>
+          <div></div>
+          <button id="btn-right" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700">→</button>
+          <div></div>
+          <button id="btn-down" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700">↓</button>
+          <div></div>
         </div>
         
-        <!-- AB buttons -->
-        <div class="ab-buttons flex justify-center space-x-8 mt-6">
-          <button id="btn-b" class="konami-btn w-14 h-14 bg-blue-600 hover:bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">B</button>
-          <button id="btn-a" class="konami-btn w-14 h-14 bg-red-600 hover:bg-red-500 rounded-full flex items-center justify-center text-white font-bold">A</button>
+        <!-- A/B buttons -->
+        <div class="flex justify-center space-x-4">
+          <button id="btn-b" class="bg-black text-red-500 w-12 h-12 rounded-full hover:bg-gray-900 border-2 border-red-600">B</button>
+          <button id="btn-a" class="bg-red-900 text-red-100 w-12 h-12 rounded-full hover:bg-red-700">A</button>
         </div>
-        
-        <!-- Sequence display -->
-        <div class="sequence-display mt-8 bg-gray-900 w-full h-12 rounded-md flex items-center justify-center">
-          <div id="sequence-dots" class="flex space-x-2">
-            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
-            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
-            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
-            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
-            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
-            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
-            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
-            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
-            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
-            <div class="w-3 h-3 rounded-full bg-gray-700"></div>
-          </div>
-        </div>
-        
-        <!-- Close button -->
-        <button id="controller-close" class="absolute top-2 right-2 w-8 h-8 bg-red-600 hover:bg-red-500 rounded-full flex items-center justify-center text-white font-bold">×</button>
       </div>
     </div>
   </div>
@@ -175,8 +182,8 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
       let longPressTimer: number | null = null;
       const longPressDelay = 1000; // 1 second for long press
       
-      // Helper function to open the secret window
-      function openSecretWindow() {
+      // Helper function to open the autism window
+      function crashOut() {
         // Reset the index
         konamiIndex = 0;
         
@@ -185,9 +192,9 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
           hideController();
         }
         
-        // Open the secret window
+        // Open the autism window
         import('../utils/windowManager').then(({ openWindow }) => {
-          openWindow('secret');
+          openWindow('autism');
           // Play a special sound if available
           import('../utils/audioManager').then(({ playSound }) => {
             playSound('windowOpen');
@@ -198,6 +205,8 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
         const body = document.querySelector('body');
         if (body) {
           body.classList.add('konami-activated');
+          
+          // Flash effect
           setTimeout(() => {
             body.classList.remove('konami-activated');
           }, 1000);
@@ -211,6 +220,9 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
           controller.classList.remove('hidden');
           controllerVisible = true;
           resetSequenceDots();
+          
+          // Add Lain background when controller is shown
+          document.body.classList.add('lain-background');
         }
       }
       
@@ -220,6 +232,9 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
           controller.classList.add('hidden');
           controllerVisible = false;
           konamiIndex = 0;
+          
+          // Remove Lain background when controller is hidden
+          document.body.classList.remove('lain-background');
         }
       }
       
@@ -227,11 +242,11 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
         const dots = document.querySelectorAll('#sequence-dots div');
         for (let i = 0; i < dots.length; i++) {
           if (i < konamiIndex) {
-            dots[i].classList.remove('bg-gray-700');
-            dots[i].classList.add('bg-green-500');
+            dots[i].classList.remove('bg-red-900');
+            dots[i].classList.add('bg-red-500');
           } else {
-            dots[i].classList.remove('bg-green-500');
-            dots[i].classList.add('bg-gray-700');
+            dots[i].classList.remove('bg-red-500');
+            dots[i].classList.add('bg-red-900');
           }
         }
       }
@@ -239,8 +254,8 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
       function resetSequenceDots() {
         const dots = document.querySelectorAll('#sequence-dots div');
         dots.forEach(dot => {
-          dot.classList.remove('bg-green-500');
-          dot.classList.add('bg-gray-700');
+          dot.classList.remove('bg-red-500');
+          dot.classList.add('bg-red-900');
         });
         konamiIndex = 0;
       }
@@ -274,7 +289,7 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
           if (konamiIndex === konamiCode.length) {
             // Add a small delay so user can see the completed sequence
             setTimeout(() => {
-              openSecretWindow();
+              crashOut();
             }, 500);
           }
         } else {
@@ -284,51 +299,35 @@ import { userName, userTagline, currentYear } from '../utils/siteConfig';
         }
       }
       
-      // Show controller on click (for desktop) or long press (for mobile)
+      // Setup controller trigger
       function setupControllerTrigger() {
-        // For desktop: Bottom right corner click
-        const desktopTrigger = document.createElement('div');
-        desktopTrigger.id = 'controller-trigger';
-        desktopTrigger.style.position = 'fixed';
-        desktopTrigger.style.bottom = '0';
-        desktopTrigger.style.right = '0';
-        desktopTrigger.style.width = '40px';
-        desktopTrigger.style.height = '40px';
-        desktopTrigger.style.cursor = 'pointer';
-        desktopTrigger.style.zIndex = '10';
-        desktopTrigger.addEventListener('click', showController);
-        document.body.appendChild(desktopTrigger);
-        
-        // For mobile: Long press detection
-        document.addEventListener('touchstart', (e) => {
-          // Only detect long press in bottom-right corner
-          const touch = e.touches[0];
-          const windowWidth = window.innerWidth;
-          const windowHeight = window.innerHeight;
-          
-          if (touch.clientX > windowWidth * 0.8 && touch.clientY > windowHeight * 0.8) {
-            longPressTimer = setTimeout(() => {
-              showController();
-              longPressTimer = null;
-            }, longPressDelay) as unknown as number;
-          }
+        // Set up a mutation observer to watch for the controller trigger panel
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            if (mutation.type === 'childList') {
+              const triggerPanel = document.getElementById('controller-trigger-panel');
+              if (triggerPanel && !triggerPanel.hasAttribute('data-controller-initialized')) {
+                triggerPanel.addEventListener('click', () => {
+                  // First close the FAQ window
+                  import('../utils/windowManager').then(({ closeWindow }) => {
+                    closeWindow('faq');
+                    
+                    // Then show the controller after a short delay
+                    setTimeout(() => {
+                      showController();
+                    }, 350); // Slightly longer than the window closing animation (300ms)
+                  });
+                });
+                triggerPanel.setAttribute('data-controller-initialized', 'true');
+                triggerPanel.style.cursor = 'pointer';
+                console.log('Controller trigger panel initialized');
+              }
+            }
+          });
         });
         
-        // Cancel long press if touch ends
-        document.addEventListener('touchend', () => {
-          if (longPressTimer) {
-            clearTimeout(longPressTimer);
-            longPressTimer = null;
-          }
-        });
-        
-        // Cancel long press if touch moves too much
-        document.addEventListener('touchmove', () => {
-          if (longPressTimer) {
-            clearTimeout(longPressTimer);
-            longPressTimer = null;
-          }
-        });
+        // Start observing the document body for changes
+        observer.observe(document.body, { childList: true, subtree: true });
       }
       
       // Initialize controller buttons when DOM is loaded

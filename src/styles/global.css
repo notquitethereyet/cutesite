@@ -608,14 +608,14 @@ a, button, [data-window], .window-close, .window-titlebar {
   background-color: var(--accent-dark);
 }
 
-/* Secret window styling */
-.secret-window {
+/* autism window styling */
+.autism-window {
   padding: 1.5rem;
   overflow-y: auto;
   max-height: calc(100vh - 120px);
 }
 
-.secret-window h2 {
+.autism-window h2 {
   margin-bottom: 1rem;
   position: relative;
   display: flex;
@@ -626,14 +626,14 @@ a, button, [data-window], .window-close, .window-titlebar {
   width: fit-content;
 }
 
-.secret-window h2::after {
+.autism-window h2::after {
   content: '🔒';
   position: absolute;
   right: -30px;
   top: 0;
 }
 
-.secret-content {
+.autism-content {
   max-width: 600px;
   margin: 0 auto;
 }
@@ -660,14 +660,14 @@ a, button, [data-window], .window-close, .window-titlebar {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.secret-notes h3 {
+.autism-notes h3 {
   margin-bottom: 0.75rem;
   border-bottom: 2px solid var(--accent);
   display: inline-block;
   padding-bottom: 2px;
 }
 
-.dark .secret-notes h3 {
+.dark .autism-notes h3 {
   border-bottom-color: var(--accent-dark);
 }
 
@@ -721,41 +721,57 @@ a, button, [data-window], .window-close, .window-titlebar {
 
 /* Konami code activation effect */
 .konami-activated {
-  animation: sakura-flash 1s ease;
+  animation: flash 0.5s;
 }
 
-@keyframes sakura-flash {
-  0%, 100% {
-    background-color: var(--background);
-  }
-  25%, 75% {
-    background-color: var(--accent);
-    background-image: url('/images/sakura.png');
-    background-size: 100px;
-    background-repeat: repeat;
-  }
-  50% {
-    background-color: var(--secondary);
-  }
+/* Lain background when Konami code is activated */
+body.lain-background {
+  background-image: url('/images/lain.gif') !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s ease-in-out;
 }
 
-.dark .konami-activated {
-  animation: sakura-flash-dark 1s ease;
+body.lain-background .window {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-@keyframes sakura-flash-dark {
-  0%, 100% {
-    background-color: var(--background-dark);
-  }
-  25%, 75% {
-    background-color: var(--accent-dark);
-    background-image: url('/images/sakura.png');
-    background-size: 100px;
-    background-repeat: repeat;
-  }
-  50% {
-    background-color: var(--secondary-dark);
-  }
+/* Lily decorations */
+.lily-decoration {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.lily-1 {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 300px;
+  transform: scale(1.2) rotate(5deg);
+  opacity: 0.8;
+}
+
+.lily-2 {
+  position: absolute;
+  top: 50px;
+  right: 80px;
+  width: 200px;
+  transform: scale(0.9) rotate(-8deg);
+  opacity: 0.6;
+}
+
+/* Dark mode adjustments for lily */
+.dark .lily-1,
+.dark .lily-2 {
+  filter: brightness(0.7) hue-rotate(30deg);
 }
 
 /* Footer */
@@ -1092,4 +1108,10 @@ a, button, [data-window], .window-close, .window-titlebar {
     width: 8px;
     height: 8px;
   }
+}
+
+@keyframes flash {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.5); }
+  100% { filter: brightness(1); }
 }

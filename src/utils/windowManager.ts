@@ -231,25 +231,27 @@ function createWindowContent(windowId: string): string | null {
     case 'faq':
       return `
         <div class="faq-window">
-          <h2 class="font-bold text-2xl text-text dark:text-text-dark">Frequently Asked Questions</h2>
+          <h2 class="font-bold text-2xl text-text dark:text-text-dark">???</h2>
+          
           <div class="faq-item">
-            <h3>Question 1?</h3>
-            <p>Answer to question 1.</p>
+            <h3 class="font-bold">???</h3>
+            <p>???</p>
           </div>
+          
+          <div class="faq-item" id="controller-trigger-panel">
+            <h3 class="font-bold">???</h3>
+            <p>???</p>
+          </div>
+          
           <div class="faq-item">
-            <h3>Question 2?</h3>
-            <p>Answer to question 2.</p>
+            <h3 class="font-bold">???</h3>
+            <p>???</p>
           </div>
         </div>
       `;
-    case 'secret':
+    case 'autism':
       // Link data structure
       const links = [
-        {
-          title: "My Medium Blog",
-          description: "I write about things that interest me! Check me out!",
-          url: "https://medium.com/@notquitethereyet_/"
-        },
         {
           title: "Degoogling",
           description: "Reduce the amount of data Google can steal from you!",
@@ -309,8 +311,8 @@ function createWindowContent(windowId: string): string | null {
       `).join('');
 
       return `
-        <div class="secret-window">
-          <h2 class="font-bold text-2xl text-text dark:text-text-dark mb-6 text-center w-full">Autism Links</h2>
+        <div class="autism-window">
+          <h2 class="font-bold text-2xl text-text dark:text-text-dark mb-6 text-center w-full">shit that i need</h2>
           <p class="mb-6 text-center text-text dark:text-text-dark opacity-80">A collection of useful and interesting links</p>
           
           <div class="links-grid grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -318,7 +320,7 @@ function createWindowContent(windowId: string): string | null {
           </div>
           
           <div class="mt-8 p-4 bg-opacity-50 bg-secondary dark:bg-accent-dark dark:bg-opacity-30 rounded-lg">
-            <p class="text-center italic text-text dark:text-text-dark">This area is for your eyes only!</p>
+            <p class="text-center italic text-text dark:text-text-dark">???</p>
           </div>
         </div>
       `;
@@ -330,24 +332,21 @@ function createWindowContent(windowId: string): string | null {
 /**
  * Closes a window
  */
-export function closeWindow(windowEl: HTMLElement): void {
-  // Play window closing sound
-  playSound('windowClose');
-  
-  // Add closing animation
-  windowEl.classList.add('window-closing');
-  windowEl.classList.remove('window-active');
-  
-  // Remove from DOM after animation completes
-  setTimeout(() => {
-    const windowId = windowEl.dataset.windowId;
-    windowEl.remove();
-    
-    // Remove from active windows array
-    if (windowId) {
-      activeWindows = activeWindows.filter(w => w.id !== windowId);
-    }
-  }, 300);
+export function closeWindow(windowId: string): void {
+  const windowElement = document.querySelector(`.window[data-window-id="${windowId}"]`);
+  if (windowElement) {
+    windowElement.classList.add('closing');
+    setTimeout(() => {
+      windowElement.remove();
+      
+      // If this was the autism window, redirect to home
+      if (windowId === 'autism') {
+        // Remove Lain background before redirecting
+        document.body.classList.remove('lain-background');
+        window.location.href = '/';
+      }
+    }, 300);
+  }
 }
 
 /**
@@ -369,24 +368,38 @@ export function bringToFront(windowEl: HTMLElement): void {
  * Initialize window events
  */
 function initWindowEvents(windowEl: HTMLElement): void {
-  // Close button
-  const closeBtn = windowEl.querySelector('button') as HTMLButtonElement;
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      closeWindow(windowEl);
-    });
-  }
+  addWindowEventListeners(windowEl);
 
   // Make window draggable
   const titleBar = windowEl.querySelector('.bg-secondary') as HTMLElement;
   if (titleBar) {
     makeDraggable(windowEl, titleBar);
   }
+}
+
+/**
+ * Adds event listeners to a window
+ */
+function addWindowEventListeners(windowEl: HTMLElement): void {
+  // Close button
+  const closeBtn = windowEl.querySelector('button') as HTMLButtonElement;
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      const windowId = windowEl.dataset.windowId;
+      if (windowId) {
+        closeWindow(windowId);
+      }
+    });
+  }
 
   // Double click on title bar to close
+  const titleBar = windowEl.querySelector('.window-title') as HTMLElement;
   if (titleBar) {
     titleBar.addEventListener('dblclick', () => {
-      closeWindow(windowEl);
+      const windowId = windowEl.dataset.windowId;
+      if (windowId) {
+        closeWindow(windowId);
+      }
     });
   }
 }
