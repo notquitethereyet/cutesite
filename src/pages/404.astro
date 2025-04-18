@@ -1,0 +1,118 @@
+---
+const base = import.meta.env.BASE_URL ?? '/cutesite/';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404</title>
+    <style>
+      body {
+        background: #0c2340;
+        color: #fff;
+        font-family: 'Consolas', 'Courier New', monospace;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .bsod-window {
+        background: var(--window-content-bg, #102d57);
+        border: 3px solid #0078d7;
+        border-radius: 12px;
+        box-shadow: 0 0 32px #0008;
+        min-width: 380px;
+        max-width: 480px;
+        min-height: 320px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .bsod-titlebar {
+        background: var(--window-title-bg, #0b1e3a);
+        color: #fff;
+        padding: 0.75rem 1.25rem;
+        display: flex;
+        align-items: center;
+        border-bottom: 2px solid #0078d7;
+        font-family: inherit;
+        font-weight: bold;
+        font-size: 1.15rem;
+        letter-spacing: 0.04em;
+      }
+      .bsod-titlebar-text {
+        flex: 1;
+        text-align: left;
+      }
+      .bsod-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2.2rem 2.2rem 2rem 2.2rem;
+        background: none;
+      }
+      .bsod-title {
+        font-size: 2.5rem;
+        color: #00bcf2;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+      }
+      .bsod-msg {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: #b0d7ff;
+        text-align: left;
+      }
+      .bsod-video {
+        width: 320px;
+        height: 180px;
+        margin-bottom: 2rem;
+        border-radius: 8px;
+        border: 2px solid #0078d7;
+        box-shadow: 0 0 12px #0006;
+      }
+      .bsod-btn {
+        background: #0078d7;
+        color: #fff;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 6px;
+        padding: 0.7rem 1.7rem;
+        cursor: pointer;
+        font-family: inherit;
+        font-weight: bold;
+        box-shadow: 0 2px 8px #0005;
+        transition: background 0.2s;
+        text-decoration: none;
+      }
+      .bsod-btn:hover {
+        background: #005fa3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bsod-window">
+      <div class="bsod-titlebar">
+        <span class="bsod-titlebar-text">404</span>
+      </div>
+      <div class="bsod-body">
+        <div class="bsod-title">:(</div>
+        <div class="bsod-msg">
+          Oopsie Woopsie! Uwu We made a fucky wucky!!<br>
+          A wittle fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this!<br>
+        </div>
+        <video class="bsod-video" autoplay loop muted playsinline>
+          <source src={`${base}images/kaeri.webm`} type="video/webm">
+          Sorry, your browser does not support the video tag.
+        </video>
+        <br>
+        <a href={base} class="bsod-btn" title="let's get you home good boy">Restart</a>
+      </div>
+    </div>
+  </body>
+</html>
