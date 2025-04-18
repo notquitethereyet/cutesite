@@ -241,7 +241,7 @@ a, button, [data-window], .window-close, .window-titlebar {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
-  
+
   /* Increase the home window width on mobile */
   .home-window {
     min-width: 280px !important;
@@ -503,6 +503,12 @@ a, button, [data-window], .window-close, .window-titlebar {
   margin-top: 25px;
 }
 
+.card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
 .card {
   margin-bottom: 30px;
   padding: 15px;
@@ -518,7 +524,7 @@ a, button, [data-window], .window-close, .window-titlebar {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
-.card:hover {
+.card-link:hover .card {
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
@@ -1049,22 +1055,22 @@ a, button, [data-window], .window-close, .window-titlebar {
     width: 10px;
     height: 10px;
   }
-  
+
   .petal-2, .petal-7, .petal-12 {
     width: 8px;
     height: 8px;
   }
-  
+
   .petal-3, .petal-8, .petal-13 {
     width: 7px;
     height: 7px;
   }
-  
+
   .petal-4, .petal-9, .petal-14 {
     width: 9px;
     height: 9px;
   }
-  
+
   .petal-5, .petal-10, .petal-15 {
     width: 8px;
     height: 8px;

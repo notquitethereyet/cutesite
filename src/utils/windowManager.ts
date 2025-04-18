@@ -44,7 +44,7 @@ export function openWindow(windowId: string): void {
   // Clone the template content
   const clonedContent = (template as HTMLTemplateElement).content.cloneNode(true) as DocumentFragment;
   const windowEl = clonedContent.querySelector('.window') as HTMLElement;
-  
+
   if (!windowEl) {
     console.error('Window element not found in template');
     return;
@@ -86,7 +86,7 @@ export function openWindow(windowId: string): void {
   const windowWidth = windowEl.offsetWidth;
   const windowHeight = windowEl.offsetHeight;
   const position = calculateWindowPosition(windowWidth, windowHeight);
-  
+
   windowEl.style.left = `${position.left}px`;
   windowEl.style.top = `${position.top}px`;
 
@@ -103,12 +103,12 @@ export function openWindow(windowId: string): void {
   setTimeout(() => {
     // Play window opening sound
     playSound('windowOpen');
-    
+
     // First add the opening animation
     windowEl.classList.add('window-opening');
     windowEl.classList.add('window-active');
     bringToFront(windowEl);
-    
+
     // Then load content after the window appears
     loadWindowContent(windowId, windowEl);
   }, 10);
@@ -134,20 +134,20 @@ function loadWindowContent(windowId: string, windowEl: HTMLElement): void {
       console.error(`Content for ${windowId} could not be created`);
       return;
     }
-    
+
     // Clear loading indicator
     contentEl.innerHTML = '';
-    
+
     // Add content
     contentEl.innerHTML = contentHtml;
     contentEl.classList.remove('loading');
-    
+
     // Add fade-in animation to content
     const innerContent = contentEl.firstElementChild as HTMLElement;
     if (innerContent) {
       innerContent.classList.add('content-fade-in');
     }
-    
+
     // We don't need an additional bounce animation here since the window is already visible
   }, 300); // Reduced from 500ms to 300ms for a snappier feel
 }
@@ -157,7 +157,7 @@ function loadWindowContent(windowId: string, windowEl: HTMLElement): void {
  */
 function createWindowContent(windowId: string): string | null {
   // This function dynamically creates the HTML for each window type
-  
+
   switch (windowId) {
     case 'about':
       return `
@@ -197,7 +197,7 @@ function createWindowContent(windowId: string): string | null {
             devto: 'fab fa-dev',
             medium: 'fab fa-medium'
           };
-          
+
           // Only create HTML for platforms that have an icon mapping
           if (iconMap[platform]) {
             const platformName = platform.charAt(0).toUpperCase() + platform.slice(1);
@@ -211,7 +211,7 @@ function createWindowContent(windowId: string): string | null {
           return '';
         })
         .join('');
-      
+
       return `
         <div class="links-window">
           <h2 class="font-bold text-2xl text-highlight dark:text-highlight-dark mb-6">Find Me Online</h2>
@@ -248,17 +248,17 @@ function createWindowContent(windowId: string): string | null {
       return `
         <div class="faq-window">
           <h2 class="font-bold text-2xl text-highlight dark:text-highlight-dark mb-6">???</h2>
-          
+
           <div class="faq-item">
             <h3 class="font-bold text-highlight dark:text-highlight-dark">???</h3>
             <p class="text-highlight dark:text-highlight-dark">???</p>
           </div>
-          
+
           <div class="faq-item" id="controller-trigger-panel">
             <h3 class="font-bold text-highlight dark:text-highlight-dark">???</h3>
             <p class="text-highlight dark:text-highlight-dark">???</p>
           </div>
-          
+
           <div class="faq-item">
             <h3 class="font-bold text-highlight dark:text-highlight-dark">???</h3>
             <p class="text-highlight dark:text-highlight-dark">???</p>
@@ -349,7 +349,7 @@ export function closeWindow(windowId: string): void {
     windowElement.classList.add('closing');
     setTimeout(() => {
       windowElement.remove();
-      
+
       // If this was the autism window, redirect to home
       if (windowId === 'autism') {
         setTheme({ mode: document.documentElement.classList.contains('dark') ? 'dark' : 'light', background: 'default', decoration: 'sakura' });
@@ -639,10 +639,12 @@ function generateCardListHtml(items: { title: string; description: string; url: 
   return `
     <div class="card-list">
       ${items.map(item => `
-        <div class="card">
-          <h3 class="font-bold text-highlight dark:text-highlight-dark"><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
-          <p class="text-highlight dark:text-highlight-dark">${item.description}</p>
-        </div>
+        <a href="${item.url}" class="card-link" target="_blank" rel="noopener noreferrer">
+          <div class="card">
+            <h3 class="font-bold text-highlight dark:text-highlight-dark">${item.title}</h3>
+            <p class="text-highlight dark:text-highlight-dark">${item.description}</p>
+          </div>
+        </a>
       `).join('')}
     </div>
   `;
