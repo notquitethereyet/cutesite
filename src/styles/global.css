@@ -422,18 +422,6 @@ a, button, [data-window], .window-close, .window-titlebar {
   color: var(--highlight-color) !important;
 }
 
-.about-window h2::after, .links-window h2::after, .work-window h2::after, .faq-window h2::after, .contact-window h2::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: var(--highlight-color);
-  opacity: 0.5;
-  border-radius: 10px;
-}
-
 .links-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -618,13 +606,6 @@ a, button, [data-window], .window-close, .window-titlebar {
   width: fit-content;
 }
 
-.autism-window h2::after {
-  content: '🔒';
-  position: absolute;
-  right: -30px;
-  top: 0;
-}
-
 .autism-content {
   max-width: 600px;
   margin: 0 auto;
@@ -793,7 +774,6 @@ a, button, [data-window], .window-close, .window-titlebar {
   max-width: 400px;
   max-height: 400px;
   opacity: 0.9;
-  transform: scale(0.8);
   transform-origin: bottom left;
   animation: sakura-sway 8s ease-in-out infinite;
 }
@@ -938,10 +918,10 @@ a, button, [data-window], .window-close, .window-titlebar {
 
 @keyframes sakura-sway {
   0%, 100% {
-    transform: scale(0.8) rotate(0deg);
+    transform: scale(0.8) rotate(-8deg);
   }
   50% {
-    transform: scale(0.8) rotate(2deg) translateY(-5px);
+    transform: scale(0.8) rotate(-6deg) translateY(-5px);
   }
 }
 
