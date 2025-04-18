@@ -3,6 +3,7 @@ import DesktopIcon from './DesktopIcon.astro';
 import DarkModeToggle from './DarkModeToggle.astro';
 import Window from './Window.astro';
 import CherryBlossoms from './CherryBlossoms.astro';
+import { Image } from 'astro:assets';
 import { userName, currentYear } from '../utils/siteConfig';
 
 // Greeting logic based on current hour
@@ -18,17 +19,17 @@ const base = import.meta.env.BASE_URL ?? '/';
 <div class="flex flex-col h-screen relative bg-background dark:bg-background-dark">
   <!-- Decorations - both sakura and lily -->
   <div class="sakura-decoration">
-    <img src={`${base}images/sakura.webp`} alt="Sakura branch decoration" loading="lazy" width="400" height="300">
+    <Image src={`${base}images/sakura.webp`} alt="Sakura branch decoration" width={400} height={300} />
   </div>
-  
+
   <div class="lily-decoration hidden">
-    <img src={`${base}images/lily.webp`} alt="Lily decoration 1" class="lily-1" loading="lazy" width="300" height="200">
-    <img src={`${base}images/lily.webp`} alt="Lily decoration 2" class="lily-2" loading="lazy" width="250" height="180">
+    <Image src={`${base}images/lily.webp`} alt="Lily decoration 1" class="lily-1" width={300} height={200} />
+    <Image src={`${base}images/lily.webp`} alt="Lily decoration 2" class="lily-2" width={250} height={180} />
   </div>
-  
+
   <!-- Cherry blossoms animation -->
   <CherryBlossoms />
-  
+
   <!-- Top bar with controls -->
   <div class="absolute top-2.5 left-2.5 z-10">
     <DarkModeToggle />
@@ -65,7 +66,7 @@ const base = import.meta.env.BASE_URL ?? '/';
         </svg>
       </button>
     </div>
-    
+
     <div class="flex flex-col items-center">
       <div class="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-red-600">
         <video
@@ -78,7 +79,7 @@ const base = import.meta.env.BASE_URL ?? '/';
           width="128" height="128"
         ></video>
       </div>
-      
+
       <div id="sequence-dots" class="flex justify-center space-x-1 mb-4" aria-label="Konami code sequence progress">
         <div class="w-2 h-2 rounded-full bg-red-900"></div>
         <div class="w-2 h-2 rounded-full bg-red-900"></div>
@@ -91,7 +92,7 @@ const base = import.meta.env.BASE_URL ?? '/';
         <div class="w-2 h-2 rounded-full bg-red-900"></div>
         <div class="w-2 h-2 rounded-full bg-red-900"></div>
       </div>
-      
+
       <div class="controller-buttons w-full" role="group" aria-label="Controller buttons">
         <!-- D-pad -->
         <div class="grid grid-cols-3 gap-2 mb-4">
@@ -105,7 +106,7 @@ const base = import.meta.env.BASE_URL ?? '/';
           <button id="btn-down" class="bg-red-900 text-red-100 p-2 rounded hover:bg-red-700" aria-label="Down">↓</button>
           <div></div>
         </div>
-        
+
         <!-- A/B buttons -->
         <div class="flex justify-center space-x-4">
           <button id="btn-b" class="bg-black text-red-500 w-12 h-12 rounded-full hover:bg-gray-900 border-2 border-red-600" aria-label="B button">B</button>
@@ -191,21 +192,21 @@ const base = import.meta.env.BASE_URL ?? '/';
         }
       }, 300);
     }
-    
+
     // Konami code implementation
     function initKonamiCode() {
       // Konami code sequence: ↑ ↑ ↓ ↓ ← → ← → B A
       const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
       let konamiIndex = 0;
-      
+
       // Controller variables
       let controllerVisible = false;
-      
+
       // Helper function to open the autism window
       function crashOut() {
         // Reset the index
         konamiIndex = 0;
-        
+
         // Hide controller if it's visible
         if (controllerVisible) {
           // Hide controller but don't remove Lain background
@@ -217,7 +218,7 @@ const base = import.meta.env.BASE_URL ?? '/';
             // Note: We intentionally don't remove the lain-background class here
           }
         }
-        
+
         // Play glitch sound effect on crashOut (Konami code success)
         import('../utils/audioManager').then(({ playSound }) => {
           playSound('glitch');
@@ -231,22 +232,22 @@ const base = import.meta.env.BASE_URL ?? '/';
             playSound('windowOpen');
           });
         });
-        
+
         // Add a special effect
         const body = document.querySelector('body');
         if (body) {
           body.classList.add('konami-activated');
-          
+
           // Ensure Lain background is applied
           // setBackground('lain');
-          
+
           // Flash effect
           setTimeout(() => {
             body.classList.remove('konami-activated');
           }, 1000);
         }
       }
-      
+
       // Controller functions
       function showController() {
         const controller = document.getElementById('konami-controller');
@@ -254,15 +255,15 @@ const base = import.meta.env.BASE_URL ?? '/';
           controller.classList.remove('hidden');
           controllerVisible = true;
           resetSequenceDots();
-          
+
           // Add Lain background when controller is shown
           // setBackground('lain');
-          
+
           // Toggle decorations
           // setDecoration('lily');
         }
       }
-      
+
       function hideController() {
         const controller = document.getElementById('konami-controller');
         if (controller) {
@@ -280,7 +281,7 @@ const base = import.meta.env.BASE_URL ?? '/';
           window.location.assign(window.location.origin + getBasePath());
         }
       }
-      
+
       // Helper function to update sequence dots
       function updateSequenceDots() {
         const dots = document.querySelectorAll('#sequence-dots div');
@@ -294,7 +295,7 @@ const base = import.meta.env.BASE_URL ?? '/';
           }
         }
       }
-      
+
       // Helper function to reset sequence dots
       function resetSequenceDots() {
         const dots = document.querySelectorAll('#sequence-dots div');
@@ -304,7 +305,7 @@ const base = import.meta.env.BASE_URL ?? '/';
         });
         konamiIndex = 0;
       }
-      
+
       // Initialize controller buttons
       function initControllerButtons() {
         // D-pad buttons
@@ -312,24 +313,24 @@ const base = import.meta.env.BASE_URL ?? '/';
         document.getElementById('btn-down')?.addEventListener('click', () => handleControllerButton('ArrowDown'));
         document.getElementById('btn-left')?.addEventListener('click', () => handleControllerButton('ArrowLeft'));
         document.getElementById('btn-right')?.addEventListener('click', () => handleControllerButton('ArrowRight'));
-        
+
         // A/B buttons
         document.getElementById('btn-a')?.addEventListener('click', () => handleControllerButton('a'));
         document.getElementById('btn-b')?.addEventListener('click', () => handleControllerButton('b'));
-        
+
         // Close button
         document.getElementById('controller-close')?.addEventListener('click', hideController);
       }
-      
+
       function handleControllerButton(key: string) {
         // Check if the key matches the expected key in the sequence
         const expectedKey = konamiCode[konamiIndex];
-        
+
         if (key.toLowerCase() === expectedKey.toLowerCase()) {
           // Move to the next key in the sequence
           konamiIndex++;
           updateSequenceDots();
-          
+
           // If the entire sequence is entered correctly
           if (konamiIndex === konamiCode.length) {
             // Add a small delay so user can see the completed sequence
@@ -343,7 +344,7 @@ const base = import.meta.env.BASE_URL ?? '/';
           updateSequenceDots();
         }
       }
-      
+
       // Setup controller trigger
       function setupControllerTrigger() {
         // Set up a mutation observer to watch for the controller trigger panel
@@ -356,12 +357,12 @@ const base = import.meta.env.BASE_URL ?? '/';
                   // First close the FAQ window
                   import('../utils/windowManager').then(({ closeWindow }) => {
                     closeWindow('faq');
-                    
+
                     // Play glitch sound
                     import('../utils/audioManager').then(({ playSound }) => {
                       playSound('glitch');
                     });
-                    
+
                     // Then show the controller after a short delay
                     setTimeout(() => {
                       showController();
@@ -375,11 +376,11 @@ const base = import.meta.env.BASE_URL ?? '/';
             }
           });
         });
-        
+
         // Start observing the document body for changes
         observer.observe(document.body, { childList: true, subtree: true });
       }
-      
+
       // Initialize controller buttons when DOM is loaded
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
@@ -391,7 +392,7 @@ const base = import.meta.env.BASE_URL ?? '/';
         setupControllerTrigger();
       }
     }
-    
+
     initKonamiCode();
   });
 </script>

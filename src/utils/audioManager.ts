@@ -24,31 +24,31 @@ const AUDIO_PATHS = {
  */
 function initSounds(): void {
   if (audioInitialized) return; // Already initialized
-  
+
   // Create sounds only after user interaction
   sounds = {
     windowOpen: new Howl({
       src: [AUDIO_PATHS.windowOpen],
-      volume: 0.5,
+      volume: 0.3,
       preload: false // Don't preload until needed
     }),
     windowClose: new Howl({
       src: [AUDIO_PATHS.windowClose],
-      volume: 0.5,
+      volume: 0.3,
       preload: false // Don't preload until needed
     }),
     profileClick: new Howl({
       src: [AUDIO_PATHS.profileClick],
-      volume: 0.7,
+      volume: 0.3,
       preload: false // Don't preload until needed
     }),
     glitch: new Howl({
       src: [AUDIO_PATHS.glitch],
-      volume: 0.7,
+      volume: 0.3,
       preload: false // Don't preload until needed
     })
   };
-  
+
   audioInitialized = true;
 }
 
@@ -62,7 +62,7 @@ export function playSound(sound: SoundType): void {
     console.warn('Audio not initialized yet - waiting for user interaction');
     return;
   }
-  
+
   // Play the sound
   if (sounds && sounds[sound]) {
     // Load and play
@@ -86,21 +86,21 @@ export function setupAudioListeners(): void {
       console.log('Audio system initialized after user interaction');
     }
   };
-  
+
   // Initialize sounds on first user interaction
   document.addEventListener('click', handleUserInteraction);
   document.addEventListener('keydown', handleUserInteraction);
-  
+
   // Listen for clicks on the profile image
   document.addEventListener('click', (event) => {
     if (!event.isTrusted) return; // Only respond to real user events
-    
+
     const target = event.target as HTMLElement;
-    
+
     // Check if the clicked element is the profile image
     if (target && target.id === 'profile-image') {
       playSound('profileClick');
-      
+
       // Add animation class
       target.classList.add('profile-click');
       setTimeout(() => {
@@ -116,7 +116,7 @@ export function setupAudioListeners(): void {
 export function initAudio(): void {
   // Don't create any audio contexts yet
   // Just set up the event listeners to initialize on first interaction
-  
+
   // Wait for DOM to be fully loaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupAudioListeners);
@@ -124,6 +124,6 @@ export function initAudio(): void {
     // DOM already loaded, setup immediately
     setupAudioListeners();
   }
-  
+
   console.log('Audio manager ready - waiting for user interaction');
 }
