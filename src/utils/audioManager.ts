@@ -11,11 +11,12 @@ let sounds: Record<SoundType, Howl> | null = null;
 let audioInitialized = false;
 
 // Audio file paths
+const base = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL) ? import.meta.env.BASE_URL : '/';
 const AUDIO_PATHS = {
-  windowOpen: '/audio/click.mp3',
-  windowClose: '/audio/close.mp3',
-  profileClick: '/audio/ahoy.mp3',
-  glitch: '/audio/glitch.mp3'
+  windowOpen: `${base}audio/click.mp3`,
+  windowClose: `${base}audio/close.mp3`,
+  profileClick: `${base}audio/ahoy.mp3`,
+  glitch: `${base}audio/glitch.mp3`
 };
 
 /**

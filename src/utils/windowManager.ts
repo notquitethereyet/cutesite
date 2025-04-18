@@ -162,7 +162,7 @@ function createWindowContent(windowId: string): string | null {
     case 'about':
       return `
         <div class="about-window">
-          <img src="/images/profile.webp" alt="Profile picture" class="profile-image" id="profile-image" loading="lazy" width="120" height="120">
+          <img src="${getBasePath()}images/profile.webp" alt="Profile picture" class="profile-image" id="profile-image" loading="lazy" width="120" height="120">
           <h2 class="font-bold text-2xl text-text dark:text-text-dark">${userName}</h2>
           <p class="mb-3">CS graduate student with software development experience.</p>
           <div class="about-sections">
@@ -328,18 +328,15 @@ function createWindowContent(windowId: string): string | null {
   }
 }
 
-// Utility: Generate card-list HTML for any list of {title, description, url}
-function generateCardListHtml(items: { title: string; description: string; url: string }[]): string {
-  return `
-    <div class="card-list">
-      ${items.map(item => `
-        <div class="card">
-          <h3 class="font-bold text-highlight dark:text-highlight-dark"><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
-          <p class="text-highlight dark:text-highlight-dark">${item.description}</p>
-        </div>
-      `).join('')}
-    </div>
-  `;
+/**
+ * Utility to get the site base path in a modular, industry-standard way
+ */
+export function getBasePath() {
+  // Astro injects import.meta.env.BASE_URL, fallback to '/cutesite/' if unavailable
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL) {
+    return import.meta.env.BASE_URL;
+  }
+  return '/cutesite/';
 }
 
 /**
@@ -356,7 +353,7 @@ export function closeWindow(windowId: string): void {
       // If this was the autism window, redirect to home
       if (windowId === 'autism') {
         setTheme({ mode: document.documentElement.classList.contains('dark') ? 'dark' : 'light', background: 'default', decoration: 'sakura' });
-        window.location.href = '/';
+        window.location.href = window.location.origin + getBasePath();
       }
     }, 300);
   }
@@ -633,4 +630,20 @@ export function rearrangeWindows(): void {
       windowEl.style.transition = '';
     }, 300);
   });
+}
+
+/**
+ * Utility: Generate card-list HTML for any list of {title, description, url}
+ */
+function generateCardListHtml(items: { title: string; description: string; url: string }[]): string {
+  return `
+    <div class="card-list">
+      ${items.map(item => `
+        <div class="card">
+          <h3 class="font-bold text-highlight dark:text-highlight-dark"><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.title}</a></h3>
+          <p class="text-highlight dark:text-highlight-dark">${item.description}</p>
+        </div>
+      `).join('')}
+    </div>
+  `;
 }

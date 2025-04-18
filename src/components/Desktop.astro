@@ -11,17 +11,19 @@ let jpGreeting = 'こんにちは！'; // Default: Konnichiwa
 if (hour < 5) jpGreeting = 'こんばんは！'; // Konbanwa (Good evening/night)
 else if (hour < 11) jpGreeting = 'おはよう！'; // Ohayou (Good morning)
 else if (hour >= 18) jpGreeting = 'こんばんは！'; // Konbanwa (Good evening)
+
+const base = import.meta.env.BASE_URL ?? '/';
 ---
 
 <div class="flex flex-col h-screen relative bg-background dark:bg-background-dark">
   <!-- Decorations - both sakura and lily -->
   <div class="sakura-decoration">
-    <img src="/images/sakura.webp" alt="Sakura branch decoration" loading="lazy" width="400" height="300">
+    <img src={`${base}images/sakura.webp`} alt="Sakura branch decoration" loading="lazy" width="400" height="300">
   </div>
   
   <div class="lily-decoration hidden">
-    <img src="/images/lily.webp" alt="Lily decoration 1" class="lily-1" loading="lazy" width="300" height="200">
-    <img src="/images/lily.webp" alt="Lily decoration 2" class="lily-2" loading="lazy" width="250" height="180">
+    <img src={`${base}images/lily.webp`} alt="Lily decoration 1" class="lily-1" loading="lazy" width="300" height="200">
+    <img src={`${base}images/lily.webp`} alt="Lily decoration 2" class="lily-2" loading="lazy" width="250" height="180">
   </div>
   
   <!-- Cherry blossoms animation -->
@@ -50,7 +52,7 @@ else if (hour >= 18) jpGreeting = 'こんばんは！'; // Konbanwa (Good evenin
     class="fixed top-0 left-0 w-full h-full object-cover z-0 hidden"
     style="pointer-events: none;"
   >
-    <source src="/images/lain.webm" type="video/webm" />
+    <source src={`${base}images/lain.webm`} type="video/webm" />
   </video>
 
   <!-- Hidden controller for Konami code (initially hidden) -->
@@ -67,7 +69,7 @@ else if (hour >= 18) jpGreeting = 'こんばんは！'; // Konbanwa (Good evenin
     <div class="flex flex-col items-center">
       <div class="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-red-600">
         <video
-          src="/images/glitch.webm"
+          src={`${base}images/glitch.webm`}
           autoplay
           loop
           muted
@@ -139,7 +141,7 @@ else if (hour >= 18) jpGreeting = 'こんばんは！'; // Konbanwa (Good evenin
 
 <script>
   import { initIcons } from '../utils/iconManager';
-  import { repositionWindows } from '../utils/windowManager';
+  import { repositionWindows, getBasePath } from '../utils/windowManager';
   import { initTouchSupport } from '../utils/touchSupport';
   import { initAudio } from '../utils/audioManager';
 
@@ -267,15 +269,15 @@ else if (hour >= 18) jpGreeting = 'こんばんは！'; // Konbanwa (Good evenin
           controller.classList.add('hidden');
           controllerVisible = false;
           konamiIndex = 0;
-          
           // Remove Lain background when controller is hidden
           // setBackground('default');
-          
           // Check if autism window is open before toggling decorations back
           const autismWindow = document.querySelector('.window[data-window-id="autism"]');
           if (!autismWindow) {
             // setDecoration('sakura');
           }
+          // Use modular getBasePath() for redirect
+          window.location.assign(window.location.origin + getBasePath());
         }
       }
       
