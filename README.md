@@ -1,34 +1,55 @@
-# Astro Starter Kit: Basics
+# cutesite - Aesthetic Personal Website
 
-```sh
-npm create astro@latest -- --template basics
-```
+![cutesite Screenshot](https://github.com/notquitethereyet/cutesite/raw/main/public/images/screenshot.png)
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+cutesite is a charming, interactive personal website with a nostalgic desktop interface fueled by my love for 花見 (Hanami, "flower viewing"). Built with Astro and TailwindCSS, it features a playful design with cherry blossom animations, customizable themes, and interactive windows.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## ✨ Features
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+- **Desktop Interface**: Navigate through a cute desktop environment with clickable icons and draggable windows
+- **Aesthetic Design**: Enjoy a pastel color scheme with sakura (cherry blossom) theme
+- **Dark/Light Mode**: Toggle between light and dark themes with persistent preferences
+- **Interactive Elements**: Experience delightful animations and sound effects
+- **Responsive Design**: Works beautifully on both desktop and mobile devices (i think)
+- **Optimized Assets**: WebP images and WebM videos for fast loading times
+
+## 🌸 Themes and Customization
+
+cutesite comes with multiple themes and decorative elements:
+
+- **Light Mode**: Soft pastel pink and peach colors with sakura decorations
+- **Dark Mode**: Elegant dark blue-purple theme with subtle pink accents
+- **Decorations**: Sakura and lily decorations
+
+## 🎮 Interactive Features
+
+- **Window System**: Open, close, and drag windows around the desktop
+- **Sound Effects**: Gentle audio feedback for interactions (all set at 30% volume)
+- **Cherry Blossom Animation**: Falling petals create a serene atmosphere
+- **Oneko Cat**: A cute cat cursor follows your mouse movements
 
 ## 🚀 Project Structure
 
-Inside of your Astro project, you'll see the following folders and files:
-
 ```text
 /
-├── public/
-│   └── favicon.svg
+├── public/               # Static assets (images, icons, sounds)
+│   ├── images/           # Website images and decorations
+│   │   ├── icons/        # SVG icons for desktop elements
+│   │   └── ...           # Other image assets
+│   └── audio/            # Sound effect files
 ├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/       # UI components (Desktop, Window, etc.)
+│   ├── layouts/          # Page layouts
+│   ├── pages/            # Astro pages
+│   ├── styles/           # CSS styles
+│   └── utils/            # Utility functions and managers
+│       ├── audioManager.ts    # Sound effect handling
+│       ├── iconManager.ts     # Desktop icon management
+│       ├── themeManager.ts    # Theme and decoration control
+│       ├── windowManager.ts   # Window system management
+│       └── ...                # Other utilities
+└── package.json         # Project dependencies
 ```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
 
 ## 🧞 Commands
 
@@ -41,8 +62,30 @@ All commands are run from the root of the project, from a terminal:
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 🔧 Technologies
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- **[Astro](https://astro.build/)**: Fast, modern static site generator
+- **[TailwindCSS](https://tailwindcss.com/)**: Utility-first CSS framework
+- **[TypeScript](https://www.typescriptlang.org/)**: Type-safe JavaScript
+- **[Howler.js](https://howlerjs.com/)**: Audio library for sound effects
+
+## 🚀 Deployment
+
+The site is configured for easy deployment to GitHub Pages using GitHub Actions. Simply push to the main branch, and the site will be automatically built and deployed.
+
+## 🎨 Customization
+
+You can easily customize the site by modifying:
+
+- **`src/utils/siteConfig.ts`**: Update personal information and social links
+- **`src/styles/global.css`**: Adjust color schemes and visual styles
+- **`public/images/`**: Replace images with your own assets
+
+## 📝 License
+
+This project is licensed under the "do whatever you want" license.
+
+---
+
+Created with 💖 by [quiet](https://github.com/notquitethereyet)
