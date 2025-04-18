@@ -5,24 +5,22 @@ function getCSSVar(name) {
 }
 
 function getPalette(mode) {
-  // Use more distinct colors for better Trianglify backgrounds
+  // Richer gradient: 5 colors, darkest to lightest
   if (mode === "dark") {
     return [
-      getCSSVar("--bg-color"),
-      getCSSVar("--window-content-bg"),
-      getCSSVar("--window-title-bg"),
-      getCSSVar("--highlight-color"),
-      getCSSVar("--icon-border"),
-      getCSSVar("--text-color")
+      "#2a2d3a", // extra dark blue-purple
+      "#505477", // dark blue-purple
+      "#616c99", // medium blue-purple
+      "#b9a6c8", // soft lavender
+      "#fcddf2"  // light pink
     ];
   } else {
     return [
-      getCSSVar("--bg-color"),
-      getCSSVar("--window-content-bg"),
-      getCSSVar("--window-title-bg"),
-      getCSSVar("--highlight-color"),
-      getCSSVar("--icon-border"),
-      getCSSVar("--text-color")
+      "#562135", // extra dark mauve
+      "#c3829e", // deep mauve
+      "#e9b1cd", // light pink
+      "#fcd1d7", // pale rose
+      "#ffe7de"  // pale peach
     ];
   }
 }
@@ -38,8 +36,8 @@ function setTrianglifyBackground() {
   const pattern = trianglify({
     width: window.innerWidth,
     height: window.innerHeight,
-    cellSize: 75,
-    variance: 1,
+    cellSize: 100,
+    variance: 0.8,
     xColors: palette,
     yColors: "match"
   });
