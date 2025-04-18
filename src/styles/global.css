@@ -46,30 +46,8 @@ body {
   color: var(--text-color);
   transition: background-color 0.5s ease;
   font-family: 'Roboto', 'Open Sans', Arial, sans-serif;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 C30,40 40,30 50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 Z M50,30 C45,25 45,15 50,10 C55,15 55,25 50,30 Z M70,50 C75,45 85,45 90,50 C85,55 75,55 70,50 Z M50,70 C55,75 55,85 50,90 C45,85 45,75 50,70 Z M30,50 C25,55 15,55 10,50 C15,45 25,45 30,50 Z" fill="%23e9b1cd" opacity="0.3"/></svg>');
-  background-size: 100px 100px;
-}
-
-/* Dark mode background pattern with reduced opacity */
-.dark body {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 C30,40 40,30 50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 Z M50,30 C45,25 45,15 50,10 C55,15 55,25 50,30 Z M70,50 C75,45 85,45 90,50 C85,55 75,55 70,50 Z M50,70 C55,75 55,85 50,90 C45,85 45,75 50,70 Z M30,50 C25,55 15,55 10,50 C15,45 25,45 30,50 Z" fill="%23fcddf2" opacity="0.15"/></svg>');
-}
-
-/* Cute cursor */
-body {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%23c3829e" opacity="0.6"/><circle cx="12" cy="12" r="4" fill="%23ffe7de"/></svg>'), auto;
-}
-
-.dark body {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%23616c99" opacity="0.6"/><circle cx="12" cy="12" r="4" fill="%23ffdede"/></svg>'), auto;
-}
-
-a, button, [data-window], .window-close, .window-titlebar {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23c3829e" opacity="0.6"/><path d="M8,12 L16,12 M12,8 L12,16" stroke="%23ffe7de" stroke-width="2"/></svg>'), pointer;
-}
-
-.dark a, .dark button, .dark [data-window], .dark .window-close, .dark .window-titlebar {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23616c99" opacity="0.6"/><path d="M8,12 L16,12 M12,8 L12,16" stroke="%23ffdede" stroke-width="2"/></svg>'), pointer;
+  /* background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M30,50 C30,40 40,30 50,30 C60,30 70,40 70,50 C70,60 60,70 50,70 C40,70 30,60 30,50 Z M50,30 C45,25 45,15 50,10 C55,15 55,25 50,30 Z M70,50 C75,45 85,45 90,50 C85,55 75,55 70,50 Z M50,70 C55,75 55,85 50,90 C45,85 45,75 50,70 Z M30,50 C25,55 15,55 10,50 C15,45 25,45 30,50 Z" fill="%23e9b1cd" opacity="0.3"/></svg>'); */
+  /* background-size: 100px 100px; */
 }
 
 /* Desktop layout */
