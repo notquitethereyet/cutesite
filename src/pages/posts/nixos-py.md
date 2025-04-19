@@ -155,10 +155,14 @@ Hello from flask-app!
 
 ## Troubleshooting
 
-- Make sure you’re in the nix-shell and virtual environment before installing or running code. Otherwise, you’re just yelling at the clouds.
-- If dependencies fail to install, check your `requirements.txt` and Python version. Or try turning it off and on again (the computer, not your brain).
-- Still broken? Blame Python packaging. Everyone else does.
+- Make sure you’re in the nix-shell and virtual environment before installing or running code. 
+- If dependencies fail to install, check your `requirements.txt` and Python version. Or try turning it off and on again.
+- Still broken? Blame Python packaging and Nix's non-traditional autism. Everyone else does.
 
 
 
-Congrats! You’ve now set up Python with external packages on NixOS (or whatever flavor of Linux you’re torturing yourself with). Go forth and break something new!
+Congrats! You’ve now set up Python with external packages on NixOS. Go forth and break something new!
+
+
+Cheers!
+quiet🌸
