@@ -20,7 +20,7 @@ We all know Linux users. We either spend the rest of our lives wasting away on D
 
 ## NixOS, flakes and home-manager
 
-![NixChan from assets](/src/assets/blog/nixos-zen/nixchan.webp)
+![NixChan from assets](/cutesite/assets/blog/nixos-zen/nixchan.webp)
 <div class="image-caption">nixchan is the unofficial NixOS mascot</div>
 
 NixOS is truly amazingly mind-boggling. When I learnt that this was Eelco Dolstra’s PhD thesis on “correct software deployment”, this simultaneously intrigued me and made me have an existential crisis (whenever I see someone my age be incredibly talented, it bums me tf out). NixOS is lauded for its modularity, reproducibility and something else I can not remember, nor can I be bothered to look up.

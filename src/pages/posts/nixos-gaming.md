@@ -12,7 +12,7 @@ layout: ../../layouts/BlogLayout.astro
 
 ## Introduction
 
-![cirno from assets](/src/assets/blog/nixos-gaming/cirno.webp)
+![cirno from assets](/cutesite/assets/blog/nixos-gaming/cirno.webp)
 <div class="image-caption">cirno for NixOS</div>
 
 In my last post, I lauded NixOS as I installed Zen Browser from an external flake. And I can already hear you saying, “Enough with the NixOS hype, just let me play some games!” I get you! After all, who wouldn’t want to experience sultry verbal abuse from Kainé (RIP Atsuko Tanaka) in NieR: Replicant, or get groomed by Tae Takemi in Persona 5? And, of course, seeing what 10 years in the joint did to Kiryu in Yakuza after a long, hard day of watching VTubers and simping in every cosplayer’s comments. All of this, on NixOS, of course.

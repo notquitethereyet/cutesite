@@ -14,10 +14,13 @@ interface Post {
 }
 
 // Use import.meta.glob to get all markdown files in the posts directory
-const postFiles = import.meta.glob<Post>('../pages/posts/*.md', { eager: true });
+const postFiles = import.meta.glob('/src/pages/posts/*.md', { eager: true });
 
 // Convert the object to an array of posts
-const posts: Post[] = Object.values(postFiles);
+const posts: Post[] = Object.values(postFiles).map((mod: any) => ({
+  frontmatter: mod.frontmatter,
+  url: mod.url,
+}));
 
 // Sort posts by date (newest first)
 const sortedPosts = [...posts].sort((a: Post, b: Post) => {

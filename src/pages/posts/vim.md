@@ -9,7 +9,7 @@ layout: ../../layouts/BlogLayout.astro
 # Vim for Beginners
 
 
-![cirno from assets](/src/assets/blog/vim/vim-megumin.webp)
+![cirno from assets](/cutesite/assets/blog/vim/vim-megumin.webp)
 <div class="image-caption">Megumin approves</div>
 
 
@@ -21,7 +21,7 @@ Alternatively, like me, you might attempt to ditch your overpriced, overengineer
 
 Contrary to what most Vim-tards claim, Vim (or Vi IMproved) didn’t adopt its strange motion keybindings just so the r/linux neckbeards (jk, i love them) could keep their hands on the home row for “efficiency.” Instead, these bindings originated from the ADM-3A keyboard layout, where the HJKL keys were literally the arrow keys. Here's what that keyboard looked like (yes, there is a “rub” key…):
 
-![ADM-3A Keyboard Layout](/src/assets/blog/vim/adm-3a-keyboard.webp)
+![ADM-3A Keyboard Layout](/cutesite/assets/blog/vim/adm-3a-keyboard.webp)
 <div class="image-caption">ADM-3A Keyboard Layout</div>
 
 But hey, whatever helps r/linux and the RTFM folks sleep at night.
@@ -35,7 +35,7 @@ Let’s dive in.
 There exists a Vim plugin for any and every IDE. I will be using Cursor because it's literally an autocomplete for writing shitty scripts I write for my system.
 
 
-![vim-extension](/src/assets/blog/vim/vim-extension.webp)
+![vim-extension](/cutesite/assets/blog/vim/vim-extension.webp)
 <div class="image-caption">vim extension on your IDE</div>
 
 
@@ -96,7 +96,7 @@ You might want to add funny ASCII art to the beginning of your config. To do thi
 ## Editing Text
 
 
-![vim editing](/src/assets/blog/vim/vim-edit.webp)
+![vim editing](/cutesite/assets/blog/vim/vim-edit.webp)
 <div class="image-caption">editing text in vim</div>
 
 

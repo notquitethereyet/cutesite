@@ -17,8 +17,8 @@ Let's go with the simplest way I know (the non-Nix route) and let's set up a rep
 
 My fella, do you need the method?
 
-![vegeta](/src/assets/blog/nixos-py/method.webp)
-<!-- <div class="image-caption">do you need the method?</div> -->
+![vegeta](/cutesite/assets/blog/nixos-py/method.webp)
+<!-- <div class="image-caption">do you need the method?</div -->
 
 
 ## Prerequisites
@@ -53,7 +53,7 @@ pkgs.mkShell {
 
 
 
-![nix-shell](/src/assets/blog/nixos-py/py1.webp)
+![nix-shell](/cutesite/assets/blog/nixos-py/py1.webp)
 <div class="image-caption">nix-shell</div>
 
 Open your terminal in the project directory and type:
@@ -68,7 +68,7 @@ This loads a reproducible shell with Python and uv, as dictated by your `shell.n
 
 ## Step 2: Create and Activate a Virtual Environment
 
-![uv venv](/src/assets/blog/nixos-py/py2.webp)
+![uv venv](/cutesite/assets/blog/nixos-py/py2.webp)
 <div class="image-caption">venv time</div>
 
 Let uv cook:
@@ -96,7 +96,7 @@ So much for industry practices.
 ## Step 4: Install Dependencies
 
 
-![uv add](/src/assets/blog/nixos-py/py3.webp)
+![uv add](/cutesite/assets/blog/nixos-py/py3.webp)
 <div class="image-caption">uv doing its magic</div>
 
 
@@ -112,7 +112,7 @@ This will (hopefully) resolve and install everything. If it doesn’t, check you
 
 ## Step 5: Run Your Python Application
 
-![seikai](/src/assets/blog/nixos-py/py4.webp)
+![seikai](/cutesite/assets/blog/nixos-py/py4.webp)
 <div class="image-caption">app runs hopefully</div>
 
 Cross your heart and run the code:
