@@ -1,0 +1,92 @@
+---
+// Define the type for post frontmatter
+interface PostFrontmatter {
+  title: string;
+  description: string;
+  date: string;
+  tags?: string[];
+}
+
+// Define the type for post files
+interface Post {
+  frontmatter: PostFrontmatter;
+  url: string;
+}
+
+// Use import.meta.glob to get all markdown files in the posts directory
+const postFiles = import.meta.glob<Post>('../pages/posts/*.md', { eager: true });
+
+// Convert the object to an array of posts
+const posts: Post[] = Object.values(postFiles);
+
+// Sort posts by date (newest first)
+const sortedPosts = [...posts].sort((a: Post, b: Post) => {
+  return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
+});
+
+// Format date function
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+---
+
+<div class="work-window" style="color: var(--text-color);">
+  <h2 class="font-bold text-2xl mb-6" style="color: var(--highlight-color);">My Work</h2>
+
+  <div class="blog-posts grid grid-cols-1 gap-6">
+    {sortedPosts.map(post => (
+      <div class="blog-post p-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
+           style="background-color: var(--window-content-bg); border: 2px dashed var(--card-border);"
+           data-url={post.url}>
+        <h3 class="font-bold text-lg" style="color: var(--text-color);">{post.frontmatter.title}</h3>
+        <p class="text-sm mb-2" style="color: var(--text-color); opacity: 0.8;">{formatDate(post.frontmatter.date)}</p>
+        <p class="mb-3" style="color: var(--text-color);">{post.frontmatter.description}</p>
+        {post.frontmatter.tags && (
+          <div class="tags flex flex-wrap gap-2 mb-3">
+            {post.frontmatter.tags.map((tag: string) => (
+              <span class="tag px-2 py-1 rounded-full text-xs">{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  // Add event listeners to the entire blog post cards
+  document.addEventListener('DOMContentLoaded', () => {
+    const blogPosts = document.querySelectorAll('.blog-post');
+    blogPosts.forEach(post => {
+      post.addEventListener('click', () => {
+        const url = (post as HTMLElement).dataset.url;
+        if (url) {
+          // Extract the slug from the URL
+          const slug = url.split('/').pop();
+          if (slug) {
+            // Use window.openWindow if it exists (defined in windowManager.ts)
+            if (typeof window.openWindow === 'function') {
+              window.openWindow(`blog-${slug}`);
+            } else {
+              console.error('openWindow function not found');
+            }
+          }
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  // This is a TypeScript declaration to tell the compiler that openWindow exists on the window object
+  declare global {
+    interface Window {
+      openWindow: (windowId: string) => void;
+    }
+  }
+</script>

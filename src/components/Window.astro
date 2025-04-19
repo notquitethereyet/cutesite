@@ -23,7 +23,7 @@ const windowId = isTemplate ? "" : id;
       <button class="bg-transparent border-none text-white cursor-pointer font-bold text-xl transition-transform duration-300 w-7 h-7 rounded-full flex justify-center items-center hover:scale-110 hover:bg-white/20">×</button>
     )}
   </div>
-  <div class="p-10 overflow-auto flex-1 transition-opacity duration-300 bg-window-content dark:bg-window-content-dark !opacity-100" style="background-color: var(--window-content-bg);">
+  <div class="p-10 overflow-auto flex-1 transition-opacity duration-300 bg-window-content dark:bg-window-content-dark !opacity-100" style="background-color: var(--window-content-bg); overflow: auto;">
     {isTemplate ? (
       <div class="flex flex-col items-center justify-center h-full min-h-[150px]">
         <div class="w-10 h-10 rounded-full border-4 border-highlight/30 dark:border-highlight-dark/30 border-t-secondary dark:border-t-secondary-dark animate-spin"></div>

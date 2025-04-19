@@ -123,9 +123,9 @@ const base = import.meta.env.BASE_URL ?? '/';
 </div>
 
 <!-- Home window (visible on load) -->
-<Window id="home" title="home">
+<Window id="home" title="Home">
   <div class="flex flex-col items-center mb-6">
-    <span class="text-3xl font-semibold text-highlight dark:text-highlight-dark" lang="ja" title="Greeting">{jpGreeting}</span>
+    <span class="text-3xl font-semibold" lang="ja" title="Greeting" style="color: var(--text-color);">{jpGreeting}</span>
   </div>
   <div class="desktop-icons grid grid-cols-2 gap-12">
     <DesktopIcon id="about" name="about" />

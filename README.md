@@ -1,6 +1,6 @@
 # cutesite - Aesthetic Personal Website
 
-![cutesite Screenshot](https://github.com/notquitethereyet/cutesite/raw/main/public/images/screenshot.png)
+![cutesite Screenshot](https://github.com/notquitethereyet/cutesite/raw/main/public/images/screenshot.webp)
 
 cutesite is a charming, interactive personal website with a nostalgic desktop interface fueled by my love for 花見 (Hanami, "flower viewing"). Built with Astro and TailwindCSS, it features a playful design with cherry blossom animations, customizable themes, and interactive windows.
 

@@ -14,5 +14,5 @@ const base = import.meta.env.BASE_URL ?? '/';
   <div class={`w-[80px] h-[80px] flex justify-center items-center mb-2 transition-transform duration-300 ${id}-icon`}>
     <Image src={`${base}images/icons/${id}.svg`} alt={`${name} icon`} width={70} height={70} class="w-full h-full object-contain transition-transform duration-300 hover:scale-110" />
   </div>
-  <div class="text-lg text-center bg-secondary/90 dark:bg-secondary/90 py-0.5 px-3 rounded-lg transition-colors duration-300 text-text dark:text-text-dark font-medium hover:bg-secondary hover:text-white dark:hover:text-white">{name}</div>
+  <div class="text-lg text-center py-0.5 px-3 rounded-lg transition-colors duration-300 font-medium hover:text-white" style="background-color: var(--window-title-bg); color: var(--window-title-text);">{name}</div>
 </div>

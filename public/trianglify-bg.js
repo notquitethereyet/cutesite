@@ -26,6 +26,15 @@ function getPalette(mode) {
 }
 
 function setTrianglifyBackground() {
+  // Skip trianglify on blog post pages
+  if (document.body.classList.contains('blog-post-page')) {
+    console.log('[Trianglify] Skipping on blog post page');
+    // Remove any existing trianglify background
+    const prev = document.getElementById("trianglify-bg");
+    if (prev) prev.remove();
+    return;
+  }
+
   const isDark = document.documentElement.classList.contains("dark");
   const palette = getPalette(isDark ? "dark" : "light");
   console.log('[Trianglify] Palette:', palette);
@@ -52,7 +61,7 @@ function setTrianglifyBackground() {
   svg.style.left = "0";
   svg.style.width = "100vw";
   svg.style.height = "100vh";
-  svg.style.zIndex = "-1";
+  svg.style.zIndex = "-10"; // Ensure it's below all content
   svg.style.pointerEvents = "none";
   document.body.prepend(svg);
   console.log('[Trianglify] SVG injected');

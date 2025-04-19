@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Define the type for post frontmatter
+interface PostFrontmatter {
+  title: string;
+  description: string;
+  date: string;
+  tags?: string[];
+}
+
+// Define the type for post files
+interface Post {
+  frontmatter: PostFrontmatter;
+  url: string;
+}
+
+// Use import.meta.glob to get all markdown files in the posts directory
+const postFiles = import.meta.glob<Post>('../pages/posts/*.md', { eager: true });
+
+// Convert the object to an array of posts
+const posts: Post[] = Object.values(postFiles);
+
+// Sort posts by date (newest first)
+const sortedPosts = [...posts].sort((a: Post, b: Post) => {
+  return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
+});
+
+// Format date function
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+
+// Base URL for assets
+const base = import.meta.env.BASE_URL ?? '/';
+---
+
+<Layout title="Posts | cutesite" description="A collection of posts and articles">
+  <div class="posts-listing-page">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+      <header class="mb-8 text-center">
+        <a href={base} class="inline-block mb-6 hover:opacity-80 transition-opacity">
+          <div class="home-button px-4 py-2 rounded-full" style="background-color: var(--window-title-bg); color: var(--window-title-text);">
+            ← Back to Home
+          </div>
+        </a>
+        <h1 class="text-4xl font-bold mb-2" style="color: var(--text-color);">Posts</h1>
+        <p class="text-lg opacity-80" style="color: var(--text-color);">A collection of my autistic ramblings.</p>
+      </header>
+
+      <div class="posts-grid grid grid-cols-1 gap-6">
+        {sortedPosts.map(post => (
+          <a href={post.url} class="block no-underline">
+            <article class="post-item p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                style="background-color: var(--window-content-bg); border: 2px dashed var(--card-border);">
+              <h2 class="font-bold text-xl mb-2" style="color: var(--text-color);">{post.frontmatter.title}</h2>
+              <p class="text-sm mb-2" style="color: var(--text-color); opacity: 0.8;">{formatDate(post.frontmatter.date)}</p>
+              <p class="mb-3" style="color: var(--text-color);">{post.frontmatter.description}</p>
+              {post.frontmatter.tags && (
+                <div class="tags flex flex-wrap gap-2 mb-1">
+                  {post.frontmatter.tags.map((tag: string) => (
+                    <span class="tag px-2 py-1 rounded-full text-xs">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </article>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .posts-listing-page {
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+
+  .home-button {
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+    transition: transform 0.2s ease;
+  }
+
+  .home-button:hover {
+    transform: translateX(-5px);
+  }
+
+  @media (max-width: 640px) {
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .posts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

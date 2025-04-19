@@ -1,0 +1,33 @@
+---
+const { src, alt, caption, ...attrs } = Astro.props;
+---
+
+<div class="blog-image-container">
+  <img src={src} alt={alt} {...attrs} />
+  {caption && <div class="image-caption">{caption}</div>}
+</div>
+
+<style>
+  .blog-image-container {
+    margin-block: 2.5rem;
+    width: 100%;
+  }
+
+  .blog-image-container img {
+    border-radius: 0.75rem;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: block;
+    margin: 0 auto;
+  }
+
+  .image-caption {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+</style>

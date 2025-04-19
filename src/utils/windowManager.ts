@@ -15,6 +15,10 @@ let highestZIndex: number = 10;
  * Opens a window with the specified ID
  */
 export function openWindow(windowId: string): void {
+  // Make the function available globally
+  if (typeof window !== 'undefined') {
+    (window as any).openWindow = openWindow;
+  }
   console.log('Opening window:', windowId);
   // Check if window is already open
   const existingWindow = document.querySelector(`.window[data-window-id="${windowId}"]`) as HTMLElement;
@@ -58,7 +62,22 @@ export function openWindow(windowId: string): void {
   if (!titleEl) {
     console.error('Window title element not found');
   } else {
-    titleEl.textContent = windowId;
+    // Set a more descriptive title based on the window ID
+    if (windowId.startsWith('blog-')) {
+      const slug = windowId.replace('blog-', '');
+      // Map slugs to descriptive titles
+      const titleMap: {[key: string]: string} = {
+        'project-1': 'Personal Website',
+        'project-2': 'Machine Learning Art',
+        'project-3': 'NixOS Configuration'
+      };
+      titleEl.textContent = titleMap[slug] || `Blog: ${slug}`;
+    } else {
+      // Capitalize the first letter of each word for other windows
+      titleEl.textContent = windowId.split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    }
   }
 
   // Special case for home window - make it wider on mobile
@@ -66,6 +85,30 @@ export function openWindow(windowId: string): void {
     windowEl.classList.add('home-window');
     // Add responsive width classes
     windowEl.style.width = 'min(90vw, 500px)';
+  }
+
+  // Special case for work window - make it larger
+  if (windowId === 'work') {
+    windowEl.classList.add('work-window');
+    // Set a larger size for work window
+    windowEl.style.width = 'min(90vw, 900px)';
+    windowEl.style.height = 'min(90vh, 700px)';
+  }
+
+  // Special case for blog post windows - make them larger
+  if (windowId.startsWith('blog-')) {
+    windowEl.classList.add('blog-window');
+    // Set a larger size for blog windows
+    windowEl.style.width = 'min(95vw, 1000px)';
+    windowEl.style.height = 'min(95vh, 800px)';
+  }
+
+  // Special case for links window - set appropriate size
+  if (windowId === 'links') {
+    windowEl.classList.add('links-window-container');
+    // Set a good size for the links window
+    windowEl.style.width = 'min(90vw, 450px)';
+    windowEl.style.height = 'min(90vh, 400px)';
   }
 
   // Ensure title bar has solid background color
@@ -148,6 +191,47 @@ function loadWindowContent(windowId: string, windowEl: HTMLElement): void {
       innerContent.classList.add('content-fade-in');
     }
 
+    // Special handling for the work window to load content dynamically
+    if (windowId === 'work') {
+      // Fetch the WorkWindow component HTML
+      fetch(`${getBasePath()}work-component`)
+        .then(response => response.text())
+        .then(html => {
+          const dynamicContent = contentEl.querySelector('#dynamic-work-content');
+          if (dynamicContent) {
+            dynamicContent.innerHTML = html;
+
+            // Add event listeners to the entire blog post cards
+            const blogPosts = contentEl.querySelectorAll('.blog-post');
+            blogPosts.forEach(post => {
+              post.addEventListener('click', () => {
+                const url = (post as HTMLElement).dataset.url;
+                if (url) {
+                  // Extract the slug from the URL
+                  const slug = url.split('/').pop();
+                  if (slug) {
+                    openWindow(`blog-${slug}`);
+                  }
+                }
+              });
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error loading work component:', error);
+          // Fallback content if fetch fails
+          const dynamicContent = contentEl.querySelector('#dynamic-work-content');
+          if (dynamicContent) {
+            dynamicContent.innerHTML = `
+              <div class="p-4 text-center">
+                <h3 class="text-lg font-bold mb-2">Error Loading Projects</h3>
+                <p>Could not load the projects. Please try again later.</p>
+              </div>
+            `;
+          }
+        });
+    }
+
     // We don't need an additional bounce animation here since the window is already visible
   }, 300); // Reduced from 500ms to 300ms for a snappier feel
 }
@@ -213,37 +297,25 @@ function createWindowContent(windowId: string): string | null {
         .join('');
 
       return `
-        <div class="links-window">
-          <h2 class="font-bold text-2xl text-highlight dark:text-highlight-dark mb-6">Find Me Online</h2>
-          <div class="links-grid">
+        <div class="links-window p-4">
+          <h2 class="font-bold text-2xl text-highlight dark:text-highlight-dark mb-6 text-center">Find Me Online</h2>
+          <div class="links-grid mx-auto" style="max-width: 400px;">
             ${socialLinksHTML}
             <a href="mailto:${userEmail}" class="link-item">
               <i class="fas fa-envelope link-icon"></i>
               <span>Email</span>
             </a>
+            <a href="${getBasePath()}posts" class="link-item">
+              <i class="fas fa-mobile-alt link-icon"></i>
+              <span>All Posts</span>
+            </a>
           </div>
         </div>
       `;
     case 'work':
-      // Example projects array (replace with your actual data)
-      const projects = [
-        {
-          title: 'Project 1',
-          description: 'Description of project 1.',
-          url: '#'
-        },
-        {
-          title: 'Project 2',
-          description: 'Description of project 2.',
-          url: '#'
-        }
-      ];
-      return `
-        <div class="work-window">
-          <h2 class="font-bold text-2xl text-highlight dark:text-highlight-dark mb-6">My Work</h2>
-          ${generateCardListHtml(projects)}
-        </div>
-      `;
+      // Load the work window component dynamically
+      return `<div id="dynamic-work-content" class="w-full h-full"></div>`;
+
     case 'faq':
       return `
         <div class="faq-window">
@@ -324,6 +396,16 @@ function createWindowContent(windowId: string): string | null {
         </div>
       `;
     default:
+      // Check if it's a blog post window
+      if (windowId.startsWith('blog-')) {
+        const slug = windowId.replace('blog-', '');
+        // Create an iframe to load the blog post
+        return `
+          <div class="blog-post-iframe-container" style="height: 100%; width: 100%; overflow: hidden; background-color: var(--window-content-bg); position: relative; z-index: 1;">
+            <iframe src="${getBasePath()}posts/${slug}" style="height: 100%; width: 100%; border: none; display: block; overflow: auto; background-color: var(--window-content-bg);" frameborder="0" scrolling="yes" allowtransparency="false"></iframe>
+          </div>
+        `;
+      }
       return null;
   }
 }
