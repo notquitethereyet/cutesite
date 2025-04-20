@@ -62,6 +62,13 @@ function formatDate(dateString: string): string {
 </div>
 
 <script>
+  // This is a TypeScript declaration to tell the compiler that openWindow exists on the window object
+  declare global {
+    interface Window {
+      openWindow: (windowId: string) => void;
+    }
+  }
+
   // Add event listeners to the entire blog post cards
   document.addEventListener('DOMContentLoaded', () => {
     const blogPosts = document.querySelectorAll('.blog-post');
@@ -83,13 +90,4 @@ function formatDate(dateString: string): string {
       });
     });
   });
-</script>
-
-<script>
-  // This is a TypeScript declaration to tell the compiler that openWindow exists on the window object
-  declare global {
-    interface Window {
-      openWindow: (windowId: string) => void;
-    }
-  }
 </script>

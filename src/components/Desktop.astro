@@ -142,9 +142,9 @@ const base = import.meta.env.BASE_URL ?? '/';
 
 <script>
   import { initIcons } from '../utils/iconManager';
-  import { repositionWindows, getBasePath } from '../utils/windowManager';
+  import { repositionWindows, getBasePath, openWindow, closeWindow } from '../utils/windowManager';
   import { initTouchSupport } from '../utils/touchSupport';
-  import { initAudio } from '../utils/audioManager';
+  import { initAudio, playSound } from '../utils/audioManager';
 
   // Initialize dark mode state
   let isDarkMode: boolean = false;
@@ -220,18 +220,12 @@ const base = import.meta.env.BASE_URL ?? '/';
         }
 
         // Play glitch sound effect on crashOut (Konami code success)
-        import('../utils/audioManager').then(({ playSound }) => {
-          playSound('glitch');
-        });
+        playSound('glitch');
 
         // Open the autism window
-        import('../utils/windowManager').then(({ openWindow }) => {
-          openWindow('autism');
-          // Play window open sound
-          import('../utils/audioManager').then(({ playSound }) => {
-            playSound('windowOpen');
-          });
-        });
+        openWindow('autism');
+        // Play window open sound
+        playSound('windowOpen');
 
         // Add a special effect
         const body = document.querySelector('body');
@@ -355,19 +349,15 @@ const base = import.meta.env.BASE_URL ?? '/';
               if (triggerPanel && !triggerPanel.hasAttribute('data-controller-initialized')) {
                 triggerPanel.addEventListener('click', () => {
                   // First close the FAQ window
-                  import('../utils/windowManager').then(({ closeWindow }) => {
-                    closeWindow('faq');
+                  closeWindow('faq');
 
-                    // Play glitch sound
-                    import('../utils/audioManager').then(({ playSound }) => {
-                      playSound('glitch');
-                    });
+                  // Play glitch sound
+                  playSound('glitch');
 
-                    // Then show the controller after a short delay
-                    setTimeout(() => {
-                      showController();
-                    }, 350); // Slightly longer than the window closing animation (300ms)
-                  });
+                  // Then show the controller after a short delay
+                  setTimeout(() => {
+                    showController();
+                  }, 350); // Slightly longer than the window closing animation (300ms)
                 });
                 triggerPanel.setAttribute('data-controller-initialized', 'true');
                 triggerPanel.style.cursor = 'pointer';
