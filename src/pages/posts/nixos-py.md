@@ -11,14 +11,14 @@ layout: ../../layouts/BlogLayout.astro
 
 ## Introduction
 
-Everyone and their mother uses NixOS now (Firebase and Railway too). You too wanna get to work and stack some paper since you spent your savings on that akasupa to the graduated VTuber(s) who you were parasocial for. So, you quickly install Python from the nixpkgs and then make your first import. The terminal shits out import errors from locations you never imagined existed on your system. WHAT THE HELL IS A NIX STORE!!! For the nix-tards like me, I wanna help you guys save some time.
+Everyone and their mother uses NixOS now (Firebase and Railway too). Time to get to work and stack some paper since you spent your savings on that akasupa to the graduated VTuber(s) who you were parasocial for. So, you quickly install Python from the nixpkgs and then make your first import. The terminal shits out import errors from locations you never imagined existed on your system. WHAT THE HELL IS A NIX STORE!!! "Worked fine on my Arch install!!!", you think. Buckle up rookie! I will what I wish I was told 8 months ago.
 
-Let's go with the simplest way I know (the non-Nix route) and let's set up a reproducible Python environment using Nix, uv. You’ll finally be able to run your code and hopefully get your money up and not your funny up.
 
 My fella, do you need the method?
 
 ![vegeta](/cutesite/assets/blog/nixos-py/method.webp)
-<!-- <div class="image-caption">do you need the method?</div -->
+
+Let's go with the simplest way I know (the non-Nix route) and let's set up a reproducible Python environment using Nix, uv. You’ll finally be able to hopefully get your money up and not just your funny up. This involves exposing system libraries to python packages in the nix shell.
 
 
 ## Prerequisites
@@ -43,9 +43,8 @@ pkgs.mkShell {
   env.LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
     # these are the most common
     pkgs.stdenv.cc.cc.lib
-    pkgs.libz
+    pkgs.zlib
   ];
-
 }
 ```
 
@@ -112,7 +111,7 @@ This will (hopefully) resolve and install everything. If it doesn’t, check you
 
 ## Step 5: Run Your Python Application
 
-![seikai](/cutesite/assets/blog/nixos-py/py4.webp)
+![workey](/cutesite/assets/blog/nixos-py/py4.webp)
 <div class="image-caption">app runs hopefully</div>
 
 Cross your heart and run the code:
@@ -133,35 +132,16 @@ Or if you just want to see something work:
 python main.py
 ```
 
-
-
-## Example Output
-
-If you’re running a Flask app, you should see:
-
-```
-* Serving Flask app 'app'
-* Debug mode: off
-* Running on http://127.0.0.1:5000
-```
-
-If you’re running a basic script:
-
-```
-Hello from flask-app!
-```
-
-
-
 ## Troubleshooting
-
+- Make sure you are in NixOS
+- Make sure your keyboard is connected (HHKBs work best in my testing)
+- Is your monitor on?
 - Make sure you’re in the nix-shell and virtual environment before installing or running code. 
 - If dependencies fail to install, check your `requirements.txt` and Python version. Or try turning it off and on again.
-- Still broken? Blame Python packaging and Nix's non-traditional autism. Everyone else does.
+- Still broken? Wallahi your bloodline is finished with you and your ancestors weep in dismay.
 
 
-
-Congrats! You’ve now set up Python with external packages on NixOS. Go forth and break something new!
+Congrats! You’ve now set up Python on the autism simulator that is NixOS. Go forth and break something new!
 
 
 Cheers!
