@@ -138,5 +138,5 @@ And that’s it! With just a bit of configuration, your NixOS system should be r
 
 P.S. If you like my tip, zip me up when you are done with it!
 
-Cheers!  
+Cheers!  <br>
 quiet🌸

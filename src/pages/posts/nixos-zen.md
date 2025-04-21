@@ -202,5 +202,5 @@ Also, I know GNU/Linux users do not like casuals like me who just want their sys
 
 Also, my big-dawg is currently being hospitalized for subdural hematoma and subarachnoid hemorrhage. He has much to do in this world still. Keep him in your prayers and pray for his recovery.
 
-Cheers!
+Cheers! <br>
 quiet🌸

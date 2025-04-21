@@ -21,12 +21,13 @@ My fella, do you need the method?
 Let's go with the simplest way I know (the non-Nix route) and let's set up a reproducible Python environment using Nix, uv. You’ll finally be able to hopefully get your money up and not just your funny up. This involves exposing system libraries to python packages in the nix shell.
 
 
-## Prerequisites
+### Prerequisites
 
 - NixOS installed (socially inept simulator)
 - Your project *should* have a `requirements.txt`, and your Python source files (tf you doing here if you don’t).
+## Using nix-shell and uv
 
-## Step 0: Create a `shell.nix` File
+### Step 0: Create a `shell.nix` File
 
 Create a `shell.nix` file in your project directory with the following content:
 ```nix
@@ -48,7 +49,7 @@ pkgs.mkShell {
 }
 ```
 
-## Step 1: Enter the Nix Shell
+### Step 1: Enter the Nix Shell
 
 
 
@@ -65,7 +66,7 @@ This loads a reproducible shell with Python and uv, as dictated by your `shell.n
 
 
 
-## Step 2: Create and Activate a Virtual Environment
+### Step 2: Create and Activate a Virtual Environment
 
 ![uv venv](/cutesite/assets/blog/nixos-py/py2.webp)
 <div class="image-caption">venv time</div>
@@ -81,7 +82,7 @@ If your prompt doesn’t change, it’s either working or it's not (my zsh confi
 
 
 
-## Step 3: Initialize the Project (Optional)
+### Step 3: Initialize the Project (Optional)
 
 If you are chatgpt-ing the shit outta your projcet, you might get prompted to generate a `pyproject.toml`:
 
@@ -92,7 +93,7 @@ uv init
 So much for industry practices. 
 
 
-## Step 4: Install Dependencies
+### Step 4: Install Dependencies
 
 
 ![uv add](/cutesite/assets/blog/nixos-py/py3.webp)
@@ -109,7 +110,7 @@ This will (hopefully) resolve and install everything. If it doesn’t, check you
 
 
 
-## Step 5: Run Your Python Application
+### Step 5: Run Your Python Application
 
 ![workey](/cutesite/assets/blog/nixos-py/py4.webp)
 <div class="image-caption">app runs hopefully</div>
@@ -132,17 +133,80 @@ Or if you just want to see something work:
 python main.py
 ```
 
+## Using nix-direnv
+
+### Step 0: Create a `shell.nix` File
+
+Create a `shell.nix` file in your project directory with the following content:
+```nix
+{ pkgs ? import <nixpkgs> {} }:
+
+pkgs.mkShell {
+  buildInputs = with pkgs; [
+    python3
+    python3Packages.flask # whatever packages you need
+    python3Packages.flask-cors
+    python3Packages.pandas
+    python3Packages.numpy
+    python3Packages.openpyxl
+    python3Packages.requests
+    python3Packages.python-dotenv
+    python3Packages.gunicorn
+    python3Packages.werkzeug
+    python3Packages.pytz
+    python3Packages.eventlet
+    python3Packages.gevent
+    python3Packages.flask-socketio
+  ];
+
+  # shellHook = ''
+  #   echo "Python Flask environment activated!"
+  #   echo "Run 'flask run' to start the development server"
+  #   echo "Run 'gunicorn app:app --bind 0.0.0.0:\$PORT' for production"
+  # '';
+}
+```
+
+### Step 1: Install direnv
+For NixOS 23.05+, add this to your `configuration.nix`:
+
+```nix
+{ pkgs, ... }: {
+  #set to default values
+  programs.direnv = {
+    package = pkgs.direnv;
+    silent = false;
+    loadInNixShell = true;
+    direnvrcExtra = "";
+    nix-direnv = {
+      enable = true;
+      package = pkgs.nix-direnv;
+    };
+  }
+```
+
+### Step 2: Enable direnv in your project directory
+```sh
+$ echo "use nix" >> .envrc
+$ direnv allow
+```
+
+### Step 3: Run your Python application
+```sh
+$ python app.py
+```
+
+
 ## Troubleshooting
 - Make sure you are in NixOS
 - Make sure your keyboard is connected (HHKBs work best in my testing)
 - Is your monitor on?
 - Make sure you’re in the nix-shell and virtual environment before installing or running code. 
 - If dependencies fail to install, check your `requirements.txt` and Python version. Or try turning it off and on again.
-- Still broken? Wallahi your bloodline is finished with you and your ancestors weep in dismay.
-
+- Still broken? Wallahi your bloodline is finished with you and your ancestors weep in shame.
 
 Congrats! You’ve now set up Python on the autism simulator that is NixOS. Go forth and break something new!
 
 
-Cheers!
+Cheers! <br>
 quiet🌸
