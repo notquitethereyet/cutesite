@@ -74,6 +74,54 @@ All commands are run from the root of the project, from a terminal:
 
 The site is configured for easy deployment to GitHub Pages using GitHub Actions. Simply push to the main branch, and the site will be automatically built and deployed.
 
+### GitHub Pages Setup
+
+1. **Enable GitHub Pages** in your repository:
+   - Go to Settings → Pages
+   - Set source to "GitHub Actions"
+
+2. **Automatic Deployment**: The site automatically deploys when you push to the main branch
+
+3. **Manual Deployment**: Run `npm run deploy` to build and push changes
+
+### Custom Domain Setup
+
+To use your domain `quietillust.cafe`:
+
+1. **Build the site**: `npm run build`
+2. **Push to GitHub**: The GitHub Action will deploy to `notquitethereyet.github.io/cutesite`
+3. **Configure DNS** in Hostinger:
+   ```
+   Type: CNAME
+   Name: @
+   Value: notquitethereyet.github.io
+   TTL: 300
+   
+   Type: CNAME
+   Name: www
+   Value: notquitethereyet.github.io
+   TTL: 300
+   ```
+4. **Add Custom Domain** in GitHub Pages:
+   - Go to your repo → Settings → Pages
+   - Under "Custom domain", enter: `quietillust.cafe`
+   - Check "Enforce HTTPS"
+5. **Wait for propagation** (can take up to 24 hours)
+
+**Note**: Your site will be accessible at both:
+- `notquitethereyet.github.io/cutesite` (GitHub Pages)
+- `quietillust.cafe` (your custom domain)
+
+### Local Development
+
+```bash
+npm install          # Install dependencies
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run deploy       # Build and deploy to GitHub Pages
+```
+
 ## 🎨 Customization
 
 You can easily customize the site by modifying:

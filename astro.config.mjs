@@ -6,6 +6,8 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   base: "/cutesite/",
+  output: 'static',
+  outDir: 'docs',
   vite: {
     plugins: [tailwindcss()],
     build: {
@@ -41,8 +43,6 @@ export default defineConfig({
         formats: ['webp', 'avif', 'png', 'jpeg'],
       }
     },
-    // Allow SVG files to be processed
-    allowStaticImages: true,
     // Domains that are allowed to be optimized
     domains: [],
     // Remote patterns that are allowed to be optimized
