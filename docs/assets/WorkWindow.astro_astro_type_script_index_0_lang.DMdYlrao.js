@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".blog-post").forEach(o=>{o.addEventListener("click",()=>{const n=o.dataset.url;if(n){const e=n.split("/").pop();e&&(typeof window.openWindow=="function"?window.openWindow(`blog-${e}`):console.error("openWindow function not found"))}})})});

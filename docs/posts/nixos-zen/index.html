@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.13.2"><meta name="description" content="A cute and aesthetic personal website with a desktop interface"><link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css" integrity="sha512-9YHSK59/rjvhtDcY/b+4rdnl0V4LPDWdkKceBl8ZLF5TB6745ml1AfluEU6dFWqwDw9lPvnauxFgpKvJqp7jiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css" integrity="sha512-yDUXOUWwbHH4ggxueDnC5vJv4tmfySpVdIcN1LksGZi8W8EVZv4uKGrQc0pVf66zS7LDhFJM7Zdeow1sw1/8Jw==" crossorigin="anonymous" referrerpolicy="no-referrer"><title>Zen Browser on NixOS</title><script type="module" src="/assets/Layout.astro_astro_type_script_index_0_lang.CnGTGErz.js"></script><script type="module" src="/trianglify-bg.js"></script><link rel="stylesheet" href="/assets/nixos-gaming.GtXHReRp.css"></head> <body class="blog-post-page" data-astro-cid-sckkx6r4>  <div class="blog-post-single p-8 max-w-4xl mx-auto" style="background-color: var(--window-content-bg); color: var(--text-color); height: auto; min-height: 100%; position: relative; z-index: 2; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);"> <h1 class="font-bold text-3xl mb-2" style="color: var(--text-color);">Zen Browser on NixOS</h1> <p class="text-sm mb-4" style="color: var(--text-color); opacity: 0.8;">November 14, 2024</p> <div class="tags flex flex-wrap gap-2 mb-6"> <span class="tag px-2 py-1 rounded-full text-xs">linux</span><span class="tag px-2 py-1 rounded-full text-xs">nixos</span><span class="tag px-2 py-1 rounded-full text-xs">configuration</span> </div> <div class="blog-content prose prose-lg max-w-none" style="background-color: var(--window-content-bg); position: relative; z-index: 2;"> <h1 id="installing-zen-browser-on-nixos-️">Installing Zen Browser on NixOS ❄️</h1>
+<p><strong>quiet</strong></p>
+<h2 id="introduction">Introduction</h2>
+<p>We all know Linux users. We either spend the rest of our lives wasting away on Debian or take the redpill and jump into more adventurous distros like Arch and Gentoo. I am the latter. Spending days trying to figure out what broke my Arch distro while dealing with work deadlines and grad school projects, I am convinced that I am a masochistic autist. But lately, I felt Arch has been a bit too stable for me. My last install broke due to a user error where I installed an incompatible kernel and my initramfs was confused. This won’t do! So of course, I did what most normal people would do. I bought a used ThinkPad T480s from eBay for a measly $90 to dip my toes into the “new Arch” distro, NixOS!</p>
+<h2 id="nixos-flakes-and-home-manager">NixOS, flakes and home-manager</h2>
+<p><img src="/cutesite/assets/blog/nixos-zen/nixchan.webp" alt="NixChan from assets"></p>
+<div class="image-caption">nixchan is the unofficial NixOS mascot</div>
+<p>NixOS is truly amazingly mind-boggling. When I learnt that this was Eelco Dolstra’s PhD thesis on “correct software deployment”, this simultaneously intrigued me and made me have an existential crisis (whenever I see someone my age be incredibly talented, it bums me tf out). NixOS is lauded for its modularity, reproducibility and something else I can not remember, nor can I be bothered to look up.</p>
+<p>If you want a quick NixOS setup and you don’t want to bother watching dozens of hours of Vimoyer’s NixOS videos, be sure to check out Fernando Borretti’s quick install guide!</p>
+<p>If you have looked up info on Nix, you probably know you could imperatively install anything on Nix just like on Arch:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">nix-shell</span><span style="color:#79B8FF"> -p</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF">package</span><span style="color:#9ECBFF"> nam</span><span style="color:#E1E4E8">e</span><span style="color:#F97583">></span></span></code></pre>
+<p>which is basically the NixOS counterpart of Arch’s incredibly convenient</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">sudo</span><span style="color:#9ECBFF"> pacman</span><span style="color:#79B8FF"> -S</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF">package</span><span style="color:#9ECBFF"> nam</span><span style="color:#E1E4E8">e</span><span style="color:#F97583">></span></span></code></pre>
+<p>But we are on NixOS! We want to do stuff the Nix way! We want to declaratively install packages! Even if they don’t exist in the official NixOS package repo!</p>
+<p>Let’s proceed to what is really important. Nix is a very versatile language; no two configs will be similar! It is very important to understand the basics of the language to efficiently write your configs. This can take weeks or even months to completely ingrain in my noggin. But I don’t got no time for that stuff! So, I did the next best thing; copy my friend’s config :) (Thanks draff).</p>
+<p>My <code>flake.nix</code> and <code>home.nix</code> probably look different than yours, that’s because I have followed Drake Rossman’s immaculate guide on setting up home-manager as a module (I want my home-manager to rebuild alongside NixOS cuz it’s just more convenient and I am a lazy bum). Also I moved everything inside <code>/etc/nixos</code> to <code>/home/quiet/Documents/nixos</code> and symlinked them to the original folder so I can edit them as user without root.</p>
+<p>The two important lines I’d recommend adding to <code>configuration.nix</code> are:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="nix"><code><span class="line"><span style="color:#FFAB70">nix</span><span style="color:#F97583">.</span><span style="color:#FFAB70">settings</span><span style="color:#F97583">.</span><span style="color:#FFAB70">experimental-features</span><span style="color:#FDAEB7;font-style:italic"> =</span><span style="color:#E1E4E8"> [</span><span style="color:#9ECBFF">"nix-command"</span><span style="color:#9ECBFF"> "flakes"</span><span style="color:#E1E4E8">]</span><span style="color:#FDAEB7;font-style:italic">;</span></span>
+<span class="line"><span style="color:#FFAB70">environment</span><span style="color:#F97583">.</span><span style="color:#FFAB70">systemPackages</span><span style="color:#FDAEB7;font-style:italic"> =</span><span style="color:#FDAEB7;font-style:italic"> with</span><span style="color:#FFAB70"> pkgs</span><span style="color:#FDAEB7;font-style:italic">;</span><span style="color:#79B8FF"> import</span><span style="color:#9ECBFF"> ./packages.nix</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">inherit</span><span style="color:#B392F0"> pkgs</span><span style="color:#E1E4E8">; }</span><span style="color:#FDAEB7;font-style:italic">;</span></span></code></pre>
+<p>Now I can keep the <code>configuration.nix</code> file clean and declare my system packages in <code>packages.nix</code> like such:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="nix"><code><span class="line"><span style="color:#E1E4E8">{ pkgs</span><span style="color:#F97583">,</span><span style="color:#FDAEB7;font-style:italic"> …</span><span style="color:#E1E4E8"> }:</span></span>
+<span class="line"><span style="color:#F97583">with</span><span style="color:#FFAB70"> pkgs</span><span style="color:#E1E4E8">; [</span></span>
+<span class="line"><span style="color:#FFAB70">  vim</span></span>
+<span class="line"><span style="color:#FFAB70">  git</span></span>
+<span class="line"><span style="color:#FFAB70">  kitty</span></span>
+<span class="line"><span style="color:#6A737D">  # and so on</span></span>
+<span class="line"><span style="color:#E1E4E8">]</span></span></code></pre>
+<p>This is my <code>flake.nix</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="nix"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#B392F0">  description</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "A very basic flake"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  inputs</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    nixpkgs</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">url</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "github:nixos/nixpkgs?ref=nixos-unstable"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    hyprland</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">url</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "github:hyprwm/Hyprland"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    catppuccin</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">url</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "github:catppuccin/nix"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    zen-browser</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">url</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "github:0xc000022070/zen-browser-flake"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    home-manager</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">      url</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "github:nix-community/home-manager"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">      inputs</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">nixpkgs</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">follows</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "nixpkgs"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    };</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  outputs</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> { nixpkgs</span><span style="color:#F97583">,</span><span style="color:#E1E4E8"> catppuccin</span><span style="color:#F97583">,</span><span style="color:#E1E4E8"> home-manager</span><span style="color:#F97583">,</span><span style="color:#E1E4E8"> zen-browser</span><span style="color:#F97583">,</span><span style="color:#F97583"> ... </span><span style="color:#E1E4E8">} @ inputs:</span></span>
+<span class="line"><span style="color:#E1E4E8">  {</span></span>
+<span class="line"><span style="color:#B392F0">    nixosConfigurations</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">nixchan</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> nixpkgs</span><span style="color:#F97583">.</span><span style="color:#FFAB70">lib</span><span style="color:#F97583">.</span><span style="color:#FFAB70">nixosSystem</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">      system</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "x86_64-linux"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">      specialArgs</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">inherit</span><span style="color:#B392F0"> inputs</span><span style="color:#E1E4E8">; };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">      modules</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#9ECBFF">        ./configuration.nix</span></span>
+<span class="line"><span style="color:#9ECBFF">        ./hyprland.nix</span></span>
+<span class="line"><span style="color:#9ECBFF">        ./fonts.nix</span></span>
+<span class="line"><span style="color:#FFAB70">        catppuccin</span><span style="color:#F97583">.</span><span style="color:#FFAB70">nixosModules</span><span style="color:#F97583">.</span><span style="color:#FFAB70">catppuccin</span></span>
+<span class="line"><span style="color:#FFAB70">        home-manager</span><span style="color:#F97583">.</span><span style="color:#FFAB70">nixosModules</span><span style="color:#F97583">.</span><span style="color:#FFAB70">home-manager</span></span>
+<span class="line"><span style="color:#E1E4E8">        {</span></span>
+<span class="line"><span style="color:#B392F0">          home-manager</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">useGlobalPkgs</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">          home-manager</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">backupFileExtension</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "HMBackup"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">          home-manager</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">useUserPackages</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">          home-manager</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">users</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">quiet</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">imports</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#9ECBFF">            ./home.nix</span></span>
+<span class="line"><span style="color:#FFAB70">            catppuccin</span><span style="color:#F97583">.</span><span style="color:#FFAB70">homeManagerModules</span><span style="color:#F97583">.</span><span style="color:#FFAB70">catppuccin</span></span>
+<span class="line"><span style="color:#E1E4E8">          ];</span></span>
+<span class="line"><span style="color:#B392F0">          home-manager</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">extraSpecialArgs</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> { </span><span style="color:#F97583">inherit</span><span style="color:#B392F0"> inputs</span><span style="color:#E1E4E8">; </span><span style="color:#B392F0">system</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "x86_64-linux"</span><span style="color:#E1E4E8">; };</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"><span style="color:#E1E4E8">      ];</span></span>
+<span class="line"><span style="color:#E1E4E8">    };</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>The key line here is to add the following line to your flake inputs:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="nix"><code><span class="line"><span style="color:#FFAB70">zen-browser</span><span style="color:#F97583">.</span><span style="color:#FFAB70">url</span><span style="color:#FDAEB7;font-style:italic"> =</span><span style="color:#9ECBFF"> "github:0xc000022070/zen-browser-flake"</span><span style="color:#FDAEB7;font-style:italic">;</span></span></code></pre>
+<p>Let’s look at my <code>home.nix</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="nix"><code><span class="line"><span style="color:#E1E4E8">{ config</span><span style="color:#F97583">,</span><span style="color:#E1E4E8"> pkgs</span><span style="color:#F97583">,</span><span style="color:#E1E4E8"> system</span><span style="color:#F97583">,</span><span style="color:#E1E4E8"> inputs</span><span style="color:#F97583">,</span><span style="color:#F97583"> ... </span><span style="color:#E1E4E8">}:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#B392F0">  home</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">username</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "quiet"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">  home</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">homeDirectory</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "/home/quiet"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  # Packages that should be installed to the user profile.</span></span>
+<span class="line"><span style="color:#B392F0">  home</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">packages</span><span style="color:#F97583"> =</span><span style="color:#F97583"> with</span><span style="color:#FFAB70"> pkgs</span><span style="color:#E1E4E8">; [</span></span>
+<span class="line"><span style="color:#FFAB70">    zip</span></span>
+<span class="line"><span style="color:#FFAB70">    xz</span></span>
+<span class="line"><span style="color:#FFAB70">    unzip</span></span>
+<span class="line"><span style="color:#FFAB70">    p7zip</span></span>
+<span class="line"><span style="color:#FFAB70">    oh-my-zsh</span></span>
+<span class="line"><span style="color:#FFAB70">    oh-my-posh</span></span>
+<span class="line"><span style="color:#FFAB70">    inputs</span><span style="color:#F97583">.</span><span style="color:#FFAB70">zen-browser</span><span style="color:#F97583">.</span><span style="color:#FFAB70">packages</span><span style="color:#F97583">.</span><span style="color:#9ECBFF">"</span><span style="color:#9ECBFF">${</span><span style="color:#79B8FF">system</span><span style="color:#9ECBFF">}</span><span style="color:#9ECBFF">"</span><span style="color:#F97583">.</span><span style="color:#FFAB70">specific</span></span>
+<span class="line"><span style="color:#E1E4E8">  ];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  # basic configuration of git, please change to your own</span></span>
+<span class="line"><span style="color:#B392F0">  programs</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">git</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    enable</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    userName</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "notquitethereyet"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    userEmail</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "example@example.com"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    extraConfig</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">      init</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">defaultBranch</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "main"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    };</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  # Catpussy thing</span></span>
+<span class="line"><span style="color:#B392F0">  catppuccin</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    enable</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    flavor</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "mocha"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    accent</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "blue"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">  };</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  # This value determines the home Manager release that your</span></span>
+<span class="line"><span style="color:#6A737D">  # configuration is compatible with. This helps avoid breakage</span></span>
+<span class="line"><span style="color:#6A737D">  # when a new home Manager release introduces backwards</span></span>
+<span class="line"><span style="color:#6A737D">  # incompatible changes.</span></span>
+<span class="line"><span style="color:#6A737D">  #</span></span>
+<span class="line"><span style="color:#6A737D">  # You can update home Manager without changing this value. See</span></span>
+<span class="line"><span style="color:#6A737D">  # the home Manager release notes for a list of state version</span></span>
+<span class="line"><span style="color:#6A737D">  # changes in each release.</span></span>
+<span class="line"><span style="color:#B392F0">  home</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">stateVersion</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "23.11"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  # Let home Manager install and manage itself.</span></span>
+<span class="line"><span style="color:#B392F0">  programs</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">home-manager</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">enable</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>If you don’t want to pass in your system from <code>flake.nix</code>, you could also declare it as a variable in <code>home.nix</code> as such:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="nix"><code><span class="line"><span style="color:#E1E4E8">{ config</span><span style="color:#F97583">,</span><span style="color:#E1E4E8"> pkgs</span><span style="color:#F97583">,</span><span style="color:#E1E4E8"> system</span><span style="color:#F97583">,</span><span style="color:#E1E4E8"> inputs</span><span style="color:#F97583">,</span><span style="color:#F97583"> ... </span><span style="color:#E1E4E8">}:</span></span>
+<span class="line"><span style="color:#F97583">let</span></span>
+<span class="line"><span style="color:#B392F0">  system</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "x86_64-linux"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">in</span></span>
+<span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#B392F0">  home</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">username</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "quiet"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">  home</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">homeDirectory</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> "/home/quiet"</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#6A737D">  ## rest of home.nix</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>Now, all we gotta do is rebuild the system!</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">sudo</span><span style="color:#9ECBFF"> nixos-rebuild</span><span style="color:#9ECBFF"> switch</span></span></code></pre>
+<p>Voila! Now you have Walmart version of Arc Browser installed on your NixOS system (I kid! I prefer Zen over Arc because it’s based on Firefox and not Chromium).</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>For the impatient who can not wait for Zen Browser to be added to the NixOS packages, this can let us install Zen from a stranger’s flake on github!
+This is a godsend for folks who don’t want to compile it from source (my ThinkPad took 3 hours to compile it, I think. And what’s worse? It immediately got an update!). So thanks to the maintainer who did it for us!</p>
+<p>Keep in mind that running random flakes can be a security compromise! This is not a guide per se and more like “I wish this existed when I was trying to do it” for myself and people like me who lack reading comprehension and can not simply “RTFM” like my fellow Arch users like to say.</p>
+<p>Also, I know GNU/Linux users do not like casuals like me who just want their systems to work and not spend 6 hours finding out why something does not work. I am impatient and am just concerned with the how to make it work part. I apologize in advance and do not intend any offense. I just wanted to jump the Windows (or bimbos as I call it) ship and never look back! So please direct your death threats and angry complaints to either my email, or my twitter (my ass is not calling it X).</p>
+<p>Also, my big-dawg is currently being hospitalized for subdural hematoma and subarachnoid hemorrhage. He has much to do in this world still. Keep him in your prayers and pray for his recovery.</p>
+<p>Cheers! <br>
+quiet🌸</p> </div> </div>  <script type="module" src="/assets/Layout.astro_astro_type_script_index_1_lang.BEt9FOer.js"></script> </body> </html>

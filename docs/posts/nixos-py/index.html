@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v5.13.2"><meta name="description" content="A cute and aesthetic personal website with a desktop interface"><link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css" integrity="sha512-9YHSK59/rjvhtDcY/b+4rdnl0V4LPDWdkKceBl8ZLF5TB6745ml1AfluEU6dFWqwDw9lPvnauxFgpKvJqp7jiQ==" crossorigin="anonymous" referrerpolicy="no-referrer"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css" integrity="sha512-yDUXOUWwbHH4ggxueDnC5vJv4tmfySpVdIcN1LksGZi8W8EVZv4uKGrQc0pVf66zS7LDhFJM7Zdeow1sw1/8Jw==" crossorigin="anonymous" referrerpolicy="no-referrer"><title>Python on NixOS</title><script type="module" src="/assets/Layout.astro_astro_type_script_index_0_lang.CnGTGErz.js"></script><script type="module" src="/trianglify-bg.js"></script><link rel="stylesheet" href="/assets/nixos-gaming.GtXHReRp.css"></head> <body class="blog-post-page" data-astro-cid-sckkx6r4>  <div class="blog-post-single p-8 max-w-4xl mx-auto" style="background-color: var(--window-content-bg); color: var(--text-color); height: auto; min-height: 100%; position: relative; z-index: 2; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);"> <h1 class="font-bold text-3xl mb-2" style="color: var(--text-color);">Python on NixOS</h1> <p class="text-sm mb-4" style="color: var(--text-color); opacity: 0.8;">April 19, 2025</p> <div class="tags flex flex-wrap gap-2 mb-6"> <span class="tag px-2 py-1 rounded-full text-xs">linux</span><span class="tag px-2 py-1 rounded-full text-xs">nixos</span><span class="tag px-2 py-1 rounded-full text-xs">python</span> </div> <div class="blog-content prose prose-lg max-w-none" style="background-color: var(--window-content-bg); position: relative; z-index: 2;"> <h1 id="python-on-nixos-a-guide-for-the-challenged">Python on NixOS: A Guide for the Challenged</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Everyone and their mother uses NixOS now (Firebase and Railway too). Time to get to work and stack some paper since you spent your savings on that akasupa to the graduated VTuber(s) who you were parasocial for. So, you quickly install Python from the nixpkgs and then make your first import. The terminal shits out import errors from locations you never imagined existed on your system. WHAT THE HELL IS A NIX STORE!!! “Worked fine on my Arch install!!!”, you think. Buckle up rookie! I will what I wish I was told 8 months ago.</p>
+<p>My fella, do you need the method?</p>
+<p><img src="/cutesite/assets/blog/nixos-py/method.webp" alt="vegeta"></p>
+<p>Let’s go with the simplest way I know (the non-Nix route) and let’s set up a reproducible Python environment using Nix, uv. You’ll finally be able to hopefully get your money up and not just your funny up. This involves exposing system libraries to python packages in the nix shell.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>NixOS installed (socially inept simulator)</li>
+<li>Your project <em>should</em> have a <code>requirements.txt</code>, and your Python source files (tf you doing here if you don’t).</li>
+</ul>
+<h2 id="using-nix-shell-and-uv">Using nix-shell and uv</h2>
+<h3 id="step-0-create-a-shellnix-file">Step 0: Create a <code>shell.nix</code> File</h3>
+<p>Create a <code>shell.nix</code> file in your project directory with the following content:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="nix"><code><span class="line"><span style="color:#E1E4E8">{ pkgs </span><span style="color:#F97583">?</span><span style="color:#79B8FF"> import</span><span style="color:#9ECBFF"> &#x3C;nixpkgs></span><span style="color:#E1E4E8"> {} }:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFAB70">pkgs</span><span style="color:#F97583">.</span><span style="color:#FFAB70">mkShell</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  packages</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#FFAB70">    pkgs</span><span style="color:#F97583">.</span><span style="color:#FFAB70">python310</span><span style="color:#6A737D"> # or whatever version you use</span></span>
+<span class="line"><span style="color:#FFAB70">    pkgs</span><span style="color:#F97583">.</span><span style="color:#FFAB70">uv</span></span>
+<span class="line"><span style="color:#FFAB70">    pkgs</span><span style="color:#F97583">.</span><span style="color:#FFAB70">stdenv</span><span style="color:#F97583">.</span><span style="color:#FFAB70">cc</span><span style="color:#F97583">.</span><span style="color:#FFAB70">cc</span></span>
+<span class="line"><span style="color:#E1E4E8">  ];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  env</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">LD_LIBRARY_PATH</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> pkgs</span><span style="color:#F97583">.</span><span style="color:#FFAB70">lib</span><span style="color:#F97583">.</span><span style="color:#FFAB70">makeLibraryPath</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#6A737D">    # these are the most common</span></span>
+<span class="line"><span style="color:#FFAB70">    pkgs</span><span style="color:#F97583">.</span><span style="color:#FFAB70">stdenv</span><span style="color:#F97583">.</span><span style="color:#FFAB70">cc</span><span style="color:#F97583">.</span><span style="color:#FFAB70">cc</span><span style="color:#F97583">.</span><span style="color:#FFAB70">lib</span></span>
+<span class="line"><span style="color:#FFAB70">    pkgs</span><span style="color:#F97583">.</span><span style="color:#FFAB70">zlib</span></span>
+<span class="line"><span style="color:#E1E4E8">  ];</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="step-1-enter-the-nix-shell">Step 1: Enter the Nix Shell</h3>
+<p><img src="/cutesite/assets/blog/nixos-py/py1.webp" alt="nix-shell"></p>
+<div class="image-caption">nix-shell</div>
+<p>Open your terminal in the project directory and type:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">nix-shell</span></span></code></pre>
+<p>This loads a reproducible shell with Python and uv, as dictated by your <code>shell.nix</code>. If it fails, honestly, you are cooked.</p>
+<h3 id="step-2-create-and-activate-a-virtual-environment">Step 2: Create and Activate a Virtual Environment</h3>
+<p><img src="/cutesite/assets/blog/nixos-py/py2.webp" alt="uv venv"></p>
+<div class="image-caption">venv time</div>
+<p>Let uv cook:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">uv</span><span style="color:#9ECBFF"> venv</span></span>
+<span class="line"><span style="color:#79B8FF">source</span><span style="color:#9ECBFF"> .venv/bin/activate</span></span></code></pre>
+<p>If your prompt doesn’t change, it’s either working or it’s not (my zsh config is dogshit).</p>
+<h3 id="step-3-initialize-the-project-optional">Step 3: Initialize the Project (Optional)</h3>
+<p>If you are chatgpt-ing the shit outta your projcet, you might get prompted to generate a <code>pyproject.toml</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">uv</span><span style="color:#9ECBFF"> init</span></span></code></pre>
+<p>So much for industry practices.</p>
+<h3 id="step-4-install-dependencies">Step 4: Install Dependencies</h3>
+<p><img src="/cutesite/assets/blog/nixos-py/py3.webp" alt="uv add"></p>
+<div class="image-caption">uv doing its magic</div>
+<p>Time to summon your packages:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">uv</span><span style="color:#9ECBFF"> add</span><span style="color:#79B8FF"> -r</span><span style="color:#9ECBFF"> requirements.txt</span></span></code></pre>
+<p>This will (hopefully) resolve and install everything. If it doesn’t, check your <code>requirements.txt</code> for typos, or find the nix-tards on reddit.</p>
+<h3 id="step-5-run-your-python-application">Step 5: Run Your Python Application</h3>
+<p><img src="/cutesite/assets/blog/nixos-py/py4.webp" alt="workey"></p>
+<div class="image-caption">app runs hopefully</div>
+<p>Cross your heart and run the code:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">uv</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> app.py</span></span></code></pre>
+<p>Or, if you’re feeling retro:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">python</span><span style="color:#9ECBFF"> app.py</span></span></code></pre>
+<p>Or if you just want to see something work:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">python</span><span style="color:#9ECBFF"> main.py</span></span></code></pre>
+<h2 id="using-nix-direnv">Using nix-direnv</h2>
+<h3 id="step-0-create-a-shellnix-file-1">Step 0: Create a <code>shell.nix</code> File</h3>
+<p>Create a <code>shell.nix</code> file in your project directory with the following content:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="nix"><code><span class="line"><span style="color:#E1E4E8">{ pkgs </span><span style="color:#F97583">?</span><span style="color:#79B8FF"> import</span><span style="color:#9ECBFF"> &#x3C;nixpkgs></span><span style="color:#E1E4E8"> {} }:</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFAB70">pkgs</span><span style="color:#F97583">.</span><span style="color:#FFAB70">mkShell</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">  buildInputs</span><span style="color:#F97583"> =</span><span style="color:#F97583"> with</span><span style="color:#FFAB70"> pkgs</span><span style="color:#E1E4E8">; [</span></span>
+<span class="line"><span style="color:#FFAB70">    python3</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">flask</span><span style="color:#6A737D"> # whatever packages you need</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">flask-cors</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">pandas</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">numpy</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">openpyxl</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">requests</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">python-dotenv</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">gunicorn</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">werkzeug</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">pytz</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">eventlet</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">gevent</span></span>
+<span class="line"><span style="color:#FFAB70">    python3Packages</span><span style="color:#F97583">.</span><span style="color:#FFAB70">flask-socketio</span></span>
+<span class="line"><span style="color:#E1E4E8">  ];</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  # shellHook = ''</span></span>
+<span class="line"><span style="color:#6A737D">  #   echo "Python Flask environment activated!"</span></span>
+<span class="line"><span style="color:#6A737D">  #   echo "Run 'flask run' to start the development server"</span></span>
+<span class="line"><span style="color:#6A737D">  #   echo "Run 'gunicorn app:app --bind 0.0.0.0:\$PORT' for production"</span></span>
+<span class="line"><span style="color:#6A737D">  # '';</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="step-1-install-direnv">Step 1: Install direnv</h3>
+<p>For NixOS 23.05+, add this to your <code>configuration.nix</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="nix"><code><span class="line"><span style="color:#E1E4E8">{ pkgs</span><span style="color:#F97583">,</span><span style="color:#F97583"> ... </span><span style="color:#E1E4E8">}: {</span></span>
+<span class="line"><span style="color:#6A737D">  #set to default values</span></span>
+<span class="line"><span style="color:#B392F0">  programs</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">direnv</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">    package</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> pkgs</span><span style="color:#F97583">.</span><span style="color:#FFAB70">direnv</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    silent</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> false</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    loadInNixShell</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    direnvrcExtra</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> ""</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">    nix-direnv</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">      enable</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> true</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#B392F0">      package</span><span style="color:#F97583"> =</span><span style="color:#FFAB70"> pkgs</span><span style="color:#F97583">.</span><span style="color:#FFAB70">nix-direnv</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    };</span></span>
+<span class="line"><span style="color:#E1E4E8">  }</span></span></code></pre>
+<h3 id="step-2-enable-direnv-in-your-project-directory">Step 2: Enable direnv in your project directory</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> echo</span><span style="color:#9ECBFF"> "use nix"</span><span style="color:#F97583"> >></span><span style="color:#9ECBFF"> .envrc</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> direnv</span><span style="color:#9ECBFF"> allow</span></span></code></pre>
+<h3 id="step-3-run-your-python-application">Step 3: Run your Python application</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sh"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> python</span><span style="color:#9ECBFF"> app.py</span></span></code></pre>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<ul>
+<li>Make sure you are in NixOS</li>
+<li>Make sure your keyboard is connected (HHKBs work best in my testing)</li>
+<li>Is your monitor on?</li>
+<li>Make sure you’re in the nix-shell and virtual environment before installing or running code.</li>
+<li>If dependencies fail to install, check your <code>requirements.txt</code> and Python version. Or try turning it off and on again.</li>
+<li>Still broken? Wallahi your bloodline is finished with you and your ancestors weep in shame.</li>
+</ul>
+<p>Congrats! You’ve now set up Python on the autism simulator that is NixOS. Go forth and break something new!</p>
+<p>Cheers! <br>
+quiet🌸</p> </div> </div>  <script type="module" src="/assets/Layout.astro_astro_type_script_index_1_lang.BEt9FOer.js"></script> </body> </html>
