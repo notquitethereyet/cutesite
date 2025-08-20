@@ -256,13 +256,14 @@ function createWindowContent(windowId: string): string | null {
                 <li>Open-source, Linux (Arch & NixOS)</li>
                 <li>Machine Learning & Deep Learning</li>
                 <li>Virtualization & VFIO GPU passthrough</li>
+                <li>Hobby projects with anything I can get my hands on</li>
               </ul>
             </div>
             <div class="about-section">
               <h3 class="font-bold text-lg text-text dark:text-text-dark">Hobbies</h3>
               <ul class="list-disc pl-5">
-                <li>Anime, manga, sketching, videogames</li>
-                <li>City Pop, J-Rock & Japanese guitars</li>
+                <li>Anime, manga, sketching, videogames, and music</li>
+                <li>City Pop, Japanese Alternative Rock & guitars</li>
                 <li>Mechanical keyboards (Cherry MX Blacks & Topre)</li>
               </ul>
             </div>
@@ -277,6 +278,7 @@ function createWindowContent(windowId: string): string | null {
           const iconMap: Record<string, string> = {
             github: 'fab fa-github',
             twitter: 'fab fa-twitter',
+            spotify: 'fab fa-spotify',
             linkedin: 'fab fa-linkedin',
             devto: 'fab fa-dev',
             medium: 'fab fa-medium'
@@ -307,7 +309,7 @@ function createWindowContent(windowId: string): string | null {
             </a>
             <a href="${getBasePath()}posts" class="link-item">
               <i class="fas fa-mobile-alt link-icon"></i>
-              <span>All Posts</span>
+              <span>My Blogs</span>
             </a>
           </div>
         </div>
